@@ -92,7 +92,7 @@ parse_concomitant_medication_record_ahpd <- function(record, mapping) {
       MedctnPriorConcomPD = case_when(
         is_pd_med && !is.na(pd_meds) ~ pd_meds,
         is_pd_med && !is.na(pd_med_other) ~ pd_med_other,
-        TRUE ~ NA),
+      TRUE ~ NA),
       MedctnPriorConcomName = case_when(
         is_pd_med && is.na(pd_med_other) ~ record$pd_med_other,
         !is_pd_med ~ record$non_pd_med),
@@ -182,15 +182,47 @@ parse_concomitant_medication_record_spd <- function(record, mapping) {
 #'
 #' @param record A one-row dataframe from the clinical data containing a single record
 #' @param field_mapping
-#' @param value_mapping The value mapping. A list with heirarchy form > field identifier.
-#' @return A tibble with fields specific to concomitant medications
+#' @param value_mapping The value mapping. A list with heirarchy (form) > (field identifier).
+#' @return A tibble with fields specific to the PDBP_MDS-UPDRS form.
 parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping) {
   visit <- record$visittyppdbpmds
 
+
 }
 
-parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, visit) {
+#' Parse MDS-UPDRS record for SUPER PD cohort
+#'
+#' @param record A one-row dataframe from the clinical data containing a single record
+#' @param field_mapping
+#' @param value_mapping The value mapping. A list with heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with two records, if this is a physician administered exam (usually --
+#' one participant only completed an ON exam), or one record, if this is the
+#' substudy participant survey. All fields are specific to the DMR's MDS-UPDRS form.
+parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping) {
+  event <- case_when(
+      !is.na(visitdate) ~ "physician",
+      !is.na(mdsupdrs_sub_dttm) ~ "substudy")
+  if (event == "physician") {
+    dmr_records <- purrr::map_dfr(c("No", "Yes"), function(med_status) {
+        this_visit <- case_when(med_status == "No" ~ "Physician_ON",
+                                med_status == "Yes" ~ "Physician_OFF")
+        this_field_mapping <- field_mapping %>%
+          filter(form_name == "MDS-UPDRS",
+                 cohort == "super-pd",
+                 visit == this_visit)
+        dmr_record <- purrr::map2_dfr(
+            this_field_mapping$dmr_variable,
+            this_field_mapping$clinical_variable,
+            function(dmr_variable, clinical_variable) {
+              value <- tibble(name = dmr_variable,
+                              value = value_map_updrs(value_mapping, record, clinical_variable))
+            })
+        # TODO: pivot_wider and return
+      })
 
+  } else if (event == "substudy") {
+
+  }
 }
 
 value_map <- function(mapping, field, key) {
@@ -199,6 +231,41 @@ value_map <- function(mapping, field, key) {
   }
   value <- mapping[[field]][[key]]
   return(value)
+}
+
+# Map clinical MDS-UPDRS values to DMR permissible values
+#'
+#' @param mapping The value mapping. A list with heirarchy (form) > (field identifier) > (values).
+#' @param record A one-row data frame or named vector
+#' @param field The name of the clinical variable in `record` to map
+#' @return An integer MDS-UPDRS score
+value_map_updrs <- function(mapping, record, field) {
+  # IF (This DMR field has no mapping to the clinical data ||
+  #     The clinical field is empty in the clinical data)
+  if (is.na(field) || is.null(record[[field]])) {
+    return(NA_character_)
+  }
+  dmr_value <- str_extract(record[[field]], "\\d")
+  if (is.na(dmr_value)) {
+    # This value does not record a numeric response.
+    # If this value needs mapping, it will be mapped under one of
+    # the clinical MDS-UPDRS forms. Otherwise, we can use the value as-is.
+    mdsupdrs_map <- value_map(mapping[["mdsupdrs"]], field, record[[field]])
+    substudy_mdsupdrs_part_iii_map <- value_map(
+        mapping[["substudy_mdsupdrs_part_iii"]], field, record[[field]])
+    participant_mdsupdrs_survey_map <- value_map(
+        mapping[["participant_mdsupdrs_survey"]], field, record[[field]])
+    mdsupdrs_physician_exam_map <- value_map(
+        mapping[["mdsupdrs_physician_exam"]], field, record[[field]])
+    dmr_value <- case_when(
+        !is.na(mdsupdrs_map) ~ mdsupdrs_map,
+        !is.na(substudy_mdsupdrs_part_iii_map) ~ substudy_mdsupdrs_part_iii_map,
+        !is.na(participant_mdsupdrs_survey_map) ~ participant_mdsupdrs_survey_map,
+        !is.na(mdsupdrs_physician_exam_map) ~ mdsupdrs_physician_exam_map,
+        !is.na(record[[field]]) ~ as.character(record[[field]]),
+        TRUE ~ NA_character_)
+  }
+  return(dmr_value)
 }
 
 field_map <- function(mapping, field, cohort, visit) {
