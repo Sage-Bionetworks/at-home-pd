@@ -47,7 +47,11 @@ main <- function() {
   args <- read_args()
   synapser::synLogin()
   ctcc_dmr_fields <- read_from_synapse(args$input)
-  formatted_ctcc_dmr_fields <- format_input(ctcc_dmr_fields)
+  dmr_dic <- read_from_synapse("syn24171997") %>%
+    select(dmr_variable = field_name, form_name)
+  formatted_ctcc_dmr_fields <- format_input(ctcc_dmr_fields) %>%
+    inner_join(dmr_dic, by="dmr_variable") %>%
+    select(dmr_variable, form_name, dplyr::everything())
   store_to_synapse(
     formatted_ctcc_dmr_fields = formatted_ctcc_dmr_fields,
     synapse_parent = args$output)
