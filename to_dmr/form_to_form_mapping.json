@@ -1,5 +1,5 @@
 {
-    "PDBP_AdverseEvents_dataElementExport.csv": {
+    "AdverseEvents": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -12,7 +12,7 @@
         ],
         "event": true
     },
-    "PDBP_InclExclCriteria_dataElementExport.csv": {
+    "InclExclCriteria": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -25,7 +25,7 @@
         ],
         "event": false
     },
-    "PDBP_NeurologicalExam_dataElementExport.csv": {
+    "NeurologicalExam": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -38,7 +38,7 @@
         ],
         "event": false
     },
-    "PDBP_BehavioralHistory_dataElementExport.csv": {
+    "BehavioralHistory": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -51,7 +51,7 @@
         ],
         "event": false
     },
-    "PDBP_Vital Signs_dataElementExport.csv": {
+    "Vital Signs": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -64,7 +64,7 @@
         ],
         "event": false
     },
-    "PDBP_BloodCollection_dataElementExport.csv": {
+    "BloodCollection": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -77,7 +77,7 @@
         ],
         "event": false
     },
-    "PDBP_EarlyTerminationQuest_dataElementExport.csv": {
+    "EarlyTerminationQuest": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -90,7 +90,7 @@
         ],
         "event": true
     },
-    "PDBP_Demographics_dataElementExport.csv": {
+    "Demographics": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -103,7 +103,7 @@
         ],
         "event": false
     },
-    "PDBP_InformedConsent_dataElementExport.csv": {
+    "InformedConsent": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -116,7 +116,7 @@
         ],
         "event": false
     },
-    "PDBP_FamilyHistory_dataElementExport.csv": {
+    "FamilyHistory": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -129,7 +129,7 @@
         ],
         "event": false
     },
-    "PDBP_MDS-UPDRS_dataElementExport.csv": {
+    "MDS-UPDRS": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -146,7 +146,7 @@
         ],
         "event": false
     },
-    "PDBP_PriorAndConcomitantMeds_dataElementExport.csv": {
+    "PriorAndConcomitantMeds": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -159,7 +159,7 @@
         ],
         "event": true
     },
-    "PDBP_MoCA_dataElementExport.csv": {
+    "MoCA": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -172,7 +172,7 @@
         ],
         "event": false
     },
-    "PDBP_MayoSleepQuestionnaire_dataElementExport.csv": {
+    "MayoSleepQuestionnaire": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -185,7 +185,7 @@
         ],
         "event": false
     },
-    "PDBP_LBD InclusnXclusn_dataElementExport.csv": {
+    "LBD InclusnXclusn": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -198,7 +198,7 @@
         ],
         "event": false
     },
-    "PDBP_PDQ-39_dataElementExport.csv": {
+    "PDQ-39": {
         "cohort": [
             {
                 "name": "at-home-pd",
@@ -211,7 +211,7 @@
         ],
         "event": false
     },
-    "PDBP_ModSchwabAndEnglandScale_dataElementExport.csv": {
+    "ModSchwabAndEnglandScale": {
         "cohort": [
             {
                 "name": "at-home-pd",
