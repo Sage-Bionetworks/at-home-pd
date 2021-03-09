@@ -204,8 +204,8 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping) {
       !is.na(mdsupdrs_sub_dttm) ~ "substudy")
   if (event == "physician") {
     dmr_records <- purrr::map_dfr(c("No", "Yes"), function(med_status) {
-        this_visit <- case_when(med_status == "No" ~ "Physician_ON",
-                                med_status == "Yes" ~ "Physician_OFF")
+        this_visit <- case_when(med_status == "No" ~ "Physician_OFF",
+                                med_status == "Yes" ~ "Physician_ON")
         this_field_mapping <- field_mapping %>%
           filter(form_name == "MDS-UPDRS",
                  cohort == "super-pd",
@@ -217,7 +217,10 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping) {
               value <- tibble(name = dmr_variable,
                               value = value_map_updrs(value_mapping, record, clinical_variable))
             })
-        # TODO: pivot_wider and return
+        dmr_record <- dmr_record %>%
+          pivot_wider(names_from="name", values_from="value")
+        # TODO: Fill in UPDRS scores from file
+        return(dmr_record)
       })
 
   } else if (event == "substudy") {
