@@ -151,5 +151,20 @@
             "applied to ears": "By ear",
             "applied to eyes": "Topical"
         }
+    },
+    "mdsupdrs": {
+
+    },
+    "substudy_mdsupdrs_part_iii": {
+
+    },
+    "participant_mdsupdrs_survey": {
+
+    },
+    "mdsupdrs_physician_exam": {
+        "mdsupdrsptclinstateprknsnm": {
+            "ON (On is the typical functional state when patients are receiving medication and have a good response)": "ON",
+            "OFF (Off is the typical functional state when patients have a poor response in spite of taking medications.)": "OFF"
+        }
     }
 }
