@@ -1,8 +1,27 @@
 #' Given AT-HOME PD clinical data from REDCap, translate each record into a
 #' format which conforms to the appropriate PDBP DMR schema.
 
+library(synapser)
 library(dplyr)
 library(glue)
+
+AHPD_MDSUPDRS_SCORES <- "syn25050919"
+SUPER_OFF_MDSUPDRS_SCORES <- "syn25165548"
+SUPER_ON_MDSUPDRS_SCORES <- "syn25165546"
+
+#' Read a CSV file from Synapse as a tibble
+read_synapse_csv <- function(synapse_id) {
+  f <- synapser::synGet(synapse_id)
+  df <- readr::read_csv(f$path)
+  return(df)
+}
+
+#' Read a TSV file from Synapse as a tibble
+read_synapse_tsv <- function(synapse_id) {
+  f <- synapser::synGet(synapse_id)
+  df <- readr::read_tsv(f$path)
+  return(df)
+}
 
 #' Parse mandatory DMR schema fields from a clinical record
 get_universal_fields <- function(record, visit_date_col, dob_mapping,
@@ -185,23 +204,36 @@ parse_concomitant_medication_record_spd <- function(record, mapping) {
 #' @param value_mapping The value mapping. A list with heirarchy (form) > (field identifier).
 #' @return A tibble with fields specific to the PDBP_MDS-UPDRS form.
 parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping) {
-  visit <- record$visittyppdbpmds
-
+  # TODO all the fields for this survey won't come from the same form,
+  # so it won't be enough to parse a single record at a time (?)
 
 }
 
 #' Parse MDS-UPDRS record for SUPER PD cohort
 #'
+#' SUPER-PD cohort participants completed a full MDS-UPDRS examination in both OFF
+#' and ON states at a physician visit (form participant_mdsupdrs_survey sections 1&2,
+#' form mdsupdrs_physician_exam sections 1&3&4) and a separate, stand-alone section 3
+#' (form substudy_mdsupdrs_part_iii). The physician visit data is contained in a single
+#' record and the stand-alone section 3 data is in another record.
+#'
 #' @param record A one-row dataframe from the clinical data containing a single record
 #' @param field_mapping
-#' @param value_mapping The value mapping. A list with heirarchy (form) > (field identifier) > (values).
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @param scores A list of dataframes containing MDS-UPDRS section scores for the
+#' ON and OFF medication exam. The list names should be
+#' "Physician_ON" and "Physician_OFF".
 #' @return A tibble with two records, if this is a physician administered exam (usually --
-#' one participant only completed an ON exam), or one record, if this is the
-#' substudy participant survey. All fields are specific to the DMR's MDS-UPDRS form.
-parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping) {
+#' one participant only completed an ON exam), or a tibble with a single record if this is the
+#' stand-alone section 3 exam. All fields are specific to the DMR's MDS-UPDRS form.
+parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
   event <- case_when(
-      !is.na(visitdate) ~ "physician",
-      !is.na(mdsupdrs_sub_dttm) ~ "substudy")
+      !is.na(record$visitdate) ~ "physician",
+      !is.na(record$mdsupdrs_sub_dttm) ~ "substudy")
+  date_of_exam <- case_when(
+      !is.na(record$visitdate) ~ as.Date(record$visitdate),
+      !is.na(record$mdsupdrs_sub_dttm) ~ as.Date(record$mdsupdrs_sub_dttm))
   if (event == "physician") {
     dmr_records <- purrr::map_dfr(c("No", "Yes"), function(med_status) {
         this_visit <- case_when(med_status == "No" ~ "Physician_OFF",
@@ -214,12 +246,18 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping) {
             this_field_mapping$dmr_variable,
             this_field_mapping$clinical_variable,
             function(dmr_variable, clinical_variable) {
-              value <- tibble(name = dmr_variable,
-                              value = value_map_updrs(value_mapping, record, clinical_variable))
+              value <- tibble(
+                name = dmr_variable,
+                value = value_map_updrs(value_mapping, record, clinical_variable))
             })
+        section_scores <- mdsupdrs_section_scores(
+            scores = scores[[this_visit]],
+            participant_id = record$guid,
+            date_of_exam = date_of_exam)
         dmr_record <- dmr_record %>%
+          anti_join(section_scores, by = "name") %>%
+          bind_rows(section_scores) %>%
           pivot_wider(names_from="name", values_from="value")
-        # TODO: Fill in UPDRS scores from file
         return(dmr_record)
       })
 
@@ -275,6 +313,39 @@ field_map <- function(mapping, field, cohort, visit) {
 
 }
 
-main <- function() {
+#' Get section scores for a specific participant and date
+#'
+#' @param scores A dataframe with MDS-UPDRS scores indexed by guid and createdOn
+#' @param participant_id The participant's GUID
+#' @param date_of_exam The date or datetime of the exam
+#' @return row-wise section scores for convenient anti-join/row-bind use
+mdsupdrs_section_scores <- function(scores, participant_id, date_of_exam) {
+  score <- scores %>%
+    filter(guid == participant_id,
+           as.Date(createdOn) == as.Date(date_of_exam)) %>%
+    select(all_of(c("UPDRS1", "UPDRS2", "UPDRS3", "UPDRS4")))
+  total_score <- {
+    total_score <- score %>%
+      pivot_longer(dplyr::everything()) %>%
+      summarize(total_score = sum(value))
+    as.character(total_score$total_score)
+  }
+  score <- score %>%
+    mutate_all(as.character)
+  section_scores <- tribble(
+        ~name, ~value,
+        "MDSUPDRS_PartIScore", score$UPDRS1,
+        "MDSUPDRS_PartIIScore", score$UPDRS2,
+        "MDSUPDRS_PartIIIScore", score$UPDRS3,
+        "MDSUPDRS_PartIVScore", score$UPDRS4,
+        "MDSUPDRS_TotalScore", total_score)
+  return(section_scores)
+}
 
+main <- function() {
+  synLogin()
+  ahpd_mdsupdrs_scores <- read_synapse_tsv(AHPD_MDSUPDRS_SCORES)
+  super_mdsupdrs_scores <- list(
+    "Physician_ON" = read_synapse_csv(SUPER_ON_MDSUPDRS_SCORES),
+    "Physician_OFF" = read_synapse_csv(SUPER_OFF_MDSUPDRS_SCORES))
 }
