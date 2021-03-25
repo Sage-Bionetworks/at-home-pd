@@ -5,6 +5,7 @@
     "determination_of_falls": "determinefall_visitdt",
     "inclusion_exclusion": "inexdttm",
     "inclusion_exclusion_spd": "inexdttm_spd",
+    "mdsupdrs": "mdsupdrs_dttm",
     "mdsupdrs_physician_exam": ["time_mdsupdrs", "time_mdsupdrs_off"],
     "medical_history": "date_medhx",
     "moca": "moca_dttm",

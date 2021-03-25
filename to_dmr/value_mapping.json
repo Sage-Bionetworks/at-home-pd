@@ -156,7 +156,25 @@
 
     },
     "substudy_mdsupdrs_part_iii": {
-
+        "mdsupdrsptclinstateprknsnm_v2": {
+            "ON: On is the typical functional state when patients are receiving medication and have a good response.": "ON",
+            "OFF: Off is the typical functional state when patients have a poor response in spite of taking medications.": "OFF"
+        },
+        "neck_4": {
+            "Unable to Rate.": "555"
+        },
+        "neck_2": {
+            "Unable to Rate.": "555"
+        },
+        "neck_3": {
+            "Unable to Rate.": "555"
+        },
+        "postinst_instr": {
+            "Unable to Rate.": "555"
+        },
+        "neck_5": {
+            "Unable to Rate.": "555"
+        }
     },
     "participant_mdsupdrs_survey": {
 
