@@ -8,6 +8,7 @@ library(glue)
 AHPD_MDSUPDRS_SCORES <- "syn25050919"
 SUPER_OFF_MDSUPDRS_SCORES <- "syn25165548"
 SUPER_ON_MDSUPDRS_SCORES <- "syn25165546"
+CLINICAL_DATA_DICTIONARY <- "syn21740194"
 
 #' Read a CSV file from Synapse as a tibble
 read_synapse_csv <- function(synapse_id) {
@@ -199,14 +200,38 @@ parse_concomitant_medication_record_spd <- function(record, mapping) {
 
 #' Parse MDS-UPDRS record for AT-HOME PD cohort
 #'
-#' @param record A one-row dataframe from the clinical data containing a single record
-#' @param field_mapping
+#' @param record A one-row dataframe containing a single record.
+#' This record consists of the combined fields of the clinical forms `mdsupdrs` and
+#' either `prebaseline_survey' or `previsit_survey`
+#' @param field_mapping The DMR to clinical field mapping.
 #' @param value_mapping The value mapping. A list with heirarchy (form) > (field identifier).
 #' @return A tibble with fields specific to the PDBP_MDS-UPDRS form.
-parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping) {
-  # TODO all the fields for this survey won't come from the same form,
-  # so it won't be enough to parse a single record at a time (?)
-
+parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores) {
+  # The same clinical forms were administered at 12 and 24 months
+  this_visit <- case_when(
+      has_name(record, "assessdate_fall") ~ "Baseline",
+      has_name(record, "assessdate_fall_m12") ~ "12 Months")
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "MDS-UPDRS",
+           cohort == "at-home-pd",
+           visit == this_visit)
+  dmr_record <- purrr::map2_dfr(
+      this_field_mapping$dmr_variable,
+      this_field_mapping$clinical_variable,
+      function(dmr_variable, clinical_variable) {
+        value <- tibble(
+          name = dmr_variable,
+          value = value_map_updrs(value_mapping, record, clinical_variable))
+      })
+  section_scores <- mdsupdrs_section_scores(
+      scores = scores[[this_visit]],
+      participant_id = record$guid,
+      date_of_exam = date_of_exam)
+  dmr_record <- dmr_record %>%
+    anti_join(section_scores, by = "name") %>%
+    bind_rows(section_scores) %>%
+    pivot_wider(names_from="name", values_from="value")
+  return(dmr_record)
 }
 
 #' Parse MDS-UPDRS record for SUPER PD cohort
@@ -218,7 +243,7 @@ parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping) {
 #' record and the stand-alone section 3 data is in another record.
 #'
 #' @param record A one-row dataframe from the clinical data containing a single record
-#' @param field_mapping
+#' @param field_mapping The DMR to clinical field mapping.
 #' @param value_mapping The value mapping. A list with
 #' heirarchy (form) > (field identifier) > (values).
 #' @param scores A list of dataframes containing MDS-UPDRS section scores for the
@@ -235,6 +260,7 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
       !is.na(record$visitdate) ~ as.Date(record$visitdate),
       !is.na(record$mdsupdrs_sub_dttm) ~ as.Date(record$mdsupdrs_sub_dttm))
   if (event == "physician") {
+    # All MDS-UPDRS sections, for both OFF and ON med states
     dmr_records <- purrr::map_dfr(c("No", "Yes"), function(med_status) {
         this_visit <- case_when(med_status == "No" ~ "Physician_OFF",
                                 med_status == "Yes" ~ "Physician_ON")
@@ -260,9 +286,25 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
           pivot_wider(names_from="name", values_from="value")
         return(dmr_record)
       })
-
+    return(dmr_records)
   } else if (event == "substudy") {
-
+    # Section 3
+    this_field_mapping <- field_mapping %>%
+      filter(form_name == "MDS-UPDRS",
+             cohort == "super-pd",
+             visit == "Baseline")
+    dmr_record <- purrr::map2_dfr(
+        this_field_mapping$dmr_variable,
+        this_field_mapping$clinical_variable,
+        function(dmr_variable, clinical_variable) {
+          value <- tibble(
+            name = dmr_variable,
+            value = value_map_updrs(value_mapping, record, clinical_variable))
+        })
+    # TODO Include part 3 section score if applicable (rigidity scores are missing)
+    dmr_record <- dmr_record %>%
+      pivot_wider(names_from="name", value_from="value")
+    return(dmr_record)
   }
 }
 
@@ -309,10 +351,6 @@ value_map_updrs <- function(mapping, record, field) {
   return(dmr_value)
 }
 
-field_map <- function(mapping, field, cohort, visit) {
-
-}
-
 #' Get section scores for a specific participant and date
 #'
 #' @param scores A dataframe with MDS-UPDRS scores indexed by guid and createdOn
@@ -342,10 +380,42 @@ mdsupdrs_section_scores <- function(scores, participant_id, date_of_exam) {
   return(section_scores)
 }
 
+#' Get fields from potentially different events and forms
+#'
+#' This function is useful when data that would otherwise end up in a single DMR
+#' record is spread across different forms and/or events. For example, the
+#' MDS-UPDRS data for AHPD participants was partially collected as part of a
+#' pre-baseline survey and the rest of the fields were collected at the baseline
+#' visit. This function will combine fields from all events and forms
+#' into a single record for each participant. This assumes that the two forms
+#' do not share any fields (otherwise there would be a conflict).
+#'
+#' @param clinical The clinical data
+#' @param clinical_dic The clinical data dictionary (for looking up form fields)
+#' @param event_name The redcap event names to filter upon
+#' @param form_name The clinical form names to filter upon
+#' @return A dataframe with one row per participant. Each column will be of
+#' type character().
+get_event_and_form_fields <- function(clinical, clinical_dic, event_name, form_name) {
+  form_fields <- clinical_dic %>%
+    filter(`Form Name` %in% form_name,
+           `Field Type` != "descriptive") %>%
+    distinct(`Variable / Field Name`)
+  event_records <- clinical %>%
+    filter(redcap_event_name %in% event_name) %>%
+    select(guid, all_of(form_fields[["Variable / Field Name"]])) %>%
+    mutate(across(.fns=as.character)) %>%
+    pivot_longer(!guid) %>%
+    drop_na() %>%
+    pivot_wider(guid)
+  return(event_records)
+}
+
 main <- function() {
   synLogin()
   ahpd_mdsupdrs_scores <- read_synapse_tsv(AHPD_MDSUPDRS_SCORES)
   super_mdsupdrs_scores <- list(
     "Physician_ON" = read_synapse_csv(SUPER_ON_MDSUPDRS_SCORES),
     "Physician_OFF" = read_synapse_csv(SUPER_OFF_MDSUPDRS_SCORES))
+  clinical_data_dictionary <- read_synapse_csv(CLINICAL_DATA_DICTIONARY)
 }
