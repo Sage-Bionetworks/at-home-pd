@@ -184,5 +184,20 @@
             "ON (On is the typical functional state when patients are receiving medication and have a good response)": "ON",
             "OFF (Off is the typical functional state when patients have a poor response in spite of taking medications.)": "OFF"
         }
+    },
+    "moca_spd": {
+
+    },
+    "substudy_moca": {
+      "moca_eduind_v2": {
+          "0 (Subject has more than 12 years)": "1",
+          "1 (Subject has less than or equal to 12 years)": "0"
+      }
+    },
+    "moca": {
+      "moca_eduind": {
+          "0 (Subject has more than 12 years)": "1",
+          "1 (Subject has less than or equal to 12 years)": "0"
+      }
     }
 }

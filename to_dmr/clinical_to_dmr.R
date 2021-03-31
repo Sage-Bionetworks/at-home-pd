@@ -268,6 +268,7 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
           filter(form_name == "MDS-UPDRS",
                  cohort == "super-pd",
                  visit == this_visit)
+        this_value_mapping <- value_mapping[[]]
         dmr_record <- purrr::map2_dfr(
             this_field_mapping$dmr_variable,
             this_field_mapping$clinical_variable,
@@ -302,15 +303,163 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
             value = value_map_updrs(value_mapping, record, clinical_variable))
         })
     # TODO Include part 3 section score if applicable (rigidity scores are missing)
+    dmr_record_score <- dmr_record %>%
+      mutate(value = as.integer(value)) %>%
+      filter(!is.na(value),
+             value < 10) %>%
+      summarize(score = sum(value))
+    # TODO See email from Eric how to score this
+    score <- round(dmr_record_score$score / 33)
     dmr_record <- dmr_record %>%
-      pivot_wider(names_from="name", value_from="value")
+      pivot_wider(names_from="name", values_from="value") %>%
+      mutate(MDSUPDRS_PartIIIScore = score)
     return(dmr_record)
   }
 }
 
-value_map <- function(mapping, field, key) {
-  if (is.na(key) || !(key %in% names(mapping[[field]]))) {
+#' Parse MOCA scores for the AT-HOME PD cohort
+#'
+#' MOCA exam was administered to AT-HOME PD cohort at baseline, 12, and 24
+#' month visits. The same form was used at each visit, hence the fields
+#' are the same across visits.
+#'
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with fields specific to the DMR MoCA form
+parse_moca_ahpd <- function(record, field_mapping, value_mapping) {
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "MoCA",
+           cohort == "at-home-pd",
+           visit == "Baseline")
+  this_value_mapping <- value_mapping[["moca"]]
+  dmr_record <- purrr::map2_dfr(
+    this_field_mapping$dmr_variable,
+    this_field_mapping$clinical_variable,
+    function(dmr_variable, clinical_variable) {
+      this_key <- ifelse(is.na(clinical_variable),
+                         NA_character_,
+                         as.character(record[[clinical_variable]]))
+      value <- tibble(
+        name = dmr_variable,
+        value = value_map(
+          mapping = this_value_mapping,
+          field = clinical_variable,
+          key = this_key,
+          as_is = TRUE))
+  })
+  dmr_record  <- dmr_record %>%
+    pivot_wider(names_from = name, values_from = value)
+  return(dmr_record)
+}
+
+#' Parse MOCA scores for the SUPER PD cohort
+#'
+#' MOCA exam was administered to SUPER PD cohort at the physician visit,
+#' (form moca_spd) as well as to the substudy cohort
+#' (Arm 2: Sub-study, form substudy_moca).
+#'
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with fields specific to the DMR MoCA form
+parse_moca_super <- function(record, field_mapping, value_mapping) {
+  this_event <- case_when(
+      !is.na(record$moca_dttm_2) ~ "Baseline",
+      !is.na(record$moca_1_spd) ~ "Physician_ON")
+  if (this_event == "Physician_ON") { # form moca_spd
+    this_field_mapping <- field_mapping %>%
+      filter(form_name == "MoCA",
+             cohort == "super-pd",
+             visit == "Physician_ON")
+    this_value_mapping <- value_mapping[["moca_spd"]]
+    dmr_record <- purrr::map2_dfr(
+        this_field_mapping$dmr_variable,
+        this_field_mapping$clinical_variable,
+        function(dmr_variable, clinical_variable) {
+          this_key <- ifelse(is.na(clinical_variable),
+                             NA_character_,
+                             as.character(record[[clinical_variable]]))
+          value <- tibble(
+            name = dmr_variable,
+            value = value_map(
+              mapping = this_value_mapping,
+              field = clinical_variable,
+              key = this_key,
+              as_is = TRUE))
+        })
+    dmr_record <- dmr_record %>%
+      pivot_wider(names_from = name, values_from = value) %>%
+      mutate(
+        MOCA_VisuospatialExec = as.character(sum(
+          record$moca_1_spd, record$moca_2_spd, record$moca_3a_spd,
+          record$moca_3b_spd, record$moca_3c_spd)),
+        MOCA_Naming = as.character(sum(
+          record$moca_4a_spd, record$moca_4b_spd, record$moca_4c_spd)),
+        MOCA_DelydRecall = as.character(sum(
+          record$moca_9a_spd, record$moca_9b_spd, record$moca_9c_spd,
+          record$moca_9d_spd, record$moca_9e_spd)),
+        MOCA_Orient = as.character(sum(
+          record$moca_10a_spd, record$moca_10b_spd, record$moca_10c_spd,
+          record$moca_10d_spd, record$moca_10e_spd, record$moca_10f_spd)),
+        MOCA_Digits = as.character(sum(
+          record$moca_5a_spd, record$moca_5b_spd)))
+  } else if (this_event == "Baseline") { # form substudy_moca
+    this_field_mapping <- field_mapping %>%
+      filter(form_name == "MoCA",
+             cohort == "super-pd",
+             visit == "Baseline")
+    this_value_mapping <- value_mapping[["substudy_moca"]]
+    dmr_record <- purrr::map2_dfr(
+      this_field_mapping$dmr_variable,
+      this_field_mapping$clinical_variable,
+      function(dmr_variable, clinical_variable) {
+        this_key <- ifelse(is.na(clinical_variable),
+                           NA_character_,
+                           as.character(record[[clinical_variable]]))
+        value <- tibble(
+          name = dmr_variable,
+          value = value_map(
+            mapping = this_value_mapping,
+            field = clinical_variable,
+            key = this_key,
+            as_is = TRUE))
+    })
+    dmr_record  <- dmr_record %>%
+      pivot_wider(names_from = name, values_from = value)
+  }
+  return(dmr_record)
+}
+
+#' Map a value from clinical to DMR
+#'
+#' This function can be conservative in the sense that it
+#' returns NA in two cases:
+#' 1. The value to be mapped is NA (key is NA)
+#' 2. There are no mappings for this clinical value (key not in names of mapping[[field]])
+#'
+#' To instead return the value as-is if there are no value mappings for it, set
+#' as_is to TRUE. This function is type-safe -- it always returns character type.
+#'
+#' @param mapping The value mapping for a single clinical form and its fields.
+#' @param field The clinical field to map the values of.
+#' @param key The value from the clinical data
+#' @param as_is Whether to return the value as is if there are no mappings found.
+#' @return NA_character_ or the DMR-compliant value
+value_map <- function(mapping, field, key, as_is = FALSE) {
+  if (is.na(key)) {
     return(NA_character_)
+  } else if (!(key %in% names(mapping[[field]]))) {
+      # if field has no mappings or key not mapped
+      if (as_is) {
+        return(as.character(key))
+      } else {
+        return(NA_character_)
+      }
   }
   value <- mapping[[field]][[key]]
   return(value)
