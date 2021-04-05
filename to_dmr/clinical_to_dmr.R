@@ -222,6 +222,7 @@ parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores) {
         value <- tibble(
           name = dmr_variable,
           value = value_map_updrs(value_mapping, record, clinical_variable))
+        return(value)
       })
   section_scores <- mdsupdrs_section_scores(
       scores = scores[[this_visit]],
@@ -301,6 +302,7 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
           value <- tibble(
             name = dmr_variable,
             value = value_map_updrs(value_mapping, record, clinical_variable))
+          return(value)
         })
     # TODO Include part 3 section score if applicable (rigidity scores are missing)
     dmr_record_score <- dmr_record %>%
@@ -349,6 +351,7 @@ parse_moca_ahpd <- function(record, field_mapping, value_mapping) {
           field = clinical_variable,
           key = this_key,
           as_is = TRUE))
+      return(value)
   })
   dmr_record  <- dmr_record %>%
     pivot_wider(names_from = name, values_from = value)
@@ -428,10 +431,98 @@ parse_moca_super <- function(record, field_mapping, value_mapping) {
             field = clinical_variable,
             key = this_key,
             as_is = TRUE))
+        return(value)
     })
     dmr_record  <- dmr_record %>%
       pivot_wider(names_from = name, values_from = value)
   }
+  return(dmr_record)
+}
+
+#' Parse PDQ-39 form for SUPER-PD cohort
+#'
+#' The SUPER-PD cohort took a single PDQ-39 exam at the physician visit.
+#' Neither AT-HOME PD cohort or the sub-study cohort filled out this form.
+#'
+#' @param
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @return A tibble with fields specific to the DMR PDQ-39 form
+parse_pdq_39 <- function(record, field_mapping) {
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "PDQ-39",
+           cohort == "super-pd",
+           visit == "Baseline")
+  dmr_record <- purrr::map2_dfr(
+    this_field_mapping$dmr_variable,
+    this_field_mapping$clinical_variable,
+    function(dmr_variable, clinical_variable) {
+      if (dmr_variable == "PDQ_39_LackOfSuprtPrtnr" && record[["spouse_check"]] == "No") {
+        this_value <- "No spouse or partner"
+      } else {
+        this_value <- ifelse(is.na(clinical_variable),
+                             NA_character_,
+                             str_extract(record[[clinical_variable]], "\\d"))
+      }
+      value <- tibble(
+        name = dmr_variable,
+        value = this_value)
+      return(value)
+  })
+  sections <- tibble(
+    clinical_variable = c("leisure", "housework", "bags", "mile", "yards",
+                          "home", "public", "accompany", "fall", "confined",
+                          "wash", "dress", "shoes", "writing", "cut", "spill",
+                          "depressed", "isolated", "weepy", "angry", "anxious",
+                          "future", "conceal", "avoid", "embarrassed", "worried",
+                          "relationships", "spouse", "friends", "sleep",
+                          "concentration", "memory_e3a8f9", "dreams", "speech",
+                          "communicate", "ignored", "cramps", "aches", "temp"),
+    section = c("mobility", "mobility", "mobility", "mobility", "mobility",
+                "mobility", "mobility", "mobility", "mobility", "mobility",
+                "adl", "adl", "adl", "adl", "adl", "adl",
+                "emotional", "emotional", "emotional", "emotional",
+                "emotional", "emotional",
+                "stigma", "stigma", "stigma", "stigma",
+                "social", "social", "social",
+                "cognition", "cognition", "cognition", "cognition",
+                "communication", "communication", "communication",
+                "discomfort", "discomfort", "discomfort"),
+  max_score = 4)
+  dmr_sections <- sections %>%
+    inner_join(this_field_mapping) %>%
+    select(dmr_variable, section)
+  section_scores <- sections %>%
+    inner_join(this_field_mapping) %>%
+    inner_join(dmr_record, by = c("dmr_variable" = "name")) %>%
+    filter(value != "No spouse or partner") %>% # don't count this question
+    group_by(section) %>%
+    summarize(section_score = sum(as.integer(value)),
+              max_section_score = sum(max_score),
+              dimension_score = section_score / max_section_score * 100) %>%
+    select(name = section, value = dimension_score) %>%
+    mutate(name = case_when(
+      name == "adl" ~ "PDQ_39_TotalScore_ADL",
+      name == "cognition" ~ "PDQ_39_TotalScore_CogImpairmnt",
+      name == "communication" ~ "PDQ_39_TotalScore_Communcation",
+      name == "discomfort" ~ "PDQ_39_TotalScore_BodDiscomfrt",
+      name == "emotional" ~ "PDQ_39_TotalScore_Emotional",
+      name == "mobility" ~ "PDQ_39_TotalScore_Mobility",
+      name == "social" ~ "PDQ_39_TotalScore_SocialSuprt",
+      name == "stigma" ~ "PDQ_39_TotalScore_Stigma"),
+      value = as.character(signif(value, 3)))
+  dmr_record <- dmr_record %>%
+    mutate(value = case_when(
+      value == "0" ~ "Never",
+      value == "1" ~ "Occasionally",
+      value == "2" ~ "Sometimes",
+      value == "3" ~ "Often",
+      value == "4" ~ "Always or cannot do at all")) %>%
+    anti_join(section_scores, by = "name") %>%
+    bind_rows(section_scores)
+  dmr_record  <- dmr_record %>%
+    pivot_wider(names_from = name, values_from = value)
   return(dmr_record)
 }
 
@@ -465,7 +556,7 @@ value_map <- function(mapping, field, key, as_is = FALSE) {
   return(value)
 }
 
-# Map clinical MDS-UPDRS values to DMR permissible values
+#' Map clinical MDS-UPDRS values to DMR permissible values
 #'
 #' @param mapping The value mapping. A list with heirarchy (form) > (field identifier) > (values).
 #' @param record A one-row data frame or named vector
