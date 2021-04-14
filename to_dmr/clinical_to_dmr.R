@@ -3,6 +3,7 @@
 
 library(synapser)
 library(dplyr)
+library(lubridate)
 library(glue)
 
 AHPD_MDSUPDRS_SCORES <- "syn25050919"
@@ -33,7 +34,8 @@ get_universal_fields <- function(record, visit_date_col, dob_mapping,
       SiteName = "AT-HOME-PD_University of Rochester",
       AgeVal = get_age_in_months(
           current_date = record[[visit_date_col]],
-          dob = dob_mapping[[record$guid]]),
+          dob_mapping = dob_mapping,
+          participant_id = guid),
       VisitTypPDBP = get_visit_type(cohort, redcap_event_name))
   universal_fields[["AgeYrs"]] <- universal_fields$AgeVal %/% 12
   universal_fields[["AgeRemaindrMonths"]] <- universal_fields$AgeVal %% 12
@@ -48,12 +50,26 @@ get_universal_fields <- function(record, visit_date_col, dob_mapping,
 #' 2 NIHMR963TPLWF
 #' 3 PDGA-859-GTZ
 #' 4 PDRJ-711-MKF
-get_age_in_months <- function(current_date, dob) {
-  if (anyNA(c(current_date, dob))) {
-      return(NA)
+#'
+#' @param current_date The date this record's data was collected
+#' @param dob_mapping A mapping created by `build_dob_mapping`
+#' @param participant_id The GUID of this participant
+#' @return The participant's current age in months (as character type)
+get_age_in_months <- function(current_date, dob_mapping, participant_id) {
+  if (is.na(current_date)) {
+      return(NA_character_)
   }
-  age_in_months <- lubridate::months(current_date - dob)
-  return(age_in_months)
+  dob_record <- dob_mapping %>%
+    filter(guid == participant_id)
+  if (nrow(dob_record) == 0) {
+    return(NA_character_)
+  } else {
+    dob <- dob_record[["dob"]]
+  }
+  lifespan <- dob %--% current_date
+  age_in_months <- lubridate::time_length(lifespan, unit = "month")
+  rounded_age_in_months <- round(age_in_months, digits = 1)
+  return(as.character(rounded_age_in_months))
 }
 
 #' Get VisitTypPDBP field from cohort and event name
@@ -370,7 +386,7 @@ parse_moca_ahpd <- function(record, field_mapping, value_mapping) {
 #' @param value_mapping The value mapping. A list with
 #' heirarchy (form) > (field identifier) > (values).
 #' @return A tibble with fields specific to the DMR MoCA form
-parse_moca_super <- function(record, field_mapping, value_mapping) {
+parse_moca_spd <- function(record, field_mapping, value_mapping) {
   this_event <- case_when(
       !is.na(record$moca_dttm_2) ~ "Baseline",
       !is.na(record$moca_1_spd) ~ "Physician_ON")
@@ -524,6 +540,209 @@ parse_pdq_39 <- function(record, field_mapping) {
   dmr_record  <- dmr_record %>%
     pivot_wider(names_from = name, values_from = value)
   return(dmr_record)
+}
+
+#' Parse Demographic info for the AT-HOME PD cohort
+#'
+#' Get data for DMR fields EmplmtStatus, EduLvlUSATypPDBP,
+#' and EthnUSACat. These are the fields which are specific to the Demographics
+#' DMR form. RaceExpndCatPDBP field info is not included in the clinical data.
+#'
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with fields specific to the DMR Demographics form
+parse_demographics_ahpd <- function(record, field_mapping, value_mapping) {
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "Demographics",
+           cohort == "at-home-pd",
+           visit == "Baseline")
+  this_value_mapping <- value_mapping[["participant_demographics"]]
+  dmr_record <- purrr::map2_dfr(
+      this_field_mapping$dmr_variable,
+      this_field_mapping$clinical_variable,
+      function(dmr_variable, clinical_variable) {
+        this_key <- ifelse(is.na(clinical_variable),
+                           NA_character_,
+                           as.character(record[[clinical_variable]]))
+        value <- tibble(
+          name = dmr_variable,
+          value = value_map(
+            mapping = this_value_mapping,
+            field = clinical_variable,
+            key = this_key,
+            as_is = TRUE))
+      })
+  dmr_record <- dmr_record %>%
+    pivot_wider(names_from = name, values_from = value)
+  return(dmr_record)
+}
+
+
+#' Parse Demographic info for the SUPER PD cohort
+#'
+#' Get fields unique to DMR Demographics form.
+#'
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with fields specific to the DMR Demographics form
+parse_demographics_spd <- function(record, field_mapping, value_mapping) {
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "Demographics",
+           cohort == "super-pd",
+           visit == "Baseline")
+  this_value_mapping <- value_mapping[["demographics_spd"]]
+  dmr_record <- purrr::map2_dfr(
+      this_field_mapping$dmr_variable,
+      this_field_mapping$clinical_variable,
+      function(dmr_variable, clinical_variable) {
+        this_key <- ifelse(is.na(clinical_variable),
+                           NA_character_,
+                           as.character(record[[clinical_variable]]))
+        value <- tibble(
+          name = dmr_variable,
+          value = value_map(
+            mapping = this_value_mapping,
+            field = clinical_variable,
+            key = this_key,
+            as_is = TRUE))
+      })
+  dmr_record <- dmr_record %>%
+    pivot_wider(names_from = name, values_from = value)
+  return(dmr_record)
+}
+
+#' Parse reportable events for either AT-HOME PD or SUPER PD
+#'
+#' This function parses responses to the clinical `reportable_event` form.
+#' These events include adverse events, which map to the DMR's AdverseEvents
+#' form.
+#'
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with fields specific to the DMR AdverseEvents form
+parse_reportable_event <- function(record, field_mapping, value_mapping) {
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "AdverseEvents",
+           cohort == "at-home-pd",
+           visit == "Baseline")
+  this_value_mapping <- value_mapping[["reportable_event"]]
+  dmr_record <- purrr::map2_dfr(
+      this_field_mapping$dmr_variable,
+      this_field_mapping$clinical_variable,
+      function(dmr_variable, clinical_variable) {
+        this_key <- ifelse(is.na(clinical_variable),
+                           NA_character_,
+                           as.character(record[[clinical_variable]]))
+        value <- tibble(
+          name = dmr_variable,
+          value = value_map(
+            mapping = this_value_mapping,
+            field = clinical_variable,
+            key = this_key,
+            as_is = TRUE))
+      })
+  dmr_record <- dmr_record %>%
+    pivot_wider(names_from = name, values_from = value)
+  if (any(c(record$evntcode___4, record$evntcode___5, record$evntcode___6,
+            record$evntcode___8, record$evntcode___9, record$evntcode___10,
+            record$evntcode___11) == "Checked")) {
+    dmr_record$SeriousAdvrsEvntInd <- "Yes"
+  } else {
+    dmr_record$SeriousAdvrsEvntInd <- "No"
+  }
+  # Fatal/Death Life-Threatening/Disabling Severe Moderate Mild
+  # case_when short-circuits -- so more severe events take precedence
+  # In most cases, we don't know the exact severity grade. The five severity
+  # grades are from the Common Terminology Criteria for Adverse Events v4.0 (CTCAE)
+  dmr_record$AdvrsEvntSeverScale <- case_when(
+   record$evntcode___8  == "Checked" ~ "Fatal/Death",
+   record$evntcode___4  == "Checked" ~ "Life-Threatening/Disabling",
+   record$evntcode___5  == "Checked" ~ "Severe",
+   record$evntcode___6  == "Checked" ~ "Severe",
+   dmr_record$SeriousAdvrsEvntInd == "Yes" ~ NA_character_)
+  return(dmr_record)
+}
+
+#' Parse conclusion form for either AT-HOME PD or SUPER PD
+#'
+#' This function parses responses to the clinical `conclusion` form.
+#' These can map to the DMR's EarlyTerminationQuest form.
+#'
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with fields specific to the DMR AdverseEvents form
+parse_conclusion <- function(record, field_mapping, value_mapping) {
+  if (record$subj_status == glue("Subject discontinued participation ",
+                                "before the planned study conclusion")) {
+
+    this_field_mapping <- field_mapping %>%
+      filter(form_name == "EarlyTerminationQuest",
+             cohort == "at-home-pd", # same form for both AHPD and SUPER
+             visit == "Baseline")
+    this_value_mapping <- value_mapping[["conclusion"]]
+    dmr_record <- purrr::map2_dfr(
+        this_field_mapping$dmr_variable,
+        this_field_mapping$clinical_variable,
+        function(dmr_variable, clinical_variable) {
+          this_key <- ifelse(is.na(clinical_variable),
+                             NA_character_,
+                             as.character(record[[clinical_variable]]))
+          value <- tibble(
+            name = dmr_variable,
+            value = value_map(
+              mapping = this_value_mapping,
+              field = clinical_variable,
+              key = this_key,
+              as_is = FALSE))
+        })
+    dmr_record <- dmr_record %>%
+      pivot_wider(names_from = name, values_from = value)
+  } else {
+    return(tibble())
+  }
+  return(dmr_record)
+}
+
+#' Parse inclusion_exclusion form for AT-HOME PD
+#'
+#' This function parses responses to the clinical `inclusion_exclusion` form.
+#' These can map to the DMR's InclExclCriteria form.
+#'
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with fields specific to the DMR AdverseEvents form
+parse_inclusion_exclusion_ahpd <- function(record, field_mapping, value_mapping) {
+
+}
+
+#' Parse inclusion_exclusion form for SUPER PD
+#'
+#' This function parses responses to the clinical `inclusion_exclusion_spd` form.
+#' These can map to the DMR's InclExclCriteria form.
+#'
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with fields specific to the DMR AdverseEvents form
+parse_inclusion_exclusion_spd <- function(record, field_mapping, value_mapping) {
+
 }
 
 #' Map a value from clinical to DMR

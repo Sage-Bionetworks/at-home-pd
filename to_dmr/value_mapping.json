@@ -199,5 +199,64 @@
           "0 (Subject has more than 12 years)": "1",
           "1 (Subject has less than or equal to 12 years)": "0"
       }
+    },
+    "participant_demographics": {
+        "education": {
+          "Associate's degree": "Associate degree: academic program",
+          "Bachelor's degree": "Bachelor's degree (e.g., BA, AB, BS, BBA)",
+          "Doctorate degree (PhD, EdD, etc)": "Doctoral degree (e.g., PhD, EdD)",
+          "High school diploma (GED or equivalent)": "High school graduate",
+          "Master's degree": "Master's degree (e.g., MA, MS, MEng, MEd, MBA)",
+          "Professional school degree (MD, DDC, JD, etc)": "Professional school degree (e.g., MD, DDS, DVM, JD)",
+          "Some college (1-4 years, no degree)": "Some college, no degree"
+        },
+        "employment": {
+            "Disabled (unable to work)": "Disabled, permanently or temporarily",
+            "Employed, full time": "Working Now",
+            "Employed, part-time": "Working Now",
+            "Homemaker": "Keeping house",
+            "Prefer not to answer": "Unknown",
+            "Retired": "Retired",
+            "Unemployed": "Looking for work, unemployed"
+        }
+    },
+    "demographics_spd": {
+        "demo_education": {
+          "Associate's degree": "Associate degree: academic program",
+          "Bachelor's degree": "Bachelor's degree (e.g., BA, AB, BS, BBA)",
+          "Doctorate degree (PhD, EdD, etc)": "Doctoral degree (e.g., PhD, EdD)",
+          "High school diploma (GED or equivalent)": "High school graduate",
+          "Master's degree": "Master's degree (e.g., MA, MS, MEng, MEd, MBA)",
+          "Professional school degree (MD, DDC, JD, etc)": "Professional school degree (e.g., MD, DDS, DVM, JD)",
+          "Some college (1-4 years, no degree)": "Some college, no degree"
+        },
+        "demo_employment": {
+            "Disabled (unable to work)": "Disabled, permanently or temporarily",
+            "Employed, full time": "Working Now",
+            "Employed, part-time": "Working Now",
+            "Homemaker": "Keeping house",
+            "Prefer not to answer": "Unknown",
+            "Retired": "Retired",
+            "Unemployed": "Looking for work, unemployed"
+        },
+        "demo_ethnicity": {
+            "Not Hispanic/Latino": "Not Hispanic or Latino",
+            "Hispanic/Latino": "Hispanic or Latino"
+        }
+    },
+    "reportable_event": {
+        "relatoption": {
+            "Probably Unrelated": "Unlikely",
+            "Probably Related": "Probable"
+        }
+    },
+    "conclusion": {
+        "reasonpw": {
+            "Lost to follow-up": "Other, specify",
+            "Reason specified by the protocol": "Other, specify",
+            "Unwilling/unable to commit time and/or resources, moved from area, etc.": "I didn't have time/Being in the study wasn't worth my time",
+            "Lost to follow-up": "Other, specify",
+            "Other, specify": "Other, specify"
+        }
     }
 }
