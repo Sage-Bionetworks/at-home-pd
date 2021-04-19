@@ -686,7 +686,6 @@ parse_reportable_event <- function(record, field_mapping, value_mapping) {
 parse_conclusion <- function(record, field_mapping, value_mapping) {
   if (record$subj_status == glue("Subject discontinued participation ",
                                 "before the planned study conclusion")) {
-
     this_field_mapping <- field_mapping %>%
       filter(form_name == "EarlyTerminationQuest",
              cohort == "at-home-pd", # same form for both AHPD and SUPER
@@ -718,7 +717,7 @@ parse_conclusion <- function(record, field_mapping, value_mapping) {
 #' Parse inclusion_exclusion form for AT-HOME PD
 #'
 #' This function parses responses to the clinical `inclusion_exclusion` form.
-#' These can map to the DMR's InclExclCriteria form.
+#' These map to the DMR's InclExclCriteria form.
 #'
 #' @param record A one-row dataframe from the clinical data containing
 #' a single record
@@ -727,7 +726,33 @@ parse_conclusion <- function(record, field_mapping, value_mapping) {
 #' heirarchy (form) > (field identifier) > (values).
 #' @return A tibble with fields specific to the DMR AdverseEvents form
 parse_inclusion_exclusion_ahpd <- function(record, field_mapping, value_mapping) {
-
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "InclExclCriteria",
+           cohort == "at-home-pd",
+           visit == "Baseline")
+  this_value_mapping <- value_mapping[["inclusion_exclusion"]]
+  dmr_record <- purrr::map2_dfr(
+      this_field_mapping$dmr_variable,
+      this_field_mapping$clinical_variable,
+      function(dmr_variable, clinical_variable) {
+        this_key <- ifelse(is.na(clinical_variable),
+                           NA_character_,
+                           as.character(record[[clinical_variable]]))
+        value <- tibble(
+          name = dmr_variable,
+          value = value_map(
+            mapping = this_value_mapping,
+            field = clinical_variable,
+            key = this_key,
+            as_is = TRUE))
+      })
+  dmr_record <- dmr_record %>%
+    pivot_wider(names_from = name, values_from = value)
+  dmr_record[["SubjectCaseInd"]] = "Yes"
+  dmr_record[["SubjectCntrlInd"]] = "No"
+  dmr_record[["PDBPInclusnXclusn_InclusnCase"]] <- glue(
+      "Clinically diagnosed with Parkinson's Disease (or other ",
+      "Neurodegenerative disease appropriate for study protocol)")
 }
 
 #' Parse inclusion_exclusion form for SUPER PD
@@ -742,7 +767,75 @@ parse_inclusion_exclusion_ahpd <- function(record, field_mapping, value_mapping)
 #' heirarchy (form) > (field identifier) > (values).
 #' @return A tibble with fields specific to the DMR AdverseEvents form
 parse_inclusion_exclusion_spd <- function(record, field_mapping, value_mapping) {
+  if (record$enrollconfirm == "No" && record$guid == "NIHGE434YJLLA") {
+    # One participant in SUPER PD completed consent form but then went AWOL
+    # There are no other forms collected from this participant.
+    return tibble()
+  }
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "InclExclCriteria",
+           cohort == "super-pd",
+           visit == "Baseline")
+  this_value_mapping <- value_mapping[["inclusion_exclusion_spd"]]
+  dmr_record <- purrr::map2_dfr(
+      this_field_mapping$dmr_variable,
+      this_field_mapping$clinical_variable,
+      function(dmr_variable, clinical_variable) {
+        this_key <- ifelse(is.na(clinical_variable),
+                           NA_character_,
+                           as.character(record[[clinical_variable]]))
+        value <- tibble(
+          name = dmr_variable,
+          value = value_map(
+            mapping = this_value_mapping,
+            field = clinical_variable,
+            key = this_key,
+            as_is = TRUE))
+      })
+  dmr_record <- dmr_record %>%
+    pivot_wider(names_from = name, values_from = value)
+  dmr_record[["SubjectCaseInd"]] = "Yes"
+  dmr_record[["SubjectCntrlInd"]] = "No"
+  dmr_record[["PDBPInclusnXclusn_InclusnCase"]] <- glue(
+      "Clinically diagnosed with Parkinson's Disease (or other ",
+      "Neurodegenerative disease appropriate for study protocol)")
+}
 
+#' Parse modified_schwab_and_england_adl form
+#'
+#' This function parses responses to the clinical
+#' `modified_schwab_and_england_adl` form. Only AT-HOME PD participants
+#' completed this form. These map to the DMR's ModSchwabAndEnglandScale form.
+#'
+#' @param record A one-row dataframe from the clinical data containing
+#' a single record
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param value_mapping The value mapping. A list with
+#' heirarchy (form) > (field identifier) > (values).
+#' @return A tibble with fields specific to the DMR ModSchwabAndEnglandScale form
+parse_mod_schwab_and_england <- function(record, field_mapping, value_mapping) {
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "ModSchwabAndEnglandScale",
+           cohort == "at-home-pd",
+           visit == "Baseline")
+  this_value_mapping <- value_mapping[["modified_schwab_and_england_adl"]]
+  dmr_record <- purrr::map2_dfr(
+      this_field_mapping$dmr_variable,
+      this_field_mapping$clinical_variable,
+      function(dmr_variable, clinical_variable) {
+        this_key <- ifelse(is.na(clinical_variable),
+                           NA_character_,
+                           as.character(record[[clinical_variable]]))
+        value <- tibble(
+          name = dmr_variable,
+          value = value_map(
+            mapping = this_value_mapping,
+            field = clinical_variable,
+            key = this_key,
+            as_is = TRUE))
+      })
+  dmr_record <- dmr_record %>%
+    pivot_wider(names_from = name, values_from = value)
 }
 
 #' Map a value from clinical to DMR
@@ -763,8 +856,8 @@ parse_inclusion_exclusion_spd <- function(record, field_mapping, value_mapping) 
 value_map <- function(mapping, field, key, as_is = FALSE) {
   if (is.na(key)) {
     return(NA_character_)
-  } else if (!(key %in% names(mapping[[field]]))) {
-      # if field has no mappings or key not mapped
+  } else if (is.null(mapping) || !(key %in% names(mapping[[field]]))) {
+      # if mapping doesn't exist or field has no mappings or key not mapped
       if (as_is) {
         return(as.character(key))
       } else {
@@ -877,4 +970,10 @@ main <- function() {
     "Physician_ON" = read_synapse_csv(SUPER_ON_MDSUPDRS_SCORES),
     "Physician_OFF" = read_synapse_csv(SUPER_OFF_MDSUPDRS_SCORES))
   clinical_data_dictionary <- read_synapse_csv(CLINICAL_DATA_DICTIONARY)
+  clinical <- read_synapse_csv("syn17051543")
+  field_mapping <- read_synapse_csv("syn25056102")
+  value_mapping <- {
+    f <- synapser::synGet("syn25155671")
+    jsonlite::read_json(f$path)
+  }
 }

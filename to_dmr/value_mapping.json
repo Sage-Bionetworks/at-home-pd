@@ -258,5 +258,21 @@
             "Lost to follow-up": "Other, specify",
             "Other, specify": "Other, specify"
         }
+    },
+    "inclusion_exclusion": {
+
+    },
+    "inclusion_exclusion_spd": {
+
+    },
+    "modified_schwab_and_england_adl": {
+      "tscaleschengdallivscl": {
+        "(100% - Completely independent. Able to do all chores without slowness, difficulty or impairment. Essentially normal. Unaware of any difficulty)": "1",
+        "(90% - Completely independent. Able to do all chores with some degree of slowness, difficulty and impairment. Might take twice as long. Beginning to be aware of difficulty)": "0.9",
+        "(80% - Completely independent in most chores. Takes twice as long. Conscious of difficulty and slowness)": "0.8",
+        "(70% - Not completely independent. More difficulty with some chores. Three to four times as long in some. Must spend a large part of the day with chores)": "0.7",
+        "(60% - Some dependency. Can do most chores, but exceedingly slowly and with much effort)": "0.6",
+        "(50% - More dependent. Help with half, slower, etc. Difficulty with everything)": "0.5"
+      }
     }
 }
