@@ -1,6 +1,8 @@
 {
     "compliance_assessment": "compliance_dttm",
     "conclusion": "concldttm",
+    "concomitant_medications": "visitdate",
+    "concomitant_medications_log": null,
     "demographics_spd": "visitdate",
     "determination_of_falls": "determinefall_visitdt",
     "inclusion_exclusion": "inexdttm",

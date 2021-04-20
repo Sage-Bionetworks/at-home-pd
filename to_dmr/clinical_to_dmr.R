@@ -10,6 +10,17 @@ AHPD_MDSUPDRS_SCORES <- "syn25050919"
 SUPER_OFF_MDSUPDRS_SCORES <- "syn25165548"
 SUPER_ON_MDSUPDRS_SCORES <- "syn25165546"
 CLINICAL_DATA_DICTIONARY <- "syn21740194"
+CLINICAL_DATA <- "syn17051543"
+FIELD_MAPPING <- "syn25056102"
+VALUE_MAPPING <- "syn25155671"
+FORM_TO_DATETIME_MAPPING <- "syn25575806"
+RELEVANT_CLINICAL_FORMS <- list(
+  "concomitant_medications", "inclusion_exclusion", "participant_demographics",
+  "mdsupdrs", "moca", "modified_schwab_and_england_adl",
+  "inclusion_exclusion_spd", "substudy_moca", "prebaseline_survey",
+  "previsit_survey", "substudy_mdsupdrs_part_iii", "moca_spd",
+  "participant_mdsupdrs_survey", "mdsupdrs_physician_exam", "pdq39",
+  "concomitant_medication_log")
 
 #' Read a CSV file from Synapse as a tibble
 read_synapse_csv <- function(synapse_id) {
@@ -25,6 +36,12 @@ read_synapse_tsv <- function(synapse_id) {
   return(df)
 }
 
+read_synapse_json <- function(synapse_id) {
+  f <- synapser::synGet(synapse_id)
+  j <- jsonlite::read_json(f$path)
+  return(j)
+}
+
 #' Parse mandatory DMR schema fields from a clinical record
 get_universal_fields <- function(record, visit_date_col, dob_mapping,
                                  cohort, redcap_event_name) {
@@ -35,10 +52,12 @@ get_universal_fields <- function(record, visit_date_col, dob_mapping,
       AgeVal = get_age_in_months(
           current_date = record[[visit_date_col]],
           dob_mapping = dob_mapping,
-          participant_id = guid),
+          participant_id = record$guid),
       VisitTypPDBP = get_visit_type(cohort, redcap_event_name))
-  universal_fields[["AgeYrs"]] <- universal_fields$AgeVal %/% 12
-  universal_fields[["AgeRemaindrMonths"]] <- universal_fields$AgeVal %% 12
+  universal_fields[["AgeYrs"]] <- as.integer(
+    universal_fields[["AgeVal"]]) %/% 12
+  universal_fields[["AgeRemaindrMonths"]] <- as.integer(
+    universal_fields[["AgeVal"]]) %% 12
   return(universal_fields)
 }
 
@@ -770,7 +789,7 @@ parse_inclusion_exclusion_spd <- function(record, field_mapping, value_mapping) 
   if (record$enrollconfirm == "No" && record$guid == "NIHGE434YJLLA") {
     # One participant in SUPER PD completed consent form but then went AWOL
     # There are no other forms collected from this participant.
-    return tibble()
+    return(tibble())
   }
   this_field_mapping <- field_mapping %>%
     filter(form_name == "InclExclCriteria",
@@ -963,17 +982,58 @@ get_event_and_form_fields <- function(clinical, clinical_dic, event_name, form_n
   return(event_records)
 }
 
+#' Conform clinical data with the schemas required by PDBP DMR
+#'
+#' Clinical data comes from two different cohorts, at-home-pd and super-pd.
+#' SUPER PD participants have one screening event, one baseline event, and
+#' one physician visit. AT-HOME PD participants have a screening event,
+#' a baseline visit, a pre 12 month event, a 12 month event, a pre 24 month
+#' event, and a 24 month event.
+#'
+#'
+#'
 main <- function() {
-  synLogin()
+  synapser::synLogin()
+  # Download all reference material
   ahpd_mdsupdrs_scores <- read_synapse_tsv(AHPD_MDSUPDRS_SCORES)
   super_mdsupdrs_scores <- list(
     "Physician_ON" = read_synapse_csv(SUPER_ON_MDSUPDRS_SCORES),
     "Physician_OFF" = read_synapse_csv(SUPER_OFF_MDSUPDRS_SCORES))
+  cohorts  <- read_synapse_csv("syn24173690") %>%
+    rename(study_cohort = cohort)
   clinical_data_dictionary <- read_synapse_csv(CLINICAL_DATA_DICTIONARY)
-  clinical <- read_synapse_csv("syn17051543")
-  field_mapping <- read_synapse_csv("syn25056102")
-  value_mapping <- {
-    f <- synapser::synGet("syn25155671")
-    jsonlite::read_json(f$path)
-  }
+  clinical <- read_synapse_csv(CLINICAL_DATA) %>%
+    inner_join(cohorts, by = "guid") %>%
+    filter(!str_detect(guid, "TEST"))
+  dob_mapping <- build_dob_mapping(clinical)
+  field_mapping <- read_synapse_csv(FIELD_MAPPING)
+  value_mapping <- read_synapse_json(VALUE_MAPPING)
+  form_to_datetime_mapping <- read_synapse_json(FORM_TO_DATETIME_MAPPING)
+  # Row-wise map each record conditional on its contents
+  dmr_records <- purrr::pmap(clinical, function(...) {
+    clinical_record <- list(...)
+    cohort <- clinical_record$study_cohort
+    # TODO: iterate through list of potential clinical forms we can parse from
+    # this record. Given the clinical form, we can extract the universal fields
+    # and pass this record into the appropriate `parse_*` functions.
+    dmr_records <- purrr::map(RELEVANT_CLINICAL_FORMS, function(clinical_form) {
+      # TODO: how shall we handle visit_date_col during physician visit?
+      universal_fields <- get_universal_fields(
+        record = clinical_record,
+        visit_date_col = form_to_datetime_mapping[[clinical_form]],
+        dob_mapping = dob_mapping,
+        cohort = cohort,
+        redcap_event_name = clinical_record[["redcap_event_name"]])
+      return(universal_fields)
+      if (cohort == "super-pd") {
+        if (clinical_form == "concomitant_medications") {
+
+        }
+      } else if (cohort == "at-home-pd") {
+
+      } else {
+        stop(glue("Unknown cohort encounted for GUID { clinical_record$guid }"))
+      }
+    })
+  })
 }
