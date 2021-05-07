@@ -14,13 +14,14 @@ CLINICAL_DATA <- "syn17051543"
 FIELD_MAPPING <- "syn25056102"
 VALUE_MAPPING <- "syn25155671"
 FORM_TO_DATETIME_MAPPING <- "syn25575806"
-RELEVANT_CLINICAL_FORMS <- list(
-  "concomitant_medications", "inclusion_exclusion", "participant_demographics",
-  "mdsupdrs", "moca", "modified_schwab_and_england_adl",
-  "inclusion_exclusion_spd", "substudy_moca", "prebaseline_survey",
-  "previsit_survey", "substudy_mdsupdrs_part_iii", "moca_spd",
-  "participant_mdsupdrs_survey", "mdsupdrs_physician_exam", "pdq39",
+AHPD_CLINICAL_FORMS <- list(
+  "inclusion_exclusion", "participant_demographics", "mdsupdrs", "moca",
+  "modified_schwab_and_england_adl", "prebaseline_survey", "previsit_survey",
   "concomitant_medication_log")
+SUPER_CLINICAL_FORMS <- list(
+  "concomitant_medications", "inclusion_exclusion_spd", "substudy_moca",
+  "substudy_mdsupdrs_part_iii", "moca_spd", "participant_mdsupdrs_survey",
+  "mdsupdrs_physician_exam", "pdq39")
 
 #' Read a CSV file from Synapse as a tibble
 read_synapse_csv <- function(synapse_id) {
@@ -42,17 +43,49 @@ read_synapse_json <- function(synapse_id) {
   return(j)
 }
 
+#' Determine if this clinical record conforms to a clinical form
+#'
+#' Most forms have a required field where the form collection date is recorded.
+#' If this field is empty, we know this record does not contain the form info.
+#' The exception to this case is the clinical form `concomitant_medication_log`
+#' @param record A one-row dataframe from the clinical data containing a single record
+#' @param visit_date_col The mandatory field where the form collection date
+#' is recorded
+#' @return boolean
+has_form_info <- function(record, visit_date_col) {
+  if (is.null(visit_date_col)) {
+    repeat_instrument  <- record[["redcap_repeat_instrument"]]
+    if (!is.na(repeat_instrument) &&
+        repeat_instrument == "Concomitant Medication Log") {
+      return(TRUE)
+    } else { # This isn't a form relevant to this study
+      return(FALSE)
+    }
+  } else if (!is.na(record[[visit_date_col]])) {
+    return(TRUE)
+  } else {
+    return(FALSE)
+  }
+}
+
 #' Parse mandatory DMR schema fields from a clinical record
 get_universal_fields <- function(record, visit_date_col, dob_mapping,
                                  cohort, redcap_event_name) {
-  universal_fields <- tibble::tibble(
-      GUID = record$guid,
-      VisitDate = record[[visit_date_col]],
-      SiteName = "AT-HOME-PD_University of Rochester",
-      AgeVal = get_age_in_months(
-          current_date = record[[visit_date_col]],
+  if (is.null(visit_date_col)) { # concomitant_medication_log
+    visit_date <- NA_character_
+    age_in_months <- NA_character_
+  } else {
+    visit_date <- record[[visit_date_col]]
+    age_in_months <- get_age_in_months(
+          current_date = visit_date,
           dob_mapping = dob_mapping,
-          participant_id = record$guid),
+          participant_id = record[["guid"]])
+  }
+  universal_fields <- tibble::tibble(
+      GUID = record[["guid"]],
+      VisitDate = visit_date,
+      SiteName = "AT-HOME-PD_University of Rochester",
+      AgeVal = age_in_months,
       VisitTypPDBP = get_visit_type(cohort, redcap_event_name))
   universal_fields[["AgeYrs"]] <- as.integer(
     universal_fields[["AgeVal"]]) %/% 12
@@ -243,9 +276,10 @@ parse_concomitant_medication_record_spd <- function(record, mapping) {
 #' @return A tibble with fields specific to the PDBP_MDS-UPDRS form.
 parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores) {
   # The same clinical forms were administered at 12 and 24 months
+  # TODO: Take into account clinical form `mdsupdrs`
   this_visit <- case_when(
-      has_name(record, "assessdate_fall") ~ "Baseline",
-      has_name(record, "assessdate_fall_m12") ~ "12 Months")
+      !is.na(record[["assessdate_fall"]]) ~ "Baseline",
+      !is.na(record[["assessdate_fall_m12"]]) ~ "12 Months")
   this_field_mapping <- field_mapping %>%
     filter(form_name == "MDS-UPDRS",
            cohort == "at-home-pd",
@@ -259,10 +293,11 @@ parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores) {
           value = value_map_updrs(value_mapping, record, clinical_variable))
         return(value)
       })
+  # TODO: only add section scores when parsing clinical_form `mdsupdrs`
   section_scores <- mdsupdrs_section_scores(
-      scores = scores[[this_visit]],
+      scores = scores,
       participant_id = record$guid,
-      date_of_exam = date_of_exam)
+      date_of_exam = as.Date(record[["mdsupdrs_dttm"]]))
   dmr_record <- dmr_record %>%
     anti_join(section_scores, by = "name") %>%
     bind_rows(section_scores) %>%
@@ -304,7 +339,6 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
           filter(form_name == "MDS-UPDRS",
                  cohort == "super-pd",
                  visit == this_visit)
-        this_value_mapping <- value_mapping[[]]
         dmr_record <- purrr::map2_dfr(
             this_field_mapping$dmr_variable,
             this_field_mapping$clinical_variable,
@@ -321,6 +355,12 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
           anti_join(section_scores, by = "name") %>%
           bind_rows(section_scores) %>%
           pivot_wider(names_from="name", values_from="value")
+        # Yes, these are reversed
+        if (this_visit == "Physician_OFF") {
+          dmr_record[["VisitDate"]] <- record[["time_mdsupdrs"]]
+        } else if (this_visit == "Physician_ON") {
+          dmr_record[["VisitDate"]] <- record[["time_mdsupdrs_off"]]
+        }
         return(dmr_record)
       })
     return(dmr_records)
@@ -982,6 +1022,46 @@ get_event_and_form_fields <- function(clinical, clinical_dic, event_name, form_n
   return(event_records)
 }
 
+parse_form <- function(record, form, field_mapping, value_mapping, ...) {
+  kwargs <- list(...)
+  parsed_form <- case_when(
+    form == "inclusion_exclusion" ~ parse_inclusion_exclusion_ahpd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping),
+    form == "participant_demographics" ~ parse_demographics_ahpd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping),
+    form == "mdsupdrs" ~ parse_mdsupdrs_ahpd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping,
+        scores = kwargs[["scores"]]),
+    form == "moca" ~ parse_moca_ahpd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping),
+    form == "modified_schwab_and_england_adl" ~ parse_mod_schwab_and_england(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping),
+    form == "prebaseline_survey" ~ parse_mdsupdrs_ahpd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping),
+    form == "inclusion_exclusion" ~ parse_inclusion_exclusion_ahpd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping),
+    form == "inclusion_exclusion" ~ parse_inclusion_exclusion_ahpd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping),
+  )
+
+}
+
 #' Conform clinical data with the schemas required by PDBP DMR
 #'
 #' Clinical data comes from two different cohorts, at-home-pd and super-pd.
@@ -1016,24 +1096,41 @@ main <- function() {
     # TODO: iterate through list of potential clinical forms we can parse from
     # this record. Given the clinical form, we can extract the universal fields
     # and pass this record into the appropriate `parse_*` functions.
-    dmr_records <- purrr::map(RELEVANT_CLINICAL_FORMS, function(clinical_form) {
-      # TODO: how shall we handle visit_date_col during physician visit?
-      universal_fields <- get_universal_fields(
-        record = clinical_record,
-        visit_date_col = form_to_datetime_mapping[[clinical_form]],
-        dob_mapping = dob_mapping,
-        cohort = cohort,
-        redcap_event_name = clinical_record[["redcap_event_name"]])
-      return(universal_fields)
-      if (cohort == "super-pd") {
-        if (clinical_form == "concomitant_medications") {
-
+    if (cohort == "at-home-pd") {
+      dmr_records <- purrr::map(AHPD_CLINICAL_FORMS, function(clinical_form) {
+        visit_date_col <- form_to_datetime_mapping[[clinical_form]]
+        if (!has_form_info(record = clinical_record,
+                           visit_date_col = visit_date_col)) {
+          return(tibble())
         }
-      } else if (cohort == "at-home-pd") {
-
-      } else {
+        universal_fields <- get_universal_fields(
+          record = clinical_record,
+          visit_date_col = visit_date_col,
+          dob_mapping = dob_mapping,
+          cohort = cohort,
+          redcap_event_name = clinical_record[["redcap_event_name"]])
+        form_specific_fields <- parse_form(
+            record = clinical_record,
+            form = clinical_form)
+      })
+    } else if (cohort == "super-pd") {
+      dmr_records <- purrr::map(SUPER_CLINICAL_FORMS, function(clinical_form) {
+        visit_date_col <- form_to_datetime_mapping[[clinical_form]]
+        if (!has_form_info(record = clinical_record,
+                           visit_date_col = visit_date_col)) {
+          return(tibble())
+        }
+        universal_fields <- get_universal_fields(
+          record = clinical_record,
+          visit_date_col = visit_date_col,
+          dob_mapping = dob_mapping,
+          cohort = cohort,
+          redcap_event_name = clinical_record[["redcap_event_name"]])
+        return(universal_fields)
+      })
+    } else {
         stop(glue("Unknown cohort encounted for GUID { clinical_record$guid }"))
-      }
-    })
+    }
+    return(dmr_records)
   })
 }

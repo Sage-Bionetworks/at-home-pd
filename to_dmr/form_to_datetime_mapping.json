@@ -8,7 +8,7 @@
     "inclusion_exclusion": "inexdttm",
     "inclusion_exclusion_spd": "inexdttm_spd",
     "mdsupdrs": "mdsupdrs_dttm",
-    "mdsupdrs_physician_exam": ["time_mdsupdrs", "time_mdsupdrs_off"],
+    "mdsupdrs_physician_exam": "time_mdsupdrs",
     "medical_history": "date_medhx",
     "moca": "moca_dttm",
     "moca_spd": "visitdate",
