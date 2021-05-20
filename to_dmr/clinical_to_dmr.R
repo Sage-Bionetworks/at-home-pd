@@ -2,7 +2,7 @@
 #' format which conforms to the appropriate PDBP DMR schema.
 
 library(synapser)
-library(dplyr)
+library(tidyverse)
 library(lubridate)
 library(glue)
 
@@ -15,12 +15,15 @@ FIELD_MAPPING <- "syn25056102"
 VALUE_MAPPING <- "syn25155671"
 FORM_TO_DATETIME_MAPPING <- "syn25575806"
 AHPD_CLINICAL_FORMS <- list(
-  "inclusion_exclusion", "participant_demographics", "mdsupdrs", "moca",
-  "modified_schwab_and_england_adl", "prebaseline_survey", "previsit_survey",
-  "concomitant_medication_log")
+  "inclusion_exclusion", "participant_demographics", "moca",
+  "modified_schwab_and_england_adl", "concomitant_medication_log")
+AHPD_MDSUPDRS_FORMS <- list(
+  "prebaseline_survey", "previsit_survey", "mdsupdrs")
+# Not included in the SUPER forms is the participant_mdsupdrs_survey, since
+# we parse it as part of the mdsupdrs_physician_exam.
 SUPER_CLINICAL_FORMS <- list(
   "concomitant_medications", "inclusion_exclusion_spd", "substudy_moca",
-  "substudy_mdsupdrs_part_iii", "moca_spd", "participant_mdsupdrs_survey",
+  "substudy_mdsupdrs_part_iii", "moca_spd",
   "mdsupdrs_physician_exam", "pdq39")
 
 #' Read a CSV file from Synapse as a tibble
@@ -155,14 +158,14 @@ build_dob_mapping <- function(clinical) {
 #' visit, hence this type of record needs to be handled specially.
 #' This function extracts fields MedctnPriorConcomRteTyp, MedctnPriorConcomName,
 #' MedctnPriorConcomDoseMsrTxt, MedctnPriorConcomDoseUoM, MedctnPriorConcomFreqTxt,
-#' and MedctnPriorConcomPD. Other fields specific to this form are set to NA.
+#' and MedctnPriorConcomPD. Other fields specific to this form are set to NA_character_
 #' Super PD data is stored in a different format, see
 #' parse_concomitant_medication_record_spd
 #' @param record A one-row dataframe from the clinical data containing a single record
-#' @param mapping The value mapping. A list with heirarchy form > field identifier.
+#' @param value_mapping The value mapping. A list with heirarchy form > field identifier.
 #' @return A tibble with fields specific to concomitant medications
-parse_concomitant_medication_record_ahpd <- function(record, mapping) {
-  med_map <- mapping[["concomitant_medication_log"]]
+parse_concomitant_medication_record_ahpd <- function(record, value_mapping) {
+  med_map <- value_mapping[["concomitant_medication_log"]]
   is_pd_med <- record$pd_med_yn == "Yes"
   route <- value_map(med_map, "route", record$route)
   route_oth <- value_map(med_map, "route_oth", record$route_oth)
@@ -176,11 +179,11 @@ parse_concomitant_medication_record_ahpd <- function(record, mapping) {
       MedctnPriorConcomRteTyp = case_when(
         !is.na(route) ~ route,
         !is.na(route_oth) ~ route_oth,
-        TRUE ~ NA),
+        TRUE ~ NA_character_),
       MedctnPriorConcomPD = case_when(
         is_pd_med && !is.na(pd_meds) ~ pd_meds,
         is_pd_med && !is.na(pd_med_other) ~ pd_med_other,
-      TRUE ~ NA),
+      TRUE ~ NA_character_),
       MedctnPriorConcomName = case_when(
         is_pd_med && is.na(pd_med_other) ~ record$pd_med_other,
         !is_pd_med ~ record$non_pd_med),
@@ -188,15 +191,15 @@ parse_concomitant_medication_record_ahpd <- function(record, mapping) {
       MedctnPriorConcomFreqTxt = case_when(
         !is.na(freq) ~ freq,
         !is.na(freq_oth) ~ freq_oth,
-        TRUE ~ NA),
+        TRUE ~ NA_character_),
       MedctnPriorConcomDoseMsrTxt = record$dose,
       MedctnPriorConcomDoseUoM = case_when(
-        record$units == "other" ~ ifelse(!is.na(units_oth), units_oth, NA),
+        record$units == "other" ~ ifelse(!is.na(units_oth), units_oth, NA_character_),
         !is.na(units) ~ units,
         !is.na(units_oth) ~ units_oth,
-        TRUE ~ NA),
-      MedctnPriorConcomMinsLstDose = NA_integer_,
-      MedctnPriorConcomHrsLstDose = NA_integer_)
+        TRUE ~ NA_character_),
+      MedctnPriorConcomMinsLstDose = NA_character_,
+      MedctnPriorConcomHrsLstDose = NA_character_)
   return(dmr_record)
 }
 
@@ -207,22 +210,22 @@ parse_concomitant_medication_record_ahpd <- function(record, mapping) {
 #' visit, hence this type of record needs to be handled specially.
 #' This function extracts fields MedctnPriorConcomRteTyp, MedctnPriorConcomName,
 #' MedctnPriorConcomDoseMsrTxt, MedctnPriorConcomDoseUoM, MedctnPriorConcomFreqTxt,
-#' and MedctnPriorConcomPD. Other fields specific to this form are set to NA.
+#' and MedctnPriorConcomPD. Other fields specific to this form are set to NA_character_.
 #' In contrast to AT-HOME PD, SUPER-PD medications are recorded as a single record
 #' for each participant. Fields for a specific medication can be grouped by their
 #' numeric suffix, e.g., conmed_1, conmed_dose_amt_1, conmed_dose_unit_1, etc.
 #' AT-HOME PD data is stored in a different format, see
 #' parse_concomitant_medication_record_ahpd
 #' @param record A one-row dataframe from the clinical data containing a single record
-#' @param mapping The value mapping. A list with heirarchy form > field identifier.
+#' @param value_mapping The value mapping. A list with heirarchy form > field identifier.
 #' @return A tibble with fields specific to concomitant medications
-parse_concomitant_medication_record_spd <- function(record, mapping) {
-  med_map <- mapping[["concomitant_medications"]]
+parse_concomitant_medication_record_spd <- function(record, value_mapping) {
+  med_map <- value_mapping[["concomitant_medications"]]
   num_medications <- as.integer(record$conmed_num)
   dmr_records <- purrr::map_dfr(1:num_medications, function(n) {
     is_pd_med <- record[[glue("conmed_pd_{n}")]] == "Yes"
     conmed <- value_map(med_map, "conmed", record[[glue("conmed_{n}")]])
-    conmed_dose_amt <- record[[glue("conmed_dose_amt_{n}")]]
+    conmed_dose_amt <- as.character(record[[glue("conmed_dose_amt_{n}")]])
     conmed_dose_unit <- value_map(
       med_map, "conmed_dose_unit", record[[glue("conmed_dose_unit_{n}")]])
     conmed_dose_unit_other <- value_map(
@@ -255,12 +258,13 @@ parse_concomitant_medication_record_spd <- function(record, mapping) {
           TRUE ~ NA_character_),
         MedctnPriorConcomDoseMsrTxt = conmed_dose_amt,
         MedctnPriorConcomDoseUoM = case_when(
-          record[[glue("conmed_dose_unit_{n}")]] == "other" ~ ifelse(!is.na(conmed_dose_unit_other), conmed_dose_unit_other, NA_character_),
+          record[[glue("conmed_dose_unit_{n}")]] == "other" ~ ifelse(
+              !is.na(conmed_dose_unit_other), conmed_dose_unit_other, NA_character_),
           !is.na(conmed_dose_unit) ~ conmed_dose_unit,
           !is.na(conmed_dose_unit_other) ~ conmed_dose_unit_other,
           TRUE ~ NA_character_),
-        MedctnPriorConcomMinsLstDose = NA_integer_,
-        MedctnPriorConcomHrsLstDose = NA_integer_)
+        MedctnPriorConcomMinsLstDose = NA_character_,
+        MedctnPriorConcomHrsLstDose = NA_character_)
     return(dmr_record)
   })
   return(dmr_records)
@@ -276,7 +280,6 @@ parse_concomitant_medication_record_spd <- function(record, mapping) {
 #' @return A tibble with fields specific to the PDBP_MDS-UPDRS form.
 parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores) {
   # The same clinical forms were administered at 12 and 24 months
-  # TODO: Take into account clinical form `mdsupdrs`
   this_visit <- case_when(
       !is.na(record[["assessdate_fall"]]) ~ "Baseline",
       !is.na(record[["assessdate_fall_m12"]]) ~ "12 Months")
@@ -293,7 +296,6 @@ parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores) {
           value = value_map_updrs(value_mapping, record, clinical_variable))
         return(value)
       })
-  # TODO: only add section scores when parsing clinical_form `mdsupdrs`
   section_scores <- mdsupdrs_section_scores(
       scores = scores,
       participant_id = record$guid,
@@ -325,14 +327,19 @@ parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores) {
 #' stand-alone section 3 exam. All fields are specific to the DMR's MDS-UPDRS form.
 parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
   event <- case_when(
-      !is.na(record$visitdate) ~ "physician",
+      !is.na(record$time_mdsupdrs) ~ "physician",
       !is.na(record$mdsupdrs_sub_dttm) ~ "substudy")
   date_of_exam <- case_when(
-      !is.na(record$visitdate) ~ as.Date(record$visitdate),
+      !is.na(record$time_mdsupdrs) ~ as.Date(record$time_mdsupdrs),
       !is.na(record$mdsupdrs_sub_dttm) ~ as.Date(record$mdsupdrs_sub_dttm))
   if (event == "physician") {
     # All MDS-UPDRS sections, for both OFF and ON med states
     dmr_records <- purrr::map_dfr(c("No", "Yes"), function(med_status) {
+        # This one specific user had their OFF and ON exams on separate days
+        date_of_exam <- case_when(
+            record$guid == "NIHRH896FYACQ" && med_status == "No" ~ as.Date(record$time_mdsupdrs),
+            record$guid == "NIHRH896FYACQ" && med_status == "Yes" ~ as.Date(record$time_mdsupdrs_off),
+            TRUE ~ date_of_exam)
         this_visit <- case_when(med_status == "No" ~ "Physician_OFF",
                                 med_status == "Yes" ~ "Physician_ON")
         this_field_mapping <- field_mapping %>%
@@ -355,12 +362,6 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
           anti_join(section_scores, by = "name") %>%
           bind_rows(section_scores) %>%
           pivot_wider(names_from="name", values_from="value")
-        # Yes, these are reversed
-        if (this_visit == "Physician_OFF") {
-          dmr_record[["VisitDate"]] <- record[["time_mdsupdrs"]]
-        } else if (this_visit == "Physician_ON") {
-          dmr_record[["VisitDate"]] <- record[["time_mdsupdrs_off"]]
-        }
         return(dmr_record)
       })
     return(dmr_records)
@@ -379,17 +380,17 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
             value = value_map_updrs(value_mapping, record, clinical_variable))
           return(value)
         })
-    # TODO Include part 3 section score if applicable (rigidity scores are missing)
     dmr_record_score <- dmr_record %>%
       mutate(value = as.integer(value)) %>%
       filter(!is.na(value),
-             value < 10) %>%
-      summarize(score = sum(value))
-    # TODO See email from Eric how to score this
-    score <- round(dmr_record_score$score / 33)
+             value < 10)
+    mean_value <- round(mean(dmr_record_score$value))
+    # 4 missing rigidity questions and 1 missing postural stability question
+    dmr_record_score <- dmr_record_score %>%
+      summarize(score = sum(value) + 5*mean_value)
     dmr_record <- dmr_record %>%
       pivot_wider(names_from="name", values_from="value") %>%
-      mutate(MDSUPDRS_PartIIIScore = score)
+      mutate(MDSUPDRS_PartIIIScore = dmr_record_score$score)
     return(dmr_record)
   }
 }
@@ -447,8 +448,8 @@ parse_moca_ahpd <- function(record, field_mapping, value_mapping) {
 #' @return A tibble with fields specific to the DMR MoCA form
 parse_moca_spd <- function(record, field_mapping, value_mapping) {
   this_event <- case_when(
-      !is.na(record$moca_dttm_2) ~ "Baseline",
-      !is.na(record$moca_1_spd) ~ "Physician_ON")
+      !is.na(record$moca_dttm_v2) ~ "Baseline",
+      !is.na(record$visitdate) ~ "Physician_ON")
   if (this_event == "Physician_ON") { # form moca_spd
     this_field_mapping <- field_mapping %>%
       filter(form_name == "MoCA",
@@ -567,10 +568,13 @@ parse_pdq_39 <- function(record, field_mapping) {
   max_score = 4)
   dmr_sections <- sections %>%
     inner_join(this_field_mapping) %>%
+    suppressMessages() %>%
     select(dmr_variable, section)
   section_scores <- sections %>%
     inner_join(this_field_mapping) %>%
+    suppressMessages() %>%
     inner_join(dmr_record, by = c("dmr_variable" = "name")) %>%
+    suppressMessages() %>%
     filter(value != "No spouse or partner") %>% # don't count this question
     group_by(section) %>%
     summarize(section_score = sum(as.integer(value)),
@@ -595,6 +599,7 @@ parse_pdq_39 <- function(record, field_mapping) {
       value == "3" ~ "Often",
       value == "4" ~ "Always or cannot do at all")) %>%
     anti_join(section_scores, by = "name") %>%
+    suppressMessages() %>%
     bind_rows(section_scores)
   dmr_record  <- dmr_record %>%
     pivot_wider(names_from = name, values_from = value)
@@ -812,6 +817,7 @@ parse_inclusion_exclusion_ahpd <- function(record, field_mapping, value_mapping)
   dmr_record[["PDBPInclusnXclusn_InclusnCase"]] <- glue(
       "Clinically diagnosed with Parkinson's Disease (or other ",
       "Neurodegenerative disease appropriate for study protocol)")
+  return(dmr_record)
 }
 
 #' Parse inclusion_exclusion form for SUPER PD
@@ -858,6 +864,7 @@ parse_inclusion_exclusion_spd <- function(record, field_mapping, value_mapping) 
   dmr_record[["PDBPInclusnXclusn_InclusnCase"]] <- glue(
       "Clinically diagnosed with Parkinson's Disease (or other ",
       "Neurodegenerative disease appropriate for study protocol)")
+  return(dmr_record)
 }
 
 #' Parse modified_schwab_and_england_adl form
@@ -895,6 +902,7 @@ parse_mod_schwab_and_england <- function(record, field_mapping, value_mapping) {
       })
   dmr_record <- dmr_record %>%
     pivot_wider(names_from = name, values_from = value)
+  return(dmr_record)
 }
 
 #' Map a value from clinical to DMR
@@ -970,8 +978,9 @@ value_map_updrs <- function(mapping, record, field) {
 #' @return row-wise section scores for convenient anti-join/row-bind use
 mdsupdrs_section_scores <- function(scores, participant_id, date_of_exam) {
   score <- scores %>%
+    mutate(createdOnDate = as.Date(createdOn)) %>%
     filter(guid == participant_id,
-           as.Date(createdOn) == as.Date(date_of_exam)) %>%
+           createdOnDate == as.Date(date_of_exam)) %>%
     select(all_of(c("UPDRS1", "UPDRS2", "UPDRS3", "UPDRS4")))
   total_score <- {
     total_score <- score %>%
@@ -981,13 +990,11 @@ mdsupdrs_section_scores <- function(scores, participant_id, date_of_exam) {
   }
   score <- score %>%
     mutate_all(as.character)
-  section_scores <- tribble(
-        ~name, ~value,
-        "MDSUPDRS_PartIScore", score$UPDRS1,
-        "MDSUPDRS_PartIIScore", score$UPDRS2,
-        "MDSUPDRS_PartIIIScore", score$UPDRS3,
-        "MDSUPDRS_PartIVScore", score$UPDRS4,
-        "MDSUPDRS_TotalScore", total_score)
+  section_scores <- tibble(
+      name = c("MDSUPDRS_PartIScore", "MDSUPDRS_PartIIScore", "MDSUPDRS_PartIIIScore",
+              "MDSUPDRS_PartIVScore", "MDSUPDRS_TotalScore"),
+      value = c(score[["UPDRS1"]], score[["UPDRS2"]], score[["UPDRS3"]],
+                 score[["UPDRS4"]], total_score))
   return(section_scores)
 }
 
@@ -1007,14 +1014,15 @@ mdsupdrs_section_scores <- function(scores, participant_id, date_of_exam) {
 #' @param form_name The clinical form names to filter upon
 #' @return A dataframe with one row per participant. Each column will be of
 #' type character().
-get_event_and_form_fields <- function(clinical, clinical_dic, event_name, form_name) {
+get_event_and_form_fields <- function(clinical, clinical_dic, event_name,
+                                      form_name, visit_date_col) {
   form_fields <- clinical_dic %>%
     filter(`Form Name` %in% form_name,
            `Field Type` != "descriptive") %>%
     distinct(`Variable / Field Name`)
   event_records <- clinical %>%
     filter(redcap_event_name %in% event_name) %>%
-    select(guid, all_of(form_fields[["Variable / Field Name"]])) %>%
+    select(guid, {visit_date_col}, all_of(form_fields[["Variable / Field Name"]])) %>%
     mutate(across(.fns=as.character)) %>%
     pivot_longer(!guid) %>%
     drop_na() %>%
@@ -1024,42 +1032,68 @@ get_event_and_form_fields <- function(clinical, clinical_dic, event_name, form_n
 
 parse_form <- function(record, form, field_mapping, value_mapping, ...) {
   kwargs <- list(...)
-  parsed_form <- case_when(
-    form == "inclusion_exclusion" ~ parse_inclusion_exclusion_ahpd(
+  parsed_form <- NULL
+  if (form == "inclusion_exclusion") {
+    parsed_form <- parse_inclusion_exclusion_ahpd(
         record = record,
         field_mapping = field_mapping,
-        value_mapping = value_mapping),
-    form == "participant_demographics" ~ parse_demographics_ahpd(
+        value_mapping = value_mapping)
+  } else if (form == "participant_demographics") {
+    parsed_form <- parse_demographics_ahpd(
         record = record,
         field_mapping = field_mapping,
-        value_mapping = value_mapping),
-    form == "mdsupdrs" ~ parse_mdsupdrs_ahpd(
+        value_mapping = value_mapping)
+  } else if (form == "moca") {
+    parsed_form <- parse_moca_ahpd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping)
+  } else if (form == "modified_schwab_and_england_adl") {
+    parsed_form <- parse_mod_schwab_and_england(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping)
+  } else if (form == "concomitant_medication_log") {
+    parsed_form <- parse_concomitant_medication_record_ahpd(
+        record = record,
+        value_mapping = value_mapping)
+  } else if (form == "concomitant_medications") {
+    parsed_form <- parse_concomitant_medication_record_spd(
+        record = record,
+        value_mapping = value_mapping)
+  } else if (form == "inclusion_exclusion_spd") {
+    parsed_form <- parse_inclusion_exclusion_spd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping)
+  } else if (form == "substudy_moca") {
+    parsed_form <- parse_moca_spd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping)
+  } else if (form == "moca_spd") {
+    parsed_form <- parse_moca_spd(
+        record = record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping)
+  } else if (form == "substudy_mdsupdrs_part_iii") {
+    parsed_form <- parse_mdsupdrs_spd(
         record = record,
         field_mapping = field_mapping,
         value_mapping = value_mapping,
-        scores = kwargs[["scores"]]),
-    form == "moca" ~ parse_moca_ahpd(
+        scores = kwargs$scores)
+  } else if (form == "mdsupdrs_physician_exam") {
+    parsed_form <- parse_mdsupdrs_spd(
         record = record,
         field_mapping = field_mapping,
-        value_mapping = value_mapping),
-    form == "modified_schwab_and_england_adl" ~ parse_mod_schwab_and_england(
+        value_mapping = value_mapping,
+        scores = kwargs$scores)
+  } else if (form == "pdq39") {
+    parsed_form <- parse_pdq_39(
         record = record,
-        field_mapping = field_mapping,
-        value_mapping = value_mapping),
-    form == "prebaseline_survey" ~ parse_mdsupdrs_ahpd(
-        record = record,
-        field_mapping = field_mapping,
-        value_mapping = value_mapping),
-    form == "inclusion_exclusion" ~ parse_inclusion_exclusion_ahpd(
-        record = record,
-        field_mapping = field_mapping,
-        value_mapping = value_mapping),
-    form == "inclusion_exclusion" ~ parse_inclusion_exclusion_ahpd(
-        record = record,
-        field_mapping = field_mapping,
-        value_mapping = value_mapping),
-  )
-
+        field_mapping = field_mapping)
+  }
+  return(parsed_form)
 }
 
 #' Conform clinical data with the schemas required by PDBP DMR
@@ -1069,9 +1103,6 @@ parse_form <- function(record, form, field_mapping, value_mapping, ...) {
 #' one physician visit. AT-HOME PD participants have a screening event,
 #' a baseline visit, a pre 12 month event, a 12 month event, a pre 24 month
 #' event, and a 24 month event.
-#'
-#'
-#'
 main <- function() {
   synapser::synLogin()
   # Download all reference material
@@ -1111,8 +1142,13 @@ main <- function() {
           redcap_event_name = clinical_record[["redcap_event_name"]])
         form_specific_fields <- parse_form(
             record = clinical_record,
-            form = clinical_form)
+            form = clinical_form,
+            field_mapping = field_mapping,
+            value_mapping = value_mapping)
+        dmr_record <- bind_cols(universal_fields, form_specific_fields)
+        return(dmr_record)
       })
+      names(dmr_records) <- AHPD_CLINICAL_FORMS
     } else if (cohort == "super-pd") {
       dmr_records <- purrr::map(SUPER_CLINICAL_FORMS, function(clinical_form) {
         visit_date_col <- form_to_datetime_mapping[[clinical_form]]
@@ -1126,11 +1162,46 @@ main <- function() {
           dob_mapping = dob_mapping,
           cohort = cohort,
           redcap_event_name = clinical_record[["redcap_event_name"]])
-        return(universal_fields)
+        form_specific_fields <- parse_form(
+            record = clinical_record,
+            form = clinical_form,
+            field_mapping = field_mapping,
+            value_mapping = value_mapping,
+            scores = super_mdsupdrs_scores)
+        dmr_record <- bind_cols(universal_fields, form_specific_fields)
+        return(dmr_record)
       })
+      names(dmr_records) <- SUPER_CLINICAL_FORMS
     } else {
         stop(glue("Unknown cohort encounted for GUID { clinical_record$guid }"))
     }
     return(dmr_records)
   })
+
+  # AHPD MDS-UPDRS sections are split up across different visits and forms.
+  # We need to combine each into a single record with `get_event_and_form_fields`
+  # before parsing.
+  # The form pairings are prebaseline_survey/mdsupdrs for the baseline visit
+  # and previsit_survey/mdsupdrs for the month 12 and 24 visits.
+  ahpd_baseline_mdsupdrs <- get_event_and_form_fields(
+      clinical = clinical,
+      clinical_dic = clinical_data_dictionary,
+      event_name = c("Baseline PreVisit Survey (Arm 1: Arm 1)",
+                     "Baseline (Arm 1: Arm 1)"),
+      form_name = c("prebaseline_survey", "mdsupdrs"),
+      visit_date_col = "mdsupdrs_dttm")
+  ahpd_month_12_mdsupdrs <- get_event_and_form_fields(
+      clinical = clinical,
+      clinical_dic = clinical_data_dictionary,
+      event_name = c("Month 12 PreVisit Survey (Arm 1: Arm 1)",
+                     "Month 12 (Arm 1: Arm 1)"),
+      form_name = c("previsit_survey", "mdsupdrs"),
+      visit_date_col = "mdsupdrs_dttm")
+  ahpd_month_24_mdsupdrs <- get_event_and_form_fields(
+      clinical = clinical,
+      clinical_dic = clinical_data_dictionary,
+      event_name = c("Month 24 PreVisit Survey (Arm 1: Arm 1)",
+                     "Month 24 (Arm 1: Arm 1)"),
+      form_name = c("previsit_survey", "mdsupdrs"),
+      visit_date_col = "mdsupdrs_dttm")
 }
