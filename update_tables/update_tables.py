@@ -11,6 +11,7 @@ def get_env_var_args():
     args['participantsTable'] = os.getenv('participantsTable')
     args['substudy'] = os.getenv('substudy')
     args['tableMapping'] = os.getenv('tableMapping')
+    args['additionalHealthcodeJson'] = os.getenv('additionalHealthcodeJson')
     return args
 
 
@@ -21,6 +22,11 @@ def get_relevant_healthcodes(syn, participants_table, substudy):
     relevant_healthcodes = list(relevant_healthcodes.healthCode)
     return(relevant_healthcodes)
 
+def get_additional_healthcodes(syn, synapse_id):
+    synapse_file = syn.get(synapse_id)
+    with open(synapse_file.path, "r") as f:
+        additional_healthcodes = json.load(f)
+    return additional_healthcodes
 
 def get_table_mapping(syn, synapse_id):
     synapse_file = syn.get(synapse_id)
@@ -38,6 +44,12 @@ def main():
             syn,
             participants_table = args["participantsTable"],
             substudy = args["substudy"])
+    if args["additionalHealthcodeJson"] is not None:
+        additional_healthcodes = get_additional_healthcodes(
+                syn,
+                synapse_id = args["additionalHealthcodeJson"])
+        relevant_healthcodes = list(
+                {*relevant_healthcodes, *additional_healthcodes})
     synapsebridgehelpers.export_tables(
             syn = syn,
             table_mapping = table_mapping,
