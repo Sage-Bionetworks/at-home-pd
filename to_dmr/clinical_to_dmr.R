@@ -1000,21 +1000,27 @@ eeq_map <- function(val) {
   return(return_val)
 }
 
-# TODO: Parse rest of diseases
 parse_fox_family_history <- function(dob_mapping, field_mapping) {
   family_history <- read_synapse_csv("syn21670518")
+  conditions <- list(
+      Parkinson = "Parkinson's disease", Alzheimer = "Alzheimer's disease",
+      ALS = "Amyotrophic lateral sclerosis (ALS)", Autism = "Autism",
+      Dystonia = "Dystonia", Epilepsy = "Epilepsy", MS = "Multiple sclerosis",
+      Stroke = "Stroke", Depression = "Depression", Anxiety = "Anxiety",
+      Suicide = "Suicide or suicide attempt", Bipolar = "Bi-polar disorder",
+      Tremor = "Tremor")
   relatives <- list(
-      FamParkinsonMoth = "Mother", FamParkinsonFath = "Father",
-      FamParkinsonChild = "Child", FamParkinsonGrand = "Grandchild",
-      FamParkinsonGreat = "Great-grandchild", FamParkinsonSib = "Sibling",
-      FamParkinsonHalfSib = "Half sibling", FamParkinsonMatGrMoth = "Maternal grandmother",
-      FamParkinsonMatGrFath = "Maternal grandfather", FamParkinsonMatAunt = "Maternal aunt",
-      FamParkinsonMatUnc = "Maternal Uncle", FamParkinsonMatCous = "Maternal cousin",
-      FamParkinsonMatNieNep = "Maternal niece/nephew", FamParkinsonPatGrMoth = "Paternal grandmother",
-      FamParkinsonPatGrFath = "Paternal grandfather", FamParkinsonPatAunt = "Paternal aunt",
-      FamParkinsonPatUnc = "Paternal uncle", FamParkinsonPatCous = "Paternal cousin",
-      FamParkinsonPatNieNep = "Paternal niece/nephew", FamParkinsonOth = "Other, specify")
-  dmr_neuro_history <- purrr::pmap_dfr(family_history, function(...) {
+      Moth = "Mother", Fath = "Father",
+      Child = "Child", Grand = "Grandchild",
+      Great = "Great-grandchild", Sib = "Sibling",
+      HalfSib = "Half sibling", MatGrMoth = "Maternal grandmother",
+      MatGrFath = "Maternal grandfather", MatAunt = "Maternal aunt",
+      MatUnc = "Maternal Uncle", MatCous = "Maternal cousin",
+      MatNieNep = "Maternal niece/nephew", PatGrMoth = "Paternal grandmother",
+      PatGrFath = "Paternal grandfather", PatAunt = "Paternal aunt",
+      PatUnc = "Paternal uncle", PatCous = "Paternal cousin",
+      PatNieNep = "Paternal niece/nephew", Oth = "Other, specify")
+  dmr_family_history <- purrr::pmap_dfr(family_history, function(...) {
     record <- list(...)
     universal_fields <- get_universal_fields(
         record = record,
@@ -1022,40 +1028,43 @@ parse_fox_family_history <- function(dob_mapping, field_mapping) {
         dob_mapping = dob_mapping,
         cohort = "at-home-pd",
         redcap_event_name = "Baseline")
-    these_relatives <- purrr::map2(names(relatives), relatives, function(r, val) {
-      if (record[[r]] == 1) {
-        return(val)
-      } else {
-        return(NULL)
-      }
-    })
-    these_relatives <- purrr::compact(these_relatives)
-    if (length(these_relatives) == 0) {
-      these_relatives <- NA_character_
-    } else {
-      these_relatives <- str_c(these_relatives, collapse=",")
-    }
-    dmr_neuro_history <- tibble(
-      FamHistMedclCondInd = case_when(
-          record[["FamParkinsonHx"]] == 0 ~ "No",
-          record[["FamParkinsonHx"]] == 1 ~ "Yes",
-          record[["FamParkinsonHx"]] == 2 ~ "Unknown"),
-      FamHistMedclCondTyp = case_when(
-          record[["FamParkinsonHx"]] == 1 ~ "Parkinson's disease",
-          TRUE ~ NA_character_),
-      FamHistMedclCondReltvTyp = these_relatives)
-    dmr_neuro_history <- bind_cols(universal_fields, dmr_neuro_history)
-    return(dmr_neuro_history)
+    condition_records <- purrr::map_dfr(names(conditions), function(cond) {
+      indicator_field <- str_c("Fam", cond, "Hx")
+      these_relatives <- purrr::map(names(relatives), function(relat) {
+        relation_field <- str_c("Fam", cond, relat)
+        if (!is.na(record[[relation_field]]) && record[[relation_field]] == 1) {
+            return(relatives[[relat]])
+          } else {
+            return(NULL)
+          }
+      })
+      these_relatives <- purrr::compact(these_relatives)
+        if (length(these_relatives) == 0) {
+          these_relatives_str <- NA_character_
+        } else {
+          these_relatives_str <- str_c(these_relatives, collapse=",")
+        }
+      condition_records <- tibble(
+          FamHistMedclCondInd = case_when(
+              record[[indicator_field]] == 0 ~ "No",
+              record[[indicator_field]] == 1 ~ "Yes",
+              record[[indicator_field]] == 2 ~ "Unknown"),
+          FamHistMedclCondTyp = conditions[[cond]],
+          FamHistMedclCondReltvTyp = these_relatives_str)
+      return(condition_records)
+      })
+    dmr_family_history <- bind_cols(universal_fields, condition_records)
+    return(dmr_family_history)
   })
   all_names <- field_mapping %>%
     filter(form_name == "FamilyHistory") %>%
     distinct(dmr_variable)
   for (n in all_names$dmr_variable) {
-    if (!hasName(dmr_neuro_history, n)) {
-      dmr_neuro_history[[n]] <- NA_character_
+    if (!hasName(dmr_family_history, n)) {
+      dmr_family_history[[n]] <- NA_character_
     }
   }
-  return(dmr_neuro_history)
+  return(dmr_family_history)
 }
 
 #' Map a value from clinical to DMR
