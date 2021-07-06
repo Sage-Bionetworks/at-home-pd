@@ -1,5 +1,6 @@
 FROM amancevice/pandas:0.23.4-python3
 
+ENV CRYPTOGRAPHY_DONT_BUILD_RUST=1
 RUN pip install synapseclient==2.0.0 \
                 boto3==1.12.39 \
                 git+https://github.com/larssono/bridgeclient.git@b90eb4c \
