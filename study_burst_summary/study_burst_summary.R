@@ -62,8 +62,10 @@ build_study_burst_schedule <- function(mpower, previous_schedule_id) {
                  email = Sys.getenv("bridgeUsername"),
                  password = Sys.getenv("bridgePassword"))
     new_schedule <- purrr::map_dfr(unique(new_participants$guid), function(guid) {
-      participant_info <- bridgeclient::get_participant(guid)
-      activity_events <- bridgeclient::get_activity_events(participant_info$id) %>%
+      participant_info <- bridgeclient::get_participant(
+              external_id = guid)
+      activity_events <- bridgeclient::get_activity_events(
+              user_id = participant_info$id) %>%
         bind_rows() %>%
         filter(str_detect(eventId, "custom:activityBurst") |
                  eventId == "study_start_date") %>%
