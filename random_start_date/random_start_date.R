@@ -36,26 +36,26 @@ read_syn_csv <- function(syn_id, encoding = "UTF-8") {
 
 read_syn_table <- function(syn_id) {
   q <- synTableQuery(paste("select * from", syn_id))
-  table <- q$asDataFrame() %>% 
-    as_tibble() %>% 
+  table <- q$asDataFrame() %>%
+    as_tibble() %>%
     select(-ROW_ID, -ROW_VERSION)
   return(table)
 }
 
 curate_user_list <- function() {
-  mjff_users <- read_syn_csv(MJFF_USERS) %>% 
+  mjff_users <- read_syn_csv(MJFF_USERS) %>%
     distinct(guid) %>%
     mutate(source = "MJFF")
-  rochester_users <- read_syn_csv(ROCHESTER_USERS) %>% 
-    distinct(guid) %>% 
+  rochester_users <- read_syn_csv(ROCHESTER_USERS) %>%
+    distinct(guid) %>%
     mutate(source = "ROCHESTER")
-  bridge_users <- read_syn_table(BRIDGE_USERS) %>% 
-    distinct(guid) %>% 
+  bridge_users <- read_syn_table(BRIDGE_USERS) %>%
+    distinct(guid) %>%
     mutate(source = "MPOWER")
   users <- bind_rows(mjff_users, rochester_users, bridge_users)
-  users <- users %>% 
-    group_by(guid) %>% 
-    mutate(day_offset = round(runif(1, -10, 10))) %>% 
+  users <- users %>%
+    group_by(guid) %>%
+    mutate(day_offset = round(runif(1, -10, 10))) %>%
     ungroup()
   return(users)
 }
@@ -65,13 +65,13 @@ update_user_list <- function(users) {
     mutate(guid = as.character(guid),
            source = as.character(source))
   brand_new_users <- anti_join(users, existing_users, by = "guid")
-  new_sources <- anti_join(users, existing_users, by = c("guid", "source")) %>% 
-    anti_join(brand_new_users, by = "guid") %>% 
+  new_sources <- anti_join(users, existing_users, by = c("guid", "source")) %>%
+    anti_join(brand_new_users, by = "guid") %>%
     select(-day_offset)
-  new_sources <- new_sources %>% 
-    bind_rows(existing_users) %>% 
-    group_by(guid) %>% 
-    mutate(day_offset = replace_na(day_offset, median(day_offset, na.rm = T))) %>% 
+  new_sources <- new_sources %>%
+    bind_rows(existing_users) %>%
+    group_by(guid) %>%
+    mutate(day_offset = replace_na(day_offset, median(day_offset, na.rm = T))) %>%
     semi_join(new_sources, by = c("guid", "source"))
   new_users <- bind_rows(brand_new_users, new_sources)
   if (nrow(new_users) > 0) {
@@ -91,17 +91,17 @@ perturb_mjff_dates <- function(users) {
   mjff$syn21670549 <- NULL # General.csv, we don't want to export this (?)
   mjff$syn21670554 <- NULL # Genetic.csv, we don't want to export this (?)
   date_cols <- c("study_date", "registration_date")
-  mjff_dates <- mjff %>% 
+  mjff_dates <- mjff %>%
     purrr::map(function(df) {
-      df <- df %>% 
-        select_if(names(df) %in% date_cols) %>% 
+      df <- df %>%
+        select_if(names(df) %in% date_cols) %>%
         purrr::map_dfc(lubridate::as_datetime)
       return(df)
     })
   mjff <- purrr::map2(mjff, mjff_dates, function(df, df_dates) {
-      df <- df %>% 
-        select_if(!(names(df) %in% date_cols)) %>% 
-        select(-fox_insight_id) %>% 
+      df <- df %>%
+        select_if(!(names(df) %in% date_cols)) %>%
+        select(-fox_insight_id) %>%
         bind_cols(df_dates)
       return(df)
     })
@@ -131,13 +131,13 @@ perturb_rochester_dates <- function(users) {
                  'preference_and_burden_visit_timestamp', 'previsit_survey_timestamp',
                  'redcap_survey_identifier', 'reportable_event_timestamp',
                  'study_burst_reminders_timestamp')
-  rochester <- rochester %>% 
+  rochester <- rochester %>%
     mutate(preference_and_burden_bl_timestamp = replace(
       preference_and_burden_bl_timestamp,
       preference_and_burden_bl_timestamp == "[not completed]", NA),
       preference_and_burden_visit_timestamp = replace(
       preference_and_burden_visit_timestamp,
-      preference_and_burden_visit_timestamp == "[not completed]", NA)) %>% 
+      preference_and_burden_visit_timestamp == "[not completed]", NA)) %>%
     mutate(preference_and_burden_bl_timestamp = lubridate::as_datetime(preference_and_burden_bl_timestamp),
            preference_and_burden_visit_timestamp = lubridate::as_datetime(preference_and_burden_visit_timestamp))
   col_order <- names(rochester)
@@ -164,9 +164,9 @@ perturb_bridge_dates <- function(users, table_mapping = NULL) {
   if (!is.null(table_mapping)) {
     deidentified_bridge <- purrr::map(table_mapping, read_syn_table)
     bridge_diff <- purrr::map(names(bridge), function(source_id) {
-      source_table <- bridge[[source_id]] %>% 
+      source_table <- bridge[[source_id]] %>%
         mutate(recordId = as.character(recordId))
-      target_table <- deidentified_bridge[[source_id]] %>% 
+      target_table <- deidentified_bridge[[source_id]] %>%
         mutate(recordId = as.character(recordId))
       new_records <- anti_join(source_table, target_table, by = "recordId")
       return(new_records)
@@ -181,11 +181,11 @@ perturb_bridge_dates <- function(users, table_mapping = NULL) {
       mutate(uploadDate = lubridate::as_date(uploadDate),
              createdOn = lubridate::as_datetime(createdOn))
     if (has_name(df, "metadata.startDate")) {
-      df <- df %>% 
+      df <- df %>%
         mutate(metadata.startDate = lubridate::as_datetime(metadata.startDate))
     }
     if (has_name(df, "metadata.endDate")) {
-      df <- df %>% 
+      df <- df %>%
         mutate(metadata.endDate = lubridate::as_datetime(metadata.endDate))
     }
     bridge_perturbed <- perturb_dates(
@@ -195,14 +195,14 @@ perturb_bridge_dates <- function(users, table_mapping = NULL) {
       guid = "externalId",
       date_cols = c("uploadDate", "createdOn", "metadata.startDate",
                     "metadata.endDate", "displacement.timestampDate"))
-    bridge_perturbed <- bridge_perturbed %>% 
+    bridge_perturbed <- bridge_perturbed %>%
       distinct(recordId, .keep_all = TRUE)
     return(bridge_perturbed[col_order])
     })
   bridge_perturbed <- purrr::map(bridge_perturbed, function(df) { # drop identifiable files
     file_cols <- c("rawData", "left_tapping.samples", "right_tapping.samples",
                "left_motion.json", "right_motion.json", "trackedItems.items",
-               "balance_motion.json", "walk_motion.json")
+               "balance_motion.json", "walk_motion.json", "rawMetadata")
     df_with_file_cols_removed <- df %>%
       select_if(!(names(.) %in% file_cols))
     return(df_with_file_cols_removed)
@@ -215,29 +215,29 @@ perturb_dates <- function(df, users, source_name, guid, date_cols=NULL) {
     return(df)
   }
   df[[guid]] <- as.character(df[[guid]])
-  df_with_offsets <- users %>% 
-    filter(source == source_name) %>% 
+  df_with_offsets <- users %>%
+    filter(source == source_name) %>%
     select(guid, day_offset)
   guid_flag <- TRUE
   if (!has_name(df, "guid")) {
     df$guid <- df[[guid]]
     guid_flag <- FALSE
   }
-  df_with_offsets <- df %>% 
+  df_with_offsets <- df %>%
     left_join(df_with_offsets, by = "guid")
   if (!guid_flag) {
     df <- select(df, -guid)
   }
   df_offsets <- lubridate::days(df_with_offsets$day_offset)
   if (is.null(date_cols)) {
-    df_dates_perturbed <- df_with_offsets %>% 
+    df_dates_perturbed <- df_with_offsets %>%
       select_if(lubridate::is.timepoint)
-    df_perturbed <- df_with_offsets %>% 
+    df_perturbed <- df_with_offsets %>%
       select_if(~ !lubridate::is.timepoint(.))
   } else {
-    df_dates_perturbed <- df_with_offsets %>% 
+    df_dates_perturbed <- df_with_offsets %>%
       select_if(names(.) %in% date_cols)
-    df_perturbed <- df_with_offsets %>% 
+    df_perturbed <- df_with_offsets %>%
       select_if(!(names(.) %in% date_cols))
   }
   df_dates_perturbed <- purrr::map_dfc(df_dates_perturbed, function(col) {
@@ -247,7 +247,7 @@ perturb_dates <- function(df, users, source_name, guid, date_cols=NULL) {
     return(col + df_offsets)
   })
   df_perturbed <- df_perturbed %>%
-    bind_cols(df_dates_perturbed) %>% 
+    bind_cols(df_dates_perturbed) %>%
     select(-day_offset)
   return(df_perturbed)
 }
@@ -295,7 +295,7 @@ store_bridge_perturbed <- function(bridge_dataset, table_mapping=NULL) {
 main <- function() {
   # set env variables synapseUsername and synapsePassword before running
   synLogin(Sys.getenv("synapseUsername"), Sys.getenv("synapsePassword"))
-  users <- curate_user_list() %>% 
+  users <- curate_user_list() %>%
     update_user_list()
   rochester_dataset <- perturb_rochester_dates(users)
   mjff_dataset <- perturb_mjff_dates(users)
