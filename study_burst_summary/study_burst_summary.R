@@ -84,7 +84,9 @@ build_study_burst_schedule <- function(mpower, previous_schedule_id) {
       new_schedule$study_burst, "0" = "Y1,Q1", "1" = "Y1,Q2", "2" = "Y1,Q3",
       "3" = "Y1,Q4", "4" = "Y2,Q1", "5" = "Y2,Q2", "6" = "Y2,Q3",
       "7" = "Y2,Q4", "8" = "Y3,Q1", "9" = "Y3,Q2", "10" = "Y3,Q3",
-      "11" = "Y3,Q4", "12" = "Y4,Q1")
+      "11" = "Y3,Q4", "12" = "Y4,Q1", "13" = "Y4,Q2", "14" = "Y4,Q3",
+      "15" = "Y4,Q4", "16" = "Y5,Q1", "17" = "Y5,Q2", "18" = "Y5,Q3",
+      "19" = "Y5,Q4", "20" = "Y6,Q1")
     new_schedule <- new_schedule %>%
       mutate(study_burst_start_date = as.character(study_burst_start_date),
              study_burst_end_date = as.character(study_burst_end_date))
