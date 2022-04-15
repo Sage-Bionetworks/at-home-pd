@@ -18,7 +18,7 @@ library(tidyverse)
 
 STUDY_BURST_SUMMARY <- Sys.getenv("studyBurstSummaryTable")
 TABLE_OUTPUT <- Sys.getenv("outputTable")
-HEALTH_DATA_SUMMARY_TABLE <- Sys.getenv("studyBurstSummaryTable")
+HEALTH_DATA_SUMMARY_TABLE <- Sys.getenv("healthDataSummaryTable")
 
 read_syn_table <- function(syn_id) {
   q <- synTableQuery(paste("select * from", syn_id))
