@@ -259,9 +259,12 @@ parse_concomitant_medication_record_ahpd <- function(record, value_mapping) {
 #' @param value_mapping The value mapping. A list with heirarchy form > field identifier.
 #' @return A tibble with fields specific to concomitant medications
 parse_concomitant_medication_record_spd <- function(record, value_mapping) {
-   med_map <- value_mapping[["concomitant_medications"]]
+  med_map <- value_mapping[["concomitant_medications"]]
   num_medications <- as.integer(record$conmed_num)
   dmr_records <- purrr::map_dfr(1:num_medications, function(n) {
+    if (!hasName(record, glue("conmed_{n}"))) {
+      return(tibble())
+    }
     is_pd_med <- record[[glue("conmed_pd_{n}")]] == "Yes"
     conmed <- value_map(med_map, "conmed", record[[glue("conmed_{n}")]])
     conmed_dose_amt <- as.character(record[[glue("conmed_dose_amt_{n}")]])
@@ -1105,7 +1108,7 @@ parse_fox_family_history <- function(dob_mapping, field_mapping) {
         } else {
           these_relatives_str <- str_c(these_relatives, collapse=",")
         }
-      condition_records <- tibble()
+      condition_records <- list()
         condition_records[[glue("{conditions[[cond]]}.FamHistMedclCondTyp")]] <- conditions[[cond]]
         condition_records[[glue("{conditions[[cond]]}.FamHistMedclCondInd")]] <- case_when(
               record[[indicator_field]] == 0 ~ "No",
@@ -1316,9 +1319,9 @@ parse_form <- function(record, form, field_mapping, value_mapping, ...) {
         record = record,
         value_mapping = value_mapping)
   } else if (form == "concomitant_medications") {
-    #parsed_form <- parse_concomitant_medication_record_spd(
-    #    record = record,
-    #    value_mapping = value_mapping)
+    parsed_form <- parse_concomitant_medication_record_spd(
+        record = record,
+        value_mapping = value_mapping)
   } else if (form == "inclusion_exclusion_spd") {
     parsed_form <- parse_inclusion_exclusion_spd(
         record = record,
@@ -1378,24 +1381,23 @@ parse_form <- function(record, form, field_mapping, value_mapping, ...) {
 #' event, and a 24 month event.
 main <- function() {
   synapser::synLogin()
-  # Download all reference material
-  ahpd_mdsupdrs_scores <- read_synapse_tsv(AHPD_MDSUPDRS_SCORES)
-  super_mdsupdrs_scores <- list(
-    "Physician_ON" = read_synapse_csv(SUPER_ON_MDSUPDRS_SCORES),
-    "Physician_OFF" = read_synapse_csv(SUPER_OFF_MDSUPDRS_SCORES))
-  cohorts  <- read_synapse_csv("syn24173690") %>%
-    rename(study_cohort = cohort)
-  clinical_data_dictionary <- read_synapse_csv(CLINICAL_DATA_DICTIONARY)
+  # Load all reference material and clinical data
+  cohorts  <- readr::read_csv("resources/guid_to_cohort_mapping.csv")
+  clinical_data_dictionary <- readr::read_csv("resources/clinical_data_dictionary.csv")
+  field_mapping <- readr::read_csv("resources/dmr_to_clinical_field_mapping.csv")
+  value_mapping <- jsonlite::read_json("resources/value_mapping.json")
+  form_to_datetime_mapping <- jsonlite::read_json("resources/clinical_form_to_datetime_mapping.json")
+  form_to_form_mapping <- jsonlite::read_json("resources/dmr_form_to_clinical_form_mapping.json")
+  form_to_header_mapping <- jsonlite::read_json("resources/dmr_form_to_header_mapping.json")
   clinical <- read_synapse_csv(CLINICAL_DATA) %>%
     inner_join(cohorts, by = "guid") %>%
     filter(!str_detect(guid, "TEST"))
   dob_mapping <- build_dob_mapping(clinical)
   visit_date_mapping <- build_visit_date_mapping(clinical)
-  field_mapping <- read_synapse_csv(FIELD_MAPPING)
-  value_mapping <- read_synapse_json(VALUE_MAPPING)
-  form_to_datetime_mapping <- read_synapse_json(FORM_TO_DATETIME_MAPPING)
-  form_to_form_mapping <- read_synapse_json(FORM_TO_FORM_MAPPING)
-  form_to_header_mapping <- read_synapse_json(FORM_TO_HEADER_MAPPING)
+  ahpd_mdsupdrs_scores <- read_synapse_tsv(AHPD_MDSUPDRS_SCORES)
+  super_mdsupdrs_scores <- list(
+    "Physician_ON" = read_synapse_csv(SUPER_ON_MDSUPDRS_SCORES),
+    "Physician_OFF" = read_synapse_csv(SUPER_OFF_MDSUPDRS_SCORES))
   # Row-wise map each record conditional on its contents
   dmr_records <- purrr::pmap(clinical, function(...) {
     clinical_record <- list(...)
@@ -1449,7 +1451,7 @@ main <- function() {
       })
       names(dmr_records) <- SUPER_CLINICAL_FORMS
     } else {
-        stop(glue("Unknown cohort encounted for GUID { clinical_record$guid }"))
+      stop(glue("Unknown cohort encounted for GUID { clinical_record$guid }"))
     }
     return(dmr_records)
   })
@@ -1468,8 +1470,11 @@ main <- function() {
   })
   names(clinical_forms) <- all_form_names
 
-  # The DMR's InformedConsent form has its info spread across two of the
-  # clinical forms. Fortunately, it is easy to stitch together
+  #' The DMR's InformedConsent form has its info spread across two of the
+  #' clinical forms. Fortunately, it is easy to stitch together.
+  #' There is a redcap_repeat_instrument == "Informed Consent Log" for AHPD
+  #' participants, but none of these fields are relevant to the DMR's
+  #' InformedConsent form.
   ahpd_informed_consent <- {
     inclex_records <- clinical %>%
       filter(!is.na(inexdttm), study_cohort == "at-home-pd") %>%
@@ -1610,7 +1615,8 @@ main <- function() {
         form_to_header_mapping = form_to_header_mapping) %>%
       mutate(record = "x") %>%
       select(record, dplyr::everything())
-    fname <- glue("{dmr_form_name}.csv")
+    dir.create("forms", showWarnings = FALSE)
+    fname <- glue("forms/{dmr_form_name}.csv")
     write_csv(form_data, fname)
     system(glue("sed -i '' '1s/^/{dmr_form_name} \\n/' {fname}"))
     f <- synapser::File(fname, parent = OUTPUT_PARENT)
@@ -1619,4 +1625,4 @@ main <- function() {
   })
 }
 
-#main()
+main()
