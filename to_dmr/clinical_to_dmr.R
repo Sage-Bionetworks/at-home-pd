@@ -140,6 +140,9 @@ get_visit_type <- function(cohort, redcap_event_name) {
     cohort == "at-home-pd" && str_detect(redcap_event_name, "Screening") ~ "Baseline",
     cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 12") ~ "Month 12",
     cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 24") ~ "Month 24",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 36") ~ "Month 36",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 48") ~ "Month 48",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 60") ~ "Month 60",
     cohort == "super-pd" ~ "Baseline",
     TRUE ~ "Baseline") # Logs and Premature Withdrawal
   return(visit_type)
@@ -161,8 +164,13 @@ build_dob_mapping <- function(clinical) {
 #' Build a mapping of GUID to visit type and date
 build_visit_date_mapping <- function(clinical) {
   visit_date_mapping <- clinical %>%
-    filter(!is.na(visstatdttm),
+    filter(!is.na(visstatdttm) | !is.na(annual_survey_timestamp),
            redcap_event_name != "Screening (Arm 1: Arm 1)") %>%
+    mutate(visstatdttm = case_when(
+        is.na(visstatdttm) ~ annual_survey_timestamp,
+        !is.na(visstatdttm) ~ visstatdttm
+    )) %>%
+    filter(!is.na(visstatdttm)) %>%
     distinct(guid, redcap_event_name, visstatdttm, study_cohort)
   visit_date_mapping$VisitTypPDBP <- unlist(
         purrr::map2(
@@ -181,9 +189,10 @@ build_visit_date_mapping <- function(clinical) {
 #' Super PD data is stored in a different format, see
 #' parse_concomitant_medication_record_spd
 #' @param record A one-row dataframe from the clinical data containing a single record
+#' @param visit_date_mapping A mapping of GUID to visit type and date
 #' @param value_mapping The value mapping. A list with heirarchy form > field identifier.
 #' @return A tibble with fields specific to concomitant medications
-parse_concomitant_medication_record_ahpd <- function(record, value_mapping) {
+parse_concomitant_medication_record_ahpd <- function(record, visit_date_mapping, value_mapping) {
   med_map <- value_mapping[["concomitant_medication_log"]]
   is_pd_med <- record$pd_med_yn == "Yes"
   route <- value_map(med_map, "route", record$route)
@@ -194,7 +203,41 @@ parse_concomitant_medication_record_ahpd <- function(record, value_mapping) {
   freq_oth <- value_map(med_map, "freq_oth", record$freq_oth)
   units  <- value_map(med_map, "units", record$units)
   units_oth  <- value_map(med_map, "units", record$units_oth)
+  visits <- visit_date_mapping %>%
+    filter(guid == record$guid,
+           redcap_event_name %in% list(
+             "Baseline (Arm 1: Arm 1)",
+             "Month 12 (Arm 1: Arm 1)",
+             "Month 24 (Arm 1: Arm 1)",
+             "Month 36 (Arm 1: Arm 1)",
+             "Month 48 (Arm 1: Arm 1)",
+             "Month 60 (Arm 1: Arm 1)"
+           )) %>%
+    arrange(visstatdttm)
+  visit_type <- purrr::map2(visits$visstatdttm,
+                            visits$VisitTypPDBP,
+                            function(visit_date, visit_type) {
+      #' This map returns a list containing visits which took place after
+      #' this medication had been started. Since we are checking each visit
+      #' in chronological order, the first non-NA element in this list is
+      #' the visit at which this medication was reported.
+      if (is.na(record$start_dt)) {
+        # If no start date provided, assume earliest visit type
+        return(visit_type)
+      } else if (record$start_dt <= visit_date) {
+        return(visit_type)
+      }
+      return(NA)
+    }) %>%
+    purrr::discard(is.na) %>%
+    dplyr::first()
+  if (is.null(visit_type)) {
+    # In this case the start date of the medication was later than the
+    # most recent visit. We assume this was reported at the most recent visit.
+    visit_type <- dplyr::last(visits$VisitTypPDBP)
+  }
   dmr_record <- tibble(
+      `Required Fields.VisitTypPDBP` = visit_type,
       `Parkinson's Disease Medications.MedctnPriorConcomRteTyp` = case_when(
         is_pd_med && !is.na(route) ~ route,
         is_pd_med && !is.na(route_oth) ~ route_oth,
@@ -1317,6 +1360,7 @@ parse_form <- function(record, form, field_mapping, value_mapping, ...) {
   } else if (form == "concomitant_medication_log") {
     parsed_form <- parse_concomitant_medication_record_ahpd(
         record = record,
+        visit_date_mapping = kwargs$visit_date_mapping,
         value_mapping = value_mapping)
   } else if (form == "concomitant_medications") {
     parsed_form <- parse_concomitant_medication_record_spd(
@@ -1407,6 +1451,7 @@ main <- function() {
     # and pass this record into the appropriate `parse_*` function.
     if (cohort == "at-home-pd") {
       dmr_records <- purrr::map(AHPD_CLINICAL_FORMS, function(clinical_form) {
+      #dmr_records <- purrr::map(list("concomitant_medication_log"), function(clinical_form) {
         visit_date_col <- form_to_datetime_mapping[[clinical_form]]
         if (!has_form_info(record = clinical_record,
                            visit_date_col = visit_date_col)) {
@@ -1422,7 +1467,12 @@ main <- function() {
             record = clinical_record,
             form = clinical_form,
             field_mapping = field_mapping,
-            value_mapping = value_mapping)
+            value_mapping = value_mapping,
+            visit_date_mapping = visit_date_mapping)
+        if (clinical_form == "concomitant_medication_log") {
+          universal_fields <- universal_fields %>%
+            select(-VisitTypPDBP)
+        }
         dmr_record <- bind_cols(universal_fields, form_specific_fields)
         return(dmr_record)
       })
