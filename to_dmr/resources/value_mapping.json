@@ -7,6 +7,7 @@
             "Carbidopa": "Carbidopa/levodopa orally disintegrating (Parcopa)",
             "Carbidopa-Levodopa CR (Rytary)": "Carbidopa/levodopa sustained release (Sinemet CR)",
             "Carbidopa/Levodopa (Atamet, Sinemet)": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "Carbidopa/Levodopa Orally Disintegrating (Parcopa)": "Carbidopa/levodopa orally disintegrating (Parcopa)",
             "Carbidopa/Levodopa Substained Release (Sinemet CR)": "Carbidopa/levodopa sustained release (Sinemet CR)",
             "Carbidopa/Levodopa/Entacapone (Stalevo)": "Carbidopa/levodopa/entacapone (Stalevo)",
             "Entacapone (Comtan)": "Entacapone (Comtan)",
@@ -21,7 +22,8 @@
             "Trihexyphenidyl (Artane, Tremin)": "Trihexyphenidyl (Artane, Tremin)"
         },
         "pd_med_other": {
-            "carbidopa levodopa er": "Carbidopa/levodopa sustained release (Sinemet CR)"
+            "carbidopa levodopa er": "Carbidopa/levodopa sustained release (Sinemet CR)",
+            "Rivastigmine": "Rivastigmine (Exelon)"
         },
         "route": {
             "Oral": "Oral",
@@ -34,6 +36,7 @@
         },
         "route_oth": {
             "sublingual": "Sublingual",
+            "Sublingual": "Sublingual",
             "injection": "Unknown",
             "suppository": "Rectal",
             "nasal": "Nasal",
@@ -53,7 +56,8 @@
             "Other": "Other",
             "Three times daily": "TID",
             "Twice daily": "BID",
-            "Weekly": "Weekly"
+            "Weekly": "Weekly",
+            "As needed": "Other, specify"
         },
         "freq_oth": {
             "1-2 times daily": "QD",
@@ -65,7 +69,14 @@
             "once daily as needed": "QD",
             "once daily, on Sundays and Wednesdays takes half dose": "QD",
             "once or twice a day as needed": "QD",
-            "takes once daily then as needed up to 3 times daily": "QD"
+            "takes once daily then as needed up to 3 times daily": "QD",
+            ".5 tablet in the morning, then 1 tablet every four hours (4 times per day)": "QID",
+            "1 tablet morning, 0.5 tablet afternoon": "BID",
+            "4 times a day, 1 pill late night": "QID",
+            "6 days on, 1 day off": "QD",
+            "four to five times daily": "QID",
+            "four to six times a day": "QID",
+            "three times daily, plus one half-pill": "QID"
         },
         "units": {
             "application": "Unknown",
@@ -83,18 +94,23 @@
             "grams": "g",
             "mcg": "mcg",
             "ounces": "oz",
-            "ug": "mcg"
+            "ug": "mcg",
+            "mg": "mg"
         }
     },
     "concomitant_medications": {
         "conmed": {
             "amantadine": "Amantadine (Symmetrel)",
+            "Amantadine": "Amantadine (Symmetrel)",
             "Carbidopa-levodopa 25/100": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa 25-100mg": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa levodopa 25-100": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa ER 25-100": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa/levodopa": "Carbidopa/levodopa (Atamet, Sinemet)",
             "Carbidopa-levodopa 25/100 ER": "Carbidopa/levodopa sustained release (Sinemet CR)",
             "Carbidopa-levodopa 25/100 ODT": "Carbidopa/levodopa orally disintegrating (Parcopa)",
             "Carbidopa-levodopa ER 50/200": "Carbidopa/levodopa sustained release (Sinemet CR)",
-            "Rytary (carbidopa/levodopa)": "Carbidopa/levodopa (Atamet, Sinemet)",
-            "Rytary 48.75/195": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa ER 36.25-145mg": "Carbidopa/levodopa (Atamet, Sinemet)",
             "carbidopa": "Carbidopa/levodopa (Atamet, Sinemet)",
             "carbidopa-levodopa": "Carbidopa/levodopa (Atamet, Sinemet)",
             "carbidopa-levodopa 25-100": "Carbidopa/levodopa (Atamet, Sinemet)",
@@ -104,14 +120,21 @@
             "carbidopa-levodopa ER": "Carbidopa/levodopa sustained release (Sinemet CR)",
             "Entacapone": "Entacapone (Comtan)",
             "entacapone": "Entacapone (Comtan)",
+            "Neupro": "Rotigotine transdermal patch (Neupro)",
             "Pramipexole": "Pramipexole (Mirapex)",
             "pramipexole": "Pramipexole (Mirapex)",
+            "pramapexole (extended release)": "Pramipexole extended release (Mirapex ER)",
             "Rasagiline": "Rasagiline (Azilect)",
             "rasagiline": "Rasagiline (Azilect)",
+            "rasagaline": "Rasagiline (Azilect)",
             "Ropinirole": "Ropinirole (Requip)",
             "ropinirole": "Ropinirole (Requip)",
+            "ropinerole": "Ropinirole (Requip)",
+            "ropinerole ER": "Ropiniole extended release (Requip XL)",
+            "Rivastigmine": "Rivastigmine (Exelon)",
             "Selegiline": "Selegiline (Eldepryl)",
             "selegiline HCL": "Selegiline (Eldepryl)",
+            "trihexyphenydyl": "Trihexyphenidyl (Artane, Tremin)",
             "trihexyphenidyl": "Trihexyphenidyl (Artane, Tremin)"
         },
         "conmed_dose_unit": {
@@ -126,7 +149,8 @@
         },
         "conmed_dose_unit_oth": {
             "g": "g",
-            "grams": "g"
+            "grams": "g",
+            "gram": "g"
         },
         "conmed_dose_frequency": {
             "BID": "BID",
@@ -145,7 +169,9 @@
             "Inhaled": "Inhaled",
             "Other": "Other, specify",
             "PO": "Oral",
-            "Topical": "Topical"
+            "Topical": "Topical",
+            "IM": "Intramuscular",
+            "Sublingual": "Sublingual"
         },
         "conmed_dose_route_other": {
             "applied to ears": "By ear",
@@ -272,7 +298,12 @@
         "(80% - Completely independent in most chores. Takes twice as long. Conscious of difficulty and slowness)": "0.8",
         "(70% - Not completely independent. More difficulty with some chores. Three to four times as long in some. Must spend a large part of the day with chores)": "0.7",
         "(60% - Some dependency. Can do most chores, but exceedingly slowly and with much effort)": "0.6",
-        "(50% - More dependent. Help with half, slower, etc. Difficulty with everything)": "0.5"
+        "(50% - More dependent. Help with half, slower, etc. Difficulty with everything)": "0.5",
+        "(40% - Very dependent. Can assist with all chores, but few alone)": "0.4",
+        "(30% - With effort, now and then does a few chores alone or begins alone. Much help needed)": "0.3",
+        "(20% - Nothing alone. Can be a slight help with some chores. Severe invalid)": "0.2",
+        "(10% - Totally dependent, helpless. Complete invalid)": "0.1",
+        "(0% - Vegetative functions such as swallowing, bladder and bowel functions are not functioning. Bedridden)": "0"
       }
     }
 }
