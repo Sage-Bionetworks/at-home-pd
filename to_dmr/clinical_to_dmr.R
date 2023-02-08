@@ -200,9 +200,9 @@ parse_concomitant_medication_record_ahpd <- function(record, visit_date_mapping,
   pd_meds <- value_map(med_map, "pd_meds", record$pd_meds)
   pd_med_other <- value_map(med_map, "pd_med_other", record$pd_med_other)
   freq <- value_map(med_map, "freq", record$freq)
-  freq_oth <- value_map(med_map, "freq_oth", record$freq_oth)
+  freq_oth <- value_map(med_map, "freq_oth", record$freq_oth, other_specify=TRUE)
   units  <- value_map(med_map, "units", record$units)
-  units_oth  <- value_map(med_map, "units", record$units_oth)
+  units_oth  <- value_map(med_map, "units", record$units_oth, other_specify=TRUE)
   visits <- visit_date_mapping %>%
     filter(guid == record$guid,
            redcap_event_name %in% list(
@@ -227,7 +227,7 @@ parse_concomitant_medication_record_ahpd <- function(record, visit_date_mapping,
       } else if (record$start_dt <= visit_date) {
         return(visit_type)
       }
-      return(NA)
+      return(NA_character_)
     }) %>%
     purrr::discard(is.na) %>%
     dplyr::first()
@@ -314,12 +314,13 @@ parse_concomitant_medication_record_spd <- function(record, value_mapping) {
     conmed_dose_unit <- value_map(
       med_map, "conmed_dose_unit", record[[glue("conmed_dose_unit_{n}")]])
     conmed_dose_unit_other <- value_map(
-      med_map, "conmed_dose_unit_other", record[[glue("conmed_dose_unit_other_{n}")]])
+      med_map, "conmed_dose_unit_other",
+      record[[glue("conmed_dose_unit_other_{n}")]], other_specify=TRUE)
     conmed_dose_frequency <- value_map(
       med_map, "conmed_dose_frequency", record[[glue("conmed_dose_frequency_{n}")]])
     conmed_dose_frequency_other <- value_map(
       med_map, "conmed_dose_frequency_other",
-      record[[glue("conmed_dose_frequency_other_{n}")]])
+      record[[glue("conmed_dose_frequency_other_{n}")]], other_specify=TRUE)
     conmed_dose_route <- value_map(
       med_map, "conmed_dose_route", record[[glue("conmed_dose_route_{n}")]])
     conmed_dose_route_other <- value_map(
@@ -1191,13 +1192,15 @@ parse_fox_family_history <- function(dob_mapping, field_mapping) {
 #' @param key The value from the clinical data
 #' @param as_is Whether to return the value as is if there are no mappings found.
 #' @return NA_character_ or the DMR-compliant value
-value_map <- function(mapping, field, key, as_is = FALSE) {
+value_map <- function(mapping, field, key, as_is = FALSE, other_specify=FALSE) {
   if (is.null(key) || is.na(key) || is.null(field) || is.na(field)) {
     return(NA_character_)
   } else if (is.null(mapping) || !(key %in% names(mapping[[field]]))) {
       # if mapping doesn't exist or field has no mappings or key not mapped
       if (as_is) {
         return(as.character(key))
+      } else if (other_specify) {
+        return("Other, specify")
       } else {
         return(NA_character_)
       }
