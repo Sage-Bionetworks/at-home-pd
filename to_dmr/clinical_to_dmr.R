@@ -22,7 +22,7 @@ AHPD_CLINICAL_FORMS <- list(
   "modified_schwab_and_england_adl", "concomitant_medication_log",
   "reportable_event", "conclusion")
 AHPD_MDSUPDRS_FORMS <- list(
-  "prebaseline_survey", "previsit_survey", "mdsupdrs")
+  "prebaseline_survey", "previsit_survey", "mdsupdrs", "annual_survey")
 # Not included in the SUPER forms is the participant_mdsupdrs_survey, since
 # we parse it as part of the mdsupdrs_physician_exam.
 SUPER_CLINICAL_FORMS <- list(
@@ -365,12 +365,15 @@ parse_concomitant_medication_record_spd <- function(record, value_mapping) {
 #' @param field_mapping The DMR to clinical field mapping.
 #' @param value_mapping The value mapping. A list with heirarchy (form) > (field identifier).
 #' @return A tibble with fields specific to the PDBP_MDS-UPDRS form.
-parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores) {
+parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores=NULL, date_field=NULL) {
   # The same clinical forms were administered at 12 and 24 months
   this_visit <- case_when(
       record$visittyppdbpmds %in% c("Baseline", "Screening") ~ "Baseline",
       record$visittyppdbpmds == "Month 12" ~ "12 months",
-      record$visittyppdbpmds == "Month 24" ~ "24 months")
+      record$visittyppdbpmds == "Month 24" ~ "24 months",
+      record$visittyppdbpmds == "Month 36" ~ "36 months",
+      record$visittyppdbpmds == "Month 48" ~ "36 months",
+      record$visittyppdbpmds == "Month 60" ~ "36 months")
   this_field_mapping <- field_mapping %>%
     filter(form_name == "MDS-UPDRS",
            cohort == "at-home-pd",
@@ -387,10 +390,16 @@ parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores) {
   if (nrow(dmr_record) == 0) {
     return(tibble())
   }
-  section_scores <- mdsupdrs_section_scores(
-      scores = scores,
-      participant_id = record$guid,
-      date_of_exam = as.Date(record[["mdsupdrs_dttm"]]))
+  if (!is.null(scores) && !is.null(date_field)) {
+    section_scores <- mdsupdrs_section_scores(
+        scores = scores,
+        participant_id = record$guid,
+        date_of_exam = as.Date(record[[date_field]]))
+  } else {
+    section_scores <- tibble(
+        name = character(),
+        value = character())
+  }
   dmr_record <- dmr_record %>%
     anti_join(section_scores, by = "name") %>%
     bind_rows(section_scores) %>%
@@ -1293,13 +1302,18 @@ mdsupdrs_section_scores <- function(scores, participant_id, date_of_exam) {
 #' type character().
 get_event_and_form_fields <- function(clinical, clinical_dic, event_name,
                                       form_name, visit_date_col,
-                                      additional_fields = NULL) {
+                                      additional_fields=NULL, ignore_fields=NULL) {
   form_fields <- clinical_dic %>%
     filter(`Form Name` %in% form_name,
            `Field Type` != "descriptive") %>%
     distinct(`Variable / Field Name`)
+  if (!is.null(ignore_fields)) {
+    form_fields <- form_fields %>%
+      filter(!(`Variable / Field Name` %in% ignore_fields))
+  }
   event_records <- clinical %>%
-    filter(redcap_event_name %in% event_name) %>%
+    filter(redcap_event_name %in% event_name,
+           !is.na(!!sym(visit_date_col))) %>%
     select(guid,
            {visit_date_col},
            all_of(form_fields[["Variable / Field Name"]]),
@@ -1584,8 +1598,10 @@ main <- function() {
   # AHPD MDS-UPDRS sections are split up across different visits and forms.
   # We need to combine each into a single record with `get_event_and_form_fields`
   # before parsing.
-  # The form pairings are prebaseline_survey/mdsupdrs for the baseline visit
-  # and previsit_survey/mdsupdrs for the month 12 and 24 visits.
+  # The form pairings are prebaseline_survey/mdsupdrs for the baseline visit,
+  # previsit_survey/mdsupdrs for the month 12 and 24 visits, and annual_survey
+  # for the month 36, 48, and 60 visits. For these latter visits, only part of
+  # Part 1 and all of Part 2 of MDSUPDRS is included in the annual_survey form.
   ahpd_baseline_mdsupdrs <- get_event_and_form_fields(
       clinical = clinical,
       clinical_dic = clinical_data_dictionary,
@@ -1607,7 +1623,7 @@ main <- function() {
                      "Month 24 (Arm 1: Arm 1)"),
       form_name = c("previsit_survey", "mdsupdrs"),
       visit_date_col = "mdsupdrs_dttm")
-  ahpd_mdsupdrs <- bind_rows(
+  ahpd_mdsupdrs_baseline_12_24 <- bind_rows(
       ahpd_baseline_mdsupdrs,
       ahpd_month_12_mdsupdrs,
       ahpd_month_24_mdsupdrs) %>%
@@ -1615,7 +1631,8 @@ main <- function() {
       visittyppdbpmds == "12 months" ~ "Month 12",
       visittyppdbpmds == "24 months" ~ "Month 24",
       TRUE ~ visittyppdbpmds))
-  dmr_records_ahpd_mdsupdrs <- purrr::pmap_dfr(ahpd_mdsupdrs, function(...) {
+  dmr_records_ahpd_mdsupdrs_baseline_12_24 <- purrr::pmap_dfr(
+        ahpd_mdsupdrs_baseline_12_24, function(...) {
     mdsupdrs_record <- list(...)
     universal_fields <- get_universal_fields(
       record = mdsupdrs_record,
@@ -1627,10 +1644,69 @@ main <- function() {
         record = mdsupdrs_record,
         field_mapping = field_mapping,
         value_mapping = value_mapping,
-        scores = ahpd_mdsupdrs_scores)
+        scores = ahpd_mdsupdrs_scores,
+        date_field = "mdsupdrs_dttm")
     dmr_record <- bind_cols(universal_fields, form_specific_fields)
     return(dmr_record)
   })
+
+  # The processing for 36, 48, and 60 months is a bit different
+  superflous_annual_survey_fields <- c(
+    "phone_as", "num_type_as", "emer_cont_as", "emerphone_as", "email_as",
+    "street1_as", "street2_as", "city_as", "state_as", "zip_as",
+    "pgi_ill_m12_as", "pgichange_as", "falllastmonth_m12_as")
+  ahpd_month_36_mdsupdrs <- get_event_and_form_fields(
+      clinical = clinical,
+      clinical_dic = clinical_data_dictionary,
+      event_name = "Month 36 (Arm 1: Arm 1)",
+      form_name = "annual_survey",
+      visit_date_col = "assessdate_fall_m12_as",
+      additional_fields = "redcap_event_name",
+      ignore_fields = superflous_annual_survey_fields)
+  ahpd_month_48_mdsupdrs <- get_event_and_form_fields(
+      clinical = clinical,
+      clinical_dic = clinical_data_dictionary,
+      event_name = "Month 48 (Arm 1: Arm 1)",
+      form_name = "annual_survey",
+      visit_date_col = "assessdate_fall_m12_as",
+      additional_fields = "redcap_event_name",
+      ignore_fields = superflous_annual_survey_fields)
+  ahpd_month_60_mdsupdrs <- get_event_and_form_fields(
+      clinical = clinical,
+      clinical_dic = clinical_data_dictionary,
+      event_name = "Month 60 (Arm 1: Arm 1)",
+      form_name = "annual_survey",
+      visit_date_col = "assessdate_fall_m12_as",
+      additional_fields = "redcap_event_name",
+      ignore_fields = superflous_annual_survey_fields)
+  ahpd_mdsupdrs_36_48_60 <- bind_rows(
+      ahpd_month_36_mdsupdrs,
+      ahpd_month_48_mdsupdrs,
+      ahpd_month_60_mdsupdrs) %>%
+    mutate(visittyppdbpmds = case_when(
+      startsWith(redcap_event_name, "Month 36") ~ "Month 36",
+      startsWith(redcap_event_name, "Month 48") ~ "Month 48",
+      startsWith(redcap_event_name, "Month 60") ~ "Month 60")) %>%
+    select(-redcap_event_name)
+  dmr_records_ahpd_mdsupdrs_36_48_60 <- purrr::pmap_dfr(
+        ahpd_mdsupdrs_36_48_60, function(...) {
+    mdsupdrs_record <- list(...)
+    universal_fields <- get_universal_fields(
+      record = mdsupdrs_record,
+      visit_date_col = "assessdate_fall_m12_as",
+      dob_mapping = dob_mapping,
+      cohort = "at-home-pd",
+      redcap_event_name = mdsupdrs_record[["visittyppdbpmds"]])
+    form_specific_fields <- parse_mdsupdrs_ahpd(
+        record = mdsupdrs_record,
+        field_mapping = field_mapping,
+        value_mapping = value_mapping)
+    dmr_record <- bind_cols(universal_fields, form_specific_fields)
+    return(dmr_record)
+  })
+  dmr_records_ahpd_mdsupdrs <- bind_rows(
+      dmr_records_ahpd_mdsupdrs_baseline_12_24,
+      dmr_records_ahpd_mdsupdrs_36_48_60)
   clinical_forms[["mdsupdrs"]] <- dmr_records_ahpd_mdsupdrs
 
   # Combine clinical form data which map to the same DMR form
