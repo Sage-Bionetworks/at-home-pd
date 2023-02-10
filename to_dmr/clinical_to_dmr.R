@@ -1263,8 +1263,15 @@ mdsupdrs_section_scores <- function(scores, participant_id, date_of_exam) {
   score <- scores %>%
     mutate(createdOnDate = as.Date(createdOn)) %>%
     filter(guid == participant_id,
-           createdOnDate == as.Date(date_of_exam)) %>%
+           createdOnDate == as.Date(date_of_exam),
+           !is.na(UPDRS1) | !is.na(UPDRS2) | !is.na(UPDRS3) | !is.na(UPDRS4)) %>%
     select(all_of(c("UPDRS1", "UPDRS2", "UPDRS3", "UPDRS4")))
+  if (nrow(score) == 0) {
+    section_scores <- tibble(
+        name = character(),
+        value = character())
+    return(section_scores)
+  }
   total_score <- {
     total_score <- score %>%
       pivot_longer(dplyr::everything()) %>%
@@ -1468,7 +1475,6 @@ main <- function() {
     # and pass this record into the appropriate `parse_*` function.
     if (cohort == "at-home-pd") {
       dmr_records <- purrr::map(AHPD_CLINICAL_FORMS, function(clinical_form) {
-      #dmr_records <- purrr::map(list("concomitant_medication_log"), function(clinical_form) {
         visit_date_col <- form_to_datetime_mapping[[clinical_form]]
         if (!has_form_info(record = clinical_record,
                            visit_date_col = visit_date_col)) {
@@ -1700,7 +1706,9 @@ main <- function() {
     form_specific_fields <- parse_mdsupdrs_ahpd(
         record = mdsupdrs_record,
         field_mapping = field_mapping,
-        value_mapping = value_mapping)
+        value_mapping = value_mapping,
+        scores = ahpd_mdsupdrs_scores,
+        date_field = "assessdate_fall_m12_as")
     dmr_record <- bind_cols(universal_fields, form_specific_fields)
     return(dmr_record)
   })
