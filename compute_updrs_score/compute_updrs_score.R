@@ -1,6 +1,6 @@
 #################################################
 #' Script to generate AT-HOME-PD UPDRS scores
-#' to synapse
+#' to synapse. This script should be run from the repo root.
 #' @author: Aryton Tediarjo
 ##################################################
 library(tidyverse)
@@ -16,7 +16,6 @@ EXCEL_LOOKUP_SYN_ID <- "syn25050918"
 SYNAPSE_PARENT_ID <- "syn16809549"
 SUPER_PARENT_ID <- "syn25715411"
 OUTPUT_FILENAME <- "computed_ahpd_updrs_scores.tsv"
-DMR_FIELD_MAPPING <- "syn25056102"
 
 #' instantiate github
 GIT_URL <- file.path(
@@ -37,15 +36,16 @@ SCORES <- c(
 get_ahpd_clinical_data <- function(){
   clinical_records <- fread(synGet(CLINICAL_DATA_SYN_ID)$path) %>%
     tibble::as_tibble(.)
-  visit_info <- clinical_records %>%
+  section_1_3_4 <- clinical_records %>%
     dplyr::filter(!stringr::str_detect(guid, "TEST"),
                   redcap_event_name %in% c(
                     "baseline_arm_1", "month_12_arm_1", "month_24_arm_1"),
                   redcap_repeat_instrument != "reportable_event") %>%
-    dplyr::mutate(visit = case_when(
-      redcap_event_name == "baseline_arm_1" ~ "Baseline",
-      redcap_event_name == "month_12_arm_1" ~ "Month 12",
-      redcap_event_name == "month_24_arm_1" ~ "Month 24")) %>%
+    dplyr::mutate(
+      visit = case_when(
+          redcap_event_name == "baseline_arm_1" ~ "Baseline",
+          redcap_event_name == "month_12_arm_1" ~ "Month 12",
+          redcap_event_name == "month_24_arm_1" ~ "Month 24")) %>%
     dplyr::select(guid,
                   redcap_event_name,
                   visit,
@@ -53,7 +53,7 @@ get_ahpd_clinical_data <- function(){
                   viscompltyn,
                   c("mdsupdrs_dttm":"painfloffstatdystn"),
                   matches("neck|postinst_instr"))
-  score_info <- clinical_records %>%
+  section_1_2 <- clinical_records %>%
     dplyr::filter(!stringr::str_detect(guid, "TEST"),
                   redcap_event_name %in% c(
                     "baseline_pre_visit_arm_1",
@@ -83,8 +83,41 @@ get_ahpd_clinical_data <- function(){
         stringr::str_c("mdsupdrs", name),
         name)) %>%
     pivot_wider(guid:visit)
-  scores <- visit_info %>%
-    dplyr::left_join(score_info, by = c("guid", "visit")) %>%
+  section_1_2_annual_survey <- clinical_records %>%
+    dplyr::filter(!stringr::str_detect(guid, "TEST"),
+                  assessdate_fall_m12_as != "",
+                  redcap_event_name %in% c(
+                    "month_36_arm_1",
+                    "month_48_arm_1",
+                    "month_60_arm_1")) %>%
+    dplyr::mutate(visit = case_when(
+      redcap_event_name == "month_36_arm_1" ~ "Month 36",
+      redcap_event_name == "month_48_arm_1" ~ "Month 48",
+      redcap_event_name == "month_60_arm_1" ~ "Month 60")) %>%
+    dplyr::select(guid,
+                  redcap_event_name,
+                  visit,
+                  visstatdttm = assessdate_fall_m12_as,
+                  qstnnreinfoprovdrt_m12_as:mdsupdrsfreezingscore_m12_as) %>%
+    pivot_longer(!guid:visstatdttm) %>%
+    drop_na(value) %>%
+    mutate(name = if_else(
+      str_detect(name, "_m12_as"),
+      str_remove(name, "_m12_as"),
+      name),
+      name = if_else(
+        name %in% c("sleepprobscore", "daytmsleepscore",
+                    "painothrsensscore", "urnryprobscore",
+                    "constipprobscore", "slivadroolscore",
+                    "chwngswllwngscore", "eatingtskscore",
+                    "handwritingscore", "gttngoutbedscore",
+                    "wlkngbalancescore"),
+        stringr::str_c("mdsupdrs", name),
+        name)) %>%
+    pivot_wider(guid:visstatdttm)
+  scores <- section_1_3_4 %>%
+    dplyr::left_join(section_1_2, by = c("guid", "visit")) %>%
+    dplyr::bind_rows(section_1_2_annual_survey) %>%
     dplyr::select(createdOn = visstatdttm, everything()) %>%
     tibble::as_tibble(.)
   return(scores)
@@ -92,7 +125,7 @@ get_ahpd_clinical_data <- function(){
 
 #' Format input for SUPER-PD physician visit
 #'
-#' @param field_mapping The file referenced above by DMR_FIELD_MAPPING
+#' @param field_mapping A list mapping DMR to clinical field names
 #' @param physician_visit One of "Physician_ON" or "Physician_OFF"
 get_super_physician_scores <- function(field_mapping, physician_visit) {
   clinical_records <- fread(synGet(CLINICAL_DATA_SYN_ID)$path) %>%
@@ -143,7 +176,7 @@ store_to_synapse <- function(df, fname, parent) {
 }
 
 main <- function(){
-  field_mapping <- readr::read_csv(synapser::synGet(DMR_FIELD_MAPPING)$path)
+  field_mapping <- readr::read_csv("to_dmr/resources/dmr_form_to_clinical_form_mapping.csv")
   #' compute updrs score and write to .tsv
   super_physician_on <- get_super_physician_scores(field_mapping, "Physician_ON")
   store_to_synapse(df = super_physician_on,
@@ -164,20 +197,24 @@ main <- function(){
       -prcntoffdystniaval,
       -mdsupdrsttlhroffnum,
       -mdsupdrsprcntoffval)
-  list(
-    medication = clinical_data %>% 
-      dplyr::select(guid, visit, 
+  medication <- clinical_data %>%
+      dplyr::select(guid, visit,
                     C_PDSTATE = ptclinstateprknsnm,
                     C_ONLDOPA = mdsupdrsptntuseldopaind,
-                    C_LSTDSMIN = mdsupdrslstldopadosetm),
-    scores = clinical_data %>%
+                    C_LSTDSMIN = mdsupdrslstldopadosetm)
+  scores <- clinical_data %>%
       map_column_names("ahpd") %>%
       run_updrs_scoring(
         join_cols = c("guid", "visit", "createdOn")) %>%
-      distinct(guid, visit, createdOn, .keep_all=TRUE)) %>%
+      distinct(guid, visit, createdOn, .keep_all=TRUE)
+
+  combined_output <- list(
+    medication = medication,
+    scores = scores)
+  combined_output %>%
     purrr::reduce(dplyr::inner_join, by = c("guid", "visit")) %>%
     readr::write_tsv(OUTPUT_FILENAME)
-  
+
   #' store result to synapse
   f <- File(OUTPUT_FILENAME, SYNAPSE_PARENT_ID)
   synStore(f, activity = Activity(
