@@ -7,6 +7,7 @@ library(tidyverse)
 library(tidyr)
 library(data.table)
 library(synapser)
+library(glue)
 source("compute_updrs_score/scoring_utils.R")
 synLogin()
 
@@ -16,7 +17,9 @@ FOX_DATA_SYN_ID <- "syn21670565"
 EXCEL_LOOKUP_SYN_ID <- "syn25050918"
 SYNAPSE_PARENT_ID <- "syn16809549"
 SUPER_PARENT_ID <- "syn25715411"
-OUTPUT_FILENAME <- "computed_ahpd_updrs_scores.tsv"
+FOX_PARENT_ID <- "syn16809550"
+OUTPUT_FILENAME <- "computed_ahpd_updrs_scores.csv"
+FOX_OUTPUT_FILENAME <- glue("fox_{OUTPUT_FILENAME}")
 
 #' instantiate github
 GIT_URL <- file.path(
@@ -283,13 +286,12 @@ build_visit_date_mapping <- function() {
   return(visit_date_mapping)
 }
 
-store_to_synapse <- function(df, fname, parent) {
+store_to_synapse <- function(df, fname, parent, used) {
   readr::write_csv(df, fname)
   f <- synapser::File(fname, parent)
   synapser::synStore(f, activity = Activity(
     "compute updrs scores",
-    used = c(CLINICAL_DATA_SYN_ID,
-             EXCEL_LOOKUP_SYN_ID),
+    used = used,
     executed = GIT_URL))
   unlink(fname)
 }
@@ -297,15 +299,17 @@ store_to_synapse <- function(df, fname, parent) {
 main <- function(){
   field_mapping <- readr::read_csv("to_dmr/resources/dmr_to_clinical_field_mapping.csv")
   visit_date_mapping <- build_visit_date_mapping()
-  #' compute updrs score and write to .tsv
+  #' compute updrs score and write to .csv
   super_physician_on <- get_super_physician_scores(field_mapping, "Physician_ON")
   store_to_synapse(df = super_physician_on,
                    fname = "mdsupdrs_physician_on_med_scores.csv",
-                   parent = SUPER_PARENT_ID)
+                   parent = SUPER_PARENT_ID,
+                   used = c(CLINICAL_DATA_SYN_ID, EXCEL_LOOKUP_SYN_ID))
   super_physician_off <- get_super_physician_scores(field_mapping, "Physician_OFF")
   store_to_synapse(df = super_physician_off,
                    fname = "mdsupdrs_physician_off_med_scores.csv",
-                   parent = SUPER_PARENT_ID)
+                   parent = SUPER_PARENT_ID,
+                   used = c(CLINICAL_DATA_SYN_ID, EXCEL_LOOKUP_SYN_ID))
   clinical_data <- get_ahpd_clinical_data() %>%
     select(
       -mdsupdrsttlhrawkdysknum,
@@ -324,7 +328,11 @@ main <- function(){
                     C_ONLDOPA = mdsupdrsptntuseldopaind,
                     C_LSTDSMIN = mdsupdrslstldopadosetm)
   scores <- clinical_data %>%
-      bind_rows(fox_data) %>%
+      map_column_names("ahpd") %>%
+      run_updrs_scoring(
+        join_cols = c("guid", "visit", "createdOn")) %>%
+      distinct(guid, visit, createdOn, .keep_all=TRUE)
+  fox_scores <- fox_data %>%
       map_column_names("ahpd") %>%
       run_updrs_scoring(
         join_cols = c("guid", "visit", "createdOn")) %>%
@@ -332,19 +340,12 @@ main <- function(){
 
   combined_output <- list(
     medication = medication,
-    scores = scores)
-  combined_output %>%
-    purrr::reduce(dplyr::inner_join, by = c("guid", "visit")) %>%
-    readr::write_tsv(OUTPUT_FILENAME)
+    scores = scores) %>%
+    purrr::reduce(dplyr::inner_join, by = c("guid", "visit"))
 
   #' store result to synapse
-  f <- File(OUTPUT_FILENAME, SYNAPSE_PARENT_ID)
-  synStore(f, activity = Activity(
-    "compute updrs scores",
-    used = c(CLINICAL_DATA_SYN_ID,
-             EXCEL_LOOKUP_SYN_ID),
-    executed = GIT_URL))
-  unlink(OUTPUT_FILENAME)
+  store_to_synapse(combined_output, OUTPUT_FILENAME, SYNAPSE_PARENT_ID, used = CLINICAL_DATA_SYN_ID)
+  store_to_synapse(fox_scores, FOX_OUTPUT_FILENAME, FOX_PARENT_ID, used = FOX_DATA_SYN_ID)
 }
 
 main()
