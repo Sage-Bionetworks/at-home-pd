@@ -12,6 +12,7 @@ synLogin()
 
 #' Synapse reference
 CLINICAL_DATA_SYN_ID <- "syn18565500"
+FOX_DATA_SYN_ID <- "syn21670565"
 EXCEL_LOOKUP_SYN_ID <- "syn25050918"
 SYNAPSE_PARENT_ID <- "syn16809549"
 SUPER_PARENT_ID <- "syn25715411"
@@ -82,7 +83,7 @@ get_ahpd_clinical_data <- function(){
                     "wlkngbalancescore"),
         stringr::str_c("mdsupdrs", name),
         name)) %>%
-    pivot_wider(guid:visit)
+    pivot_wider(id_cols = guid:visit)
   section_1_2_annual_survey <- clinical_records %>%
     dplyr::filter(!stringr::str_detect(guid, "TEST"),
                   assessdate_fall_m12_as != "",
@@ -114,7 +115,7 @@ get_ahpd_clinical_data <- function(){
                     "wlkngbalancescore"),
         stringr::str_c("mdsupdrs", name),
         name)) %>%
-    pivot_wider(guid:visstatdttm)
+    pivot_wider(id_cols = guid:visstatdttm)
   scores <- section_1_3_4 %>%
     dplyr::left_join(section_1_2, by = c("guid", "visit")) %>%
     dplyr::bind_rows(section_1_2_annual_survey) %>%
@@ -164,6 +165,124 @@ get_super_physician_scores <- function(field_mapping, physician_visit) {
   return(updrs_scores)
 }
 
+get_fox_data <- function(visit_date_mapping) {
+  movement_survey <- as_tibble(fread(synGet(FOX_DATA_SYN_ID)$path))
+  section_2 <- movement_survey %>%
+    dplyr::mutate(
+      visit = get_associated_visit_type(guid, study_date, visit_date_mapping),
+      MoveWho = dplyr::case_match(MoveWho, 1 ~ 2, 2 ~ 1, 3 ~ 3),
+      study_date = as.character(study_date)) %>%
+    dplyr::select(
+      guid = guid,
+      visit = visit,
+      createdOn = study_date,
+      mdsupdrschwngswllwngscore = MoveChew,
+      mdsupdrsdressingscore = MoveDress,
+      mdsupdrseatingtskscore = MoveEat,
+      mdsupdrsfreezingscore = MoveFreeze,
+      hobbieothractscore = MoveHobby,
+      mdsupdrshygienescore = MoveHygiene,
+      mdsupdrsslivadroolscore = MoveSaliva,
+      mdsupdrsturngbedscore = MoveSleep,
+      mdsupdrsspeechscore = MoveSpeech,
+      mdsupdrstremorscore = MoveTremor,
+      mdsupdrsgttngoutbedscore = MoveUp,
+      mdsupdrswlkngbalancescore = MoveWalk,
+      qstnnreinfoprovdrt = MoveWho,
+      mdsupdrshandwritingscore = MoveWrite)
+  return(section_2)
+}
+
+get_associated_visit_type <- function(guids, study_dates, visit_date_mapping) {
+  visit_type <- purrr::map2(
+    guids,
+    study_dates,
+    function(fox_guid, study_date) {
+      visits <- visit_date_mapping %>%
+        filter(guid == fox_guid,
+               redcap_event_name %in% list(
+                 "baseline_arm_1",
+                 "month_12_arm_1",
+                 "month_24_arm_1",
+                 "month_36_arm_1",
+                 "month_48_arm_1",
+                 "month_60_arm_1"
+               )) %>%
+        arrange(visstatdttm)
+      visit_type <- purrr::map2(visits$visstatdttm,
+                                visits$VisitTypPDBP,
+                                function(visit_date, visit_type) {
+          #' This map returns a list containing visits which took place after
+          #' this survey had been completed. Since we are checking each visit
+          #' in chronological order, the first non-NA element in this list is
+          #' the visit at which this survey was completed.
+          if (is.na(study_date)) {
+            # If no start date provided, assume earliest visit type
+            return(visit_type)
+          } else if (study_date <= visit_date) {
+            return(visit_type)
+          }
+          return(NA_character_)
+        }) %>%
+        purrr::discard(is.na) %>%
+        dplyr::first()
+      if (is.null(visit_type)) {
+        # In this case the survey date was later than the
+        # most recent visit. We associate this with the next visit, or the last possible visit.
+        last_available_visit_type <- dplyr::last(visits$VisitTypPDBP)
+        visit_type <- case_when(
+          last_available_visit_type == "Baseline" ~ "Month 12",
+          last_available_visit_type == "Month 12" ~ "Month 24",
+          last_available_visit_type == "Month 24" ~ "Month 36",
+          last_available_visit_type == "Month 36" ~ "Month 48",
+          last_available_visit_type == "Month 48" ~ "Month 60",
+          last_available_visit_type == "Month 60" ~ "Month 60",
+        )
+      }
+      return(visit_type)
+  })
+  return(unlist(visit_type))
+}
+
+#' Get VisitTypPDBP field from cohort and event name
+get_visit_type <- function(cohort, redcap_event_name) {
+  visit_type <- case_when(
+    cohort == "at-home-pd" && str_starts(redcap_event_name, "baseline") ~ "Baseline",
+    cohort == "at-home-pd" && str_starts(redcap_event_name, "screening") ~ "Baseline",
+    cohort == "at-home-pd" && str_starts(redcap_event_name, "month_12") ~ "Month 12",
+    cohort == "at-home-pd" && str_starts(redcap_event_name, "month_24") ~ "Month 24",
+    cohort == "at-home-pd" && str_starts(redcap_event_name, "month_36") ~ "Month 36",
+    cohort == "at-home-pd" && str_starts(redcap_event_name, "month_48") ~ "Month 48",
+    cohort == "at-home-pd" && str_starts(redcap_event_name, "month_60") ~ "Month 60",
+    cohort == "super-pd" ~ "Baseline",
+    TRUE ~ "Baseline") # Logs and Premature Withdrawal
+  return(visit_type)
+}
+
+#' Build a mapping of GUID to visit type and date
+build_visit_date_mapping <- function() {
+  cohorts  <- readr::read_csv(synGet("syn24173690")$path) %>%
+    rename(study_cohort = cohort)
+  clinical <- readr::read_csv(synGet(CLINICAL_DATA_SYN_ID)$path) %>%
+    inner_join(cohorts, by = "guid") %>%
+    filter(!str_detect(guid, "TEST"))
+  visit_date_mapping <- clinical %>%
+    filter(!is.na(visstatdttm) | !is.na(annual_survey_timestamp),
+           redcap_event_name != "Screening (Arm 1: Arm 1)") %>%
+    mutate(visstatdttm = case_when(
+        is.na(visstatdttm) ~ annual_survey_timestamp,
+        !is.na(visstatdttm) ~ visstatdttm
+    )) %>%
+    filter(!is.na(visstatdttm)) %>%
+    distinct(guid, redcap_event_name, visstatdttm, study_cohort)
+  visit_date_mapping$VisitTypPDBP <- unlist(
+        purrr::map2(
+          visit_date_mapping$study_cohort,
+          visit_date_mapping$redcap_event_name,
+          get_visit_type))
+  return(visit_date_mapping)
+}
+
 store_to_synapse <- function(df, fname, parent) {
   readr::write_csv(df, fname)
   f <- synapser::File(fname, parent)
@@ -176,7 +295,8 @@ store_to_synapse <- function(df, fname, parent) {
 }
 
 main <- function(){
-  field_mapping <- readr::read_csv("to_dmr/resources/dmr_form_to_clinical_form_mapping.csv")
+  field_mapping <- readr::read_csv("to_dmr/resources/dmr_to_clinical_field_mapping.csv")
+  visit_date_mapping <- build_visit_date_mapping()
   #' compute updrs score and write to .tsv
   super_physician_on <- get_super_physician_scores(field_mapping, "Physician_ON")
   store_to_synapse(df = super_physician_on,
@@ -197,12 +317,14 @@ main <- function(){
       -prcntoffdystniaval,
       -mdsupdrsttlhroffnum,
       -mdsupdrsprcntoffval)
+  fox_data <- get_fox_data(visit_date_mapping)
   medication <- clinical_data %>%
       dplyr::select(guid, visit,
                     C_PDSTATE = ptclinstateprknsnm,
                     C_ONLDOPA = mdsupdrsptntuseldopaind,
                     C_LSTDSMIN = mdsupdrslstldopadosetm)
   scores <- clinical_data %>%
+      bind_rows(fox_data) %>%
       map_column_names("ahpd") %>%
       run_updrs_scoring(
         join_cols = c("guid", "visit", "createdOn")) %>%
