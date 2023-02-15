@@ -10,6 +10,7 @@ library(glue)
 AHPD_MDSUPDRS_SCORES <- "syn25050919"
 SUPER_OFF_MDSUPDRS_SCORES <- "syn25165548"
 SUPER_ON_MDSUPDRS_SCORES <- "syn25165546"
+FOX_MDSUPDRS_SCORES <- "syn51104164"
 CLINICAL_DATA_DICTIONARY <- "syn21740194"
 CLINICAL_DATA <- "syn17051543"
 FIELD_MAPPING <- "syn25056102"
@@ -35,13 +36,6 @@ OUTPUT_PARENT <- "syn25759357"
 read_synapse_csv <- function(synapse_id) {
   f <- synapser::synGet(synapse_id)
   df <- readr::read_csv(f$path)
-  return(df)
-}
-
-#' Read a TSV file from Synapse as a tibble
-read_synapse_tsv <- function(synapse_id) {
-  f <- synapser::synGet(synapse_id)
-  df <- readr::read_tsv(f$path)
   return(df)
 }
 
@@ -83,7 +77,7 @@ get_universal_fields <- function(record, visit_date_col, dob_mapping,
     visit_date <- NA_character_
     age_in_months <- NA_character_
   } else {
-    visit_date <- record[[visit_date_col]]
+    visit_date <- lubridate::format_ISO8601(lubridate::as_datetime(record[[visit_date_col]]))
     age_in_months <- get_age_in_months(
           current_date = visit_date,
           dob_mapping = dob_mapping,
@@ -172,11 +166,12 @@ build_visit_date_mapping <- function(clinical) {
     )) %>%
     filter(!is.na(visstatdttm)) %>%
     distinct(guid, redcap_event_name, visstatdttm, study_cohort)
-  visit_date_mapping$VisitTypPDBP <- unlist(
-        purrr::map2(
-          visit_date_mapping$study_cohort,
-          visit_date_mapping$redcap_event_name,
-          get_visit_type))
+  visit_date_mapping <- visit_date_mapping %>%
+    mutate(VisitTypPDBP = unlist(
+             purrr::map2(
+               visit_date_mapping$study_cohort,
+               visit_date_mapping$redcap_event_name,
+               get_visit_type)))
   return(visit_date_mapping)
 }
 #' Parse concomitant medication record for DMR, AT-HOME PD Cohort
@@ -364,9 +359,11 @@ parse_concomitant_medication_record_spd <- function(record, value_mapping) {
 #' either `prebaseline_survey' or `previsit_survey`
 #' @param field_mapping The DMR to clinical field mapping.
 #' @param value_mapping The value mapping. A list with heirarchy (form) > (field identifier).
+#' @param scores A dataframe containing MDS-UPDRS section scores
+#' @param date_field The field in `record` which contains the date of the survey
 #' @return A tibble with fields specific to the PDBP_MDS-UPDRS form.
-parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping, scores=NULL, date_field=NULL) {
-  # The same clinical forms were administered at 12 and 24 months
+parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping,
+                                scores=NULL, date_field=NULL) {
   this_visit <- case_when(
       record$visittyppdbpmds %in% c("Baseline", "Screening") ~ "Baseline",
       record$visittyppdbpmds == "Month 12" ~ "12 months",
@@ -494,6 +491,48 @@ parse_mdsupdrs_spd <- function(record, field_mapping, value_mapping, scores) {
       mutate_all(as.character)
     return(dmr_record)
   }
+}
+
+#' Parse MDS-UPDRS record for Fox Movement survey
+#'
+#' @param record A one-row dataframe containing a single record.
+#' This record consists of the combined fields of the clinical forms `mdsupdrs` and
+#' either `prebaseline_survey' or `previsit_survey`
+#' @param field_mapping The DMR to clinical field mapping.
+#' @param scores A dataframe containing MDS-UPDRS section scores.
+#' @param date_field The field in `record` which contains the date of the survey.
+#' @return A tibble with fields specific to the PDBP_MDS-UPDRS form.
+parse_mdsupdrs_fox <- function(record, field_mapping, scores=NULL, date_field=NULL) {
+  this_field_mapping <- field_mapping %>%
+    filter(form_name == "MDS-UPDRS",
+           cohort == "at-home-pd",
+           visit == "Baseline")
+  dmr_record <- purrr::map2_dfr(
+      this_field_mapping$dmr_variable,
+      this_field_mapping$clinical_variable,
+      function(dmr_variable, clinical_variable) {
+        value <- tibble(
+          name = dmr_variable,
+          value = ifelse(
+              hasName(record, clinical_variable),
+              as.character(record[[clinical_variable]]),
+              NA_character_))
+        return(value)
+  })
+  if (nrow(dmr_record) == 0) {
+    return(tibble())
+  }
+  section_scores <- mdsupdrs_section_scores(
+      scores = scores,
+      participant_id = record[["guid"]],
+      date_of_exam = as.Date(record[[date_field]]))
+  #message(dmr_record)
+  #message(section_scores)
+  dmr_record <- dmr_record %>%
+    anti_join(section_scores, by = "name") %>%
+    bind_rows(section_scores) %>%
+    pivot_wider(names_from="name", values_from="value")
+  return(dmr_record)
 }
 
 #' Parse MOCA scores for the AT-HOME PD cohort
@@ -1118,6 +1157,88 @@ eeq_map <- function(val) {
   return(return_val)
 }
 
+get_associated_visit_type <- function(guids, study_dates, visit_date_mapping) {
+  visit_type <- purrr::map2(
+    guids,
+    study_dates,
+    function(fox_guid, study_date) {
+      visits <- visit_date_mapping %>%
+        filter(guid == fox_guid,
+               redcap_event_name %in% list(
+                 "Baseline (Arm 1: Arm 1)",
+                 "Month 12 (Arm 1: Arm 1)",
+                 "Month 24 (Arm 1: Arm 1)",
+                 "Month 36 (Arm 1: Arm 1)",
+                 "Month 48 (Arm 1: Arm 1)",
+                 "Month 60 (Arm 1: Arm 1)"
+               )) %>%
+        arrange(visstatdttm)
+      visit_type <- purrr::map2(visits$visstatdttm,
+                                visits$VisitTypPDBP,
+                                function(visit_date, visit_type) {
+          #' This map returns a list containing visits which took place after
+          #' this survey had been completed. Since we are checking each visit
+          #' in chronological order, the first non-NA element in this list is
+          #' the visit at which this survey was completed.
+          if (is.na(study_date)) {
+            # If no start date provided, assume earliest visit type
+            return(visit_type)
+          } else if (study_date <= visit_date) {
+            return(visit_type)
+          }
+          return(NA_character_)
+        }) %>%
+        purrr::discard(is.na) %>%
+        dplyr::first()
+      if (is.null(visit_type)) {
+        # In this case the survey date was later than the
+        # most recent visit. We associate this with the next visit, or the last possible visit.
+        last_available_visit_type <- dplyr::last(visits$VisitTypPDBP)
+        visit_type <- case_when(
+          last_available_visit_type == "Baseline" ~ "Month 12",
+          last_available_visit_type == "Month 12" ~ "Month 24",
+          last_available_visit_type == "Month 24" ~ "Month 36",
+          last_available_visit_type == "Month 36" ~ "Month 48",
+          last_available_visit_type == "Month 48" ~ "Month 60",
+          last_available_visit_type == "Month 60" ~ "Month 60",
+        )
+      }
+      return(visit_type)
+  })
+  return(unlist(visit_type))
+}
+
+parse_fox_movement <- function(visit_date_mapping) {
+  movement_survey <- read_csv(synGet("syn21670565")$path)
+  section_2 <- movement_survey %>%
+    dplyr::mutate(
+      visit = get_associated_visit_type(guid, study_date, visit_date_mapping),
+      MoveWho = dplyr::case_when(
+          MoveWho == 1 ~ 2,
+          MoveWho == 2 ~ 1,
+          MoveWho == 3 ~ 3),
+      study_date = as.character(study_date)) %>%
+    dplyr::select(
+      guid = guid,
+      visittyppdbpmds = visit,
+      mdsupdrs_dttm = study_date,
+      mdsupdrschwngswllwngscore = MoveChew,
+      mdsupdrsdressingscore = MoveDress,
+      mdsupdrseatingtskscore = MoveEat,
+      mdsupdrsfreezingscore = MoveFreeze,
+      hobbieothractscore = MoveHobby,
+      mdsupdrshygienescore = MoveHygiene,
+      mdsupdrsslivadroolscore = MoveSaliva,
+      mdsupdrsturngbedscore = MoveSleep,
+      mdsupdrsspeechscore = MoveSpeech,
+      mdsupdrstremorscore = MoveTremor,
+      mdsupdrsgttngoutbedscore = MoveUp,
+      mdsupdrswlkngbalancescore = MoveWalk,
+      qstnnreinfoprovdrt = MoveWho,
+      mdsupdrshandwritingscore = MoveWrite)
+  return(section_2)
+}
+
 parse_fox_family_history <- function(dob_mapping, field_mapping) {
   family_history <- read_synapse_csv("syn21670518")
   conditions <- list(
@@ -1462,10 +1583,11 @@ main <- function() {
     filter(!str_detect(guid, "TEST"))
   dob_mapping <- build_dob_mapping(clinical)
   visit_date_mapping <- build_visit_date_mapping(clinical)
-  ahpd_mdsupdrs_scores <- read_synapse_tsv(AHPD_MDSUPDRS_SCORES)
+  ahpd_mdsupdrs_scores <- read_synapse_csv(AHPD_MDSUPDRS_SCORES)
   super_mdsupdrs_scores <- list(
     "Physician_ON" = read_synapse_csv(SUPER_ON_MDSUPDRS_SCORES),
     "Physician_OFF" = read_synapse_csv(SUPER_OFF_MDSUPDRS_SCORES))
+  fox_mdsupdrs_scores <- read_synapse_csv(FOX_MDSUPDRS_SCORES)
   # Row-wise map each record conditional on its contents
   dmr_records <- purrr::pmap(clinical, function(...) {
     clinical_record <- list(...)
@@ -1712,9 +1834,31 @@ main <- function() {
     dmr_record <- bind_cols(universal_fields, form_specific_fields)
     return(dmr_record)
   })
+
+
+  # And again, Fox Movement survey has an entirely different format
+  fox_movement <- parse_fox_movement(visit_date_mapping = visit_date_mapping)
+  dmr_records_fox <- purrr::pmap_dfr(fox_movement, function(...) {
+    mdsupdrs_record <- list(...)
+    universal_fields <- get_universal_fields(
+      record = mdsupdrs_record,
+      visit_date_col = "mdsupdrs_dttm",
+      dob_mapping = dob_mapping,
+      cohort = "at-home-pd",
+      redcap_event_name = mdsupdrs_record[["visittyppdbpmds"]])
+    form_specific_fields <- parse_mdsupdrs_fox(
+        record = mdsupdrs_record,
+        field_mapping = field_mapping,
+        scores = fox_mdsupdrs_scores,
+        date_field = "mdsupdrs_dttm")
+    dmr_record <- bind_cols(universal_fields, form_specific_fields)
+    return(dmr_record)
+  })
+
   dmr_records_ahpd_mdsupdrs <- bind_rows(
       dmr_records_ahpd_mdsupdrs_baseline_12_24,
-      dmr_records_ahpd_mdsupdrs_36_48_60)
+      dmr_records_ahpd_mdsupdrs_36_48_60,
+      dmr_records_fox)
   clinical_forms[["mdsupdrs"]] <- dmr_records_ahpd_mdsupdrs
 
   # Combine clinical form data which map to the same DMR form
