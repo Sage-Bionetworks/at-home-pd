@@ -101,7 +101,9 @@
     "concomitant_medications": {
         "conmed": {
             "amantadine": "Amantadine (Symmetrel)",
+            "amantidine": "Amantadine (Symmetrel)",
             "Amantadine": "Amantadine (Symmetrel)",
+            "Apomorphine": "Apomorphine (Apokyn)",
             "Carbidopa-levodopa 25/100": "Carbidopa/levodopa (Atamet, Sinemet)",
             "carbidopa-levodopa 25-100mg": "Carbidopa/levodopa (Atamet, Sinemet)",
             "carbidopa levodopa 25-100": "Carbidopa/levodopa (Atamet, Sinemet)",

@@ -3,7 +3,7 @@ library(synapser)
 
 #' filter rows from a specific redcap_event_name or redcap_repeat_instrument
 #' and drop columns which contain only NA
-select_survey_and_columns <- function(df, re_name, cohort_name, ri_name=NULL) {
+select_redcap <- function(df, re_name, cohort_name, ri_name=NULL) {
   if (is.null(ri_name)) {
     df %>%
       filter(redcap_event_name == re_name,
@@ -17,6 +17,18 @@ select_survey_and_columns <- function(df, re_name, cohort_name, ri_name=NULL) {
   }
 }
 
+# Select all columns from a clinical form
+select_form <- function(clinical, form_name, .clinical_dic = clinical_data_dictionary) {
+  form_fields <- .clinical_dic %>%
+    dplyr::filter(`Form Name` == form_name) %>%
+    dplyr::select(`Variable / Field Name`) %>%
+    unlist() %>%
+    as.vector()
+  clinical_data <- clinical %>%
+    dplyr::select(guid, redcap_event_name, tidyselect::any_of(form_fields), study_cohort) # checkbox fields not included
+  return(clinical_data)
+}
+
 select_na <- function(df) {
   df %>%
     select_if(~ any(is.na(.)))
@@ -25,6 +37,13 @@ select_na <- function(df) {
 select_not_na <- function(df) {
   df %>%
     select_if(~ any(!is.na(.)))
+}
+
+# Read DMR form from Synapse
+read_dmr <- function(synapse_id) {
+  dmr_f <- synGet(synapse_id)
+  df <- read_csv(dmr_f$path, skip = 1)  %>%
+    select(-record)
 }
 
 which_cohort <- function(clinical, column) {
@@ -74,8 +93,7 @@ spd_conmed <- function(clinical, col) {
     select(matches(glue::glue("{col}_\\d"))) %>%
     purrr::map(as.character) %>%
     as_tibble() %>%
-    pivot_longer(dplyr::everything()) %>%
-    distinct(value)
+    pivot_longer(dplyr::everything())
 }
 
 select_primary_columns <- function(clinical, add_col = NULL) {
@@ -117,16 +135,6 @@ parse_mds_updrs_notes <- function(s) {
     return(s_split)
 }
 
-select_survey <- function(clinical, survey_name, .clinical_dic = clinical_dic) {
-  survey_fields <- .clinical_dic %>%
-    dplyr::filter(`Form Name` == survey_name) %>%
-    dplyr::select(`Variable / Field Name`) %>%
-    unlist() %>%
-    as.vector()
-  clinical_data <- clinical %>%
-    dplyr::select(guid, redcap_event_name, tidyselect::any_of(survey_fields), study_cohort) # checkbox fields not included
-  return(clinical_data)
-}
 
 #' Return the clinical forms this record contains
 has_forms <- function(record) {
