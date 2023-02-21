@@ -2470,9 +2470,9 @@ SeriousAdvrsEvntInd,AdverseEvents,at-home-pd,36 months,NA
 SeriousAdvrsEvntInd,AdverseEvents,super-pd,Baseline,NA
 SeriousAdvrsEvntInd,AdverseEvents,super-pd,Physician_ON,NA
 SeriousAdvrsEvntInd,AdverseEvents,super-pd,Physician_OFF,NA
-AdverseEvntEndDateTime,AdverseEvents,at-home-pd,Baseline,NA
-AdverseEvntEndDateTime,AdverseEvents,at-home-pd,12 months,NA
-AdverseEvntEndDateTime,AdverseEvents,at-home-pd,24 months,NA
+AdverseEvntEndDateTime,AdverseEvents,at-home-pd,Baseline,reslvdt
+AdverseEvntEndDateTime,AdverseEvents,at-home-pd,12 months,reslvdt
+AdverseEvntEndDateTime,AdverseEvents,at-home-pd,24 months,reslvdt
 AdverseEvntEndDateTime,AdverseEvents,at-home-pd,36 months,NA
 AdverseEvntEndDateTime,AdverseEvents,super-pd,Baseline,NA
 AdverseEvntEndDateTime,AdverseEvents,super-pd,Physician_ON,NA

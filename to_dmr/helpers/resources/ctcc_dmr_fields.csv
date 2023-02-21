@@ -350,7 +350,7 @@ MotorStrgthGastrocnmusRtAssmt,,,,,,,,Motor strength Gastrocnemius right assessme
 NeuroExamFind,,,,,,,,Neurological examination findings,,
 MotorStrgthDeltoidLftAssmt,,,,,,,,Motor strength Deltoid left assessment,,
 SeriousAdvrsEvntInd,,,,,,,,The indicator of whether the adverse event is serious.,"See evntcode. ""Should only be answered YES if the outcome of the AE results in at least one of the following: death; a life-threatening adverse drug experience; results in inpatient hospitalization or prolongation of existing hospitalization; a persistent or significant disability/incapacity; or a congenital anomaly/birth defect. If an AE is serious, this provides a trigger that additional information must be provided by the site investigator.""",
-AdverseEvntEndDateTime,,,,,,,,"Date (and time, if applicable and known) on which the adverse event discontinued/stopped",,
+AdverseEvntEndDateTime,reslvdt,reslvdt,reslvdt,,,,,"Date (and time, if applicable and known) on which the adverse event discontinued/stopped",,
 AdvEvntOthrActionTakenTyp,,,,,,,,Type of action taken due to adverse event other than action taken with study intervention/ treatment,,
 AdvrsEvntDuringStudyInd,,,,,,,,Indicator of whether the participant/subject experienced any adverse events during the study,,
 AdvrsEvntSeverScale,,,,,,,,Scale of the severity or intensity of the adverse event,,

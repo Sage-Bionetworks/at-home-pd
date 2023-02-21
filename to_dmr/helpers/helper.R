@@ -46,6 +46,24 @@ read_dmr <- function(synapse_id) {
     select(-record)
 }
 
+read_all_dmr <- function() {
+  parent_folder <- "syn25759357"
+  dmr_files <- synapser::synGetChildren(
+      parent=parent_folder,
+      includeTypes = list("file")
+  )$asList()
+  form_names <- purrr::map(dmr_files, function(f) {
+    form_name <- str_sub(f$name, end=length(f$name)-6)
+    return(form_name)
+  })
+  forms <- purrr::map(dmr_files, function(f) {
+    form <- read_dmr(f$id)
+    return(form)
+  })
+  names(forms) <- form_names
+  return(forms)
+}
+
 which_cohort <- function(clinical, column) {
     relevant_records <- clinical %>%
         filter(!is.na({{ column }}))
