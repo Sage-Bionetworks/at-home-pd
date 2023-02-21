@@ -96,6 +96,10 @@
             "ounces": "oz",
             "ug": "mcg",
             "mg": "mg"
+        },
+        "indication": {
+            "sleep aid": "sleep",
+            "Sleep Aid": "sleep"
         }
     },
     "concomitant_medications": {
@@ -178,6 +182,13 @@
         "conmed_dose_route_other": {
             "applied to ears": "By ear",
             "applied to eyes": "Topical"
+        },
+        "conmed_indication": {
+            "parkinson's disease": "pd",
+            "Parkinson disease": "pd",
+            "Parkinson's Disease": "pd",
+            "Parkinson's disease": "pd",
+            "sleep aid": "sleep"
         }
     },
     "mdsupdrs": {
@@ -283,7 +294,7 @@
             "Lost to follow-up": "Other, specify",
             "Reason specified by the protocol": "Other, specify",
             "Unwilling/unable to commit time and/or resources, moved from area, etc.": "I didn't have time/Being in the study wasn't worth my time",
-            "Lost to follow-up": "Other, specify",
+            "Reportable Event (complete Reportable Event log)": "Other, specify",
             "Other, specify": "Other, specify"
         }
     },

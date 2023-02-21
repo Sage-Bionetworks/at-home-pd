@@ -6,6 +6,7 @@ library(synapser)
 library(tidyverse)
 library(lubridate)
 library(glue)
+library(logger)
 
 AHPD_MDSUPDRS_SCORES <- "syn25050919"
 SUPER_OFF_MDSUPDRS_SCORES <- "syn25165548"
@@ -54,11 +55,16 @@ read_synapse_json <- function(synapse_id) {
 #' @param visit_date_col The mandatory field where the form collection date
 #' is recorded
 #' @return boolean
-has_form_info <- function(record, visit_date_col) {
+has_form_info <- function(record, form_name, visit_date_col) {
   if (is.null(visit_date_col)) {
     repeat_instrument  <- record[["redcap_repeat_instrument"]]
     if (!is.na(repeat_instrument) &&
+        form_name == "concomitant_medication_log" &&
         repeat_instrument == "Concomitant Medication Log") {
+      return(TRUE)
+    } else if (!is.na(repeat_instrument) &&
+        form_name == "reportable_event" &&
+        repeat_instrument == "Reportable Event") {
       return(TRUE)
     } else { # This isn't a form relevant to this study
       return(FALSE)
@@ -132,11 +138,13 @@ get_visit_type <- function(cohort, redcap_event_name) {
   visit_type <- case_when(
     cohort == "at-home-pd" && str_detect(redcap_event_name, "Baseline") ~ "Baseline",
     cohort == "at-home-pd" && str_detect(redcap_event_name, "Screening") ~ "Baseline",
-    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 12") ~ "Month 12",
-    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 24") ~ "Month 24",
-    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 36") ~ "Month 36",
-    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 48") ~ "Month 48",
-    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 60") ~ "Month 60",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 12") ~ "12 months",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 24") ~ "24 months",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 36") ~ "36 months",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 48") ~ "48 months",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Month 60") ~ "60 months",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Reconsent") ~ "36 months",
+    cohort == "at-home-pd" && str_detect(redcap_event_name, "Premature") ~ "60 months",
     cohort == "super-pd" ~ "Baseline",
     TRUE ~ "Baseline") # Logs and Premature Withdrawal
   return(visit_type)
@@ -174,6 +182,7 @@ build_visit_date_mapping <- function(clinical) {
                get_visit_type)))
   return(visit_date_mapping)
 }
+
 #' Parse concomitant medication record for DMR, AT-HOME PD Cohort
 #'
 #' Participants can have multiple concomitant medication records for a single
@@ -187,17 +196,26 @@ build_visit_date_mapping <- function(clinical) {
 #' @param visit_date_mapping A mapping of GUID to visit type and date
 #' @param value_mapping The value mapping. A list with heirarchy form > field identifier.
 #' @return A tibble with fields specific to concomitant medications
-parse_concomitant_medication_record_ahpd <- function(record, visit_date_mapping, value_mapping) {
+parse_concomitant_medication_record_ahpd <- function(record, visit_date_mapping,
+                                                     value_mapping, dob_mapping) {
   med_map <- value_mapping[["concomitant_medication_log"]]
-  is_pd_med <- record$pd_med_yn == "Yes"
-  route <- value_map(med_map, "route", record$route)
-  route_oth <- value_map(med_map, "route_oth", record$route_oth)
   pd_meds <- value_map(med_map, "pd_meds", record$pd_meds)
   pd_med_other <- value_map(med_map, "pd_med_other", record$pd_med_other)
+  is_pd_med <- !is.na(record$pd_med_yn) && record$pd_med_yn == "Yes"
+  recognized_pd_med <- is_pd_med && !(is.na(pd_meds) && is.na(pd_med_other))
+  if (is_pd_med && !recognized_pd_med) {
+    log_warn(glue("Neither {record$pd_meds} nor {record$pd_med_other}",
+                  " is a recognized PD medication. We will include this medication",
+                  " under the field `Other Medications.MedctnPriorConcomName`"))
+  }
+  is_other_medication <- !recognized_pd_med
+  route <- value_map(med_map, "route", record$route)
+  route_oth <- value_map(med_map, "route_oth", record$route_oth)
   freq <- value_map(med_map, "freq", record$freq)
   freq_oth <- value_map(med_map, "freq_oth", record$freq_oth, other_specify=TRUE)
   units  <- value_map(med_map, "units", record$units)
   units_oth  <- value_map(med_map, "units", record$units_oth, other_specify=TRUE)
+  indication <- value_map(med_map, "indication", record$indication, as_is=TRUE)
   visits <- visit_date_mapping %>%
     filter(guid == record$guid,
            redcap_event_name %in% list(
@@ -218,6 +236,9 @@ parse_concomitant_medication_record_ahpd <- function(record, visit_date_mapping,
       #' the visit at which this medication was reported.
       if (is.na(record$start_dt)) {
         # If no start date provided, assume earliest visit type
+        log_warn(glue("No medication start date provided for medication",
+                      " either {pd_meds} or {pd_med_other} or {record$non_pd_med}.",
+                      " Assuming VisitTypPDBP = 'Baseline'."))
         return(visit_type)
       } else if (record$start_dt <= visit_date) {
         return(visit_type)
@@ -230,56 +251,100 @@ parse_concomitant_medication_record_ahpd <- function(record, visit_date_mapping,
     # In this case the start date of the medication was later than the
     # most recent visit. We assume this was reported at the most recent visit.
     visit_type <- dplyr::last(visits$VisitTypPDBP)
+    log_warn(glue("Medication start date for medication",
+                  " either {pd_meds} or {pd_med_other} or {record$non_pd_med}",
+                  " is later than most recent visit.",
+                  " Assuming VisitTypPDBP = '{visit_type}'."))
   }
+  visit_date <- visits[visits$VisitTypPDBP == visit_type,][["visstatdttm"]]
+  age_in_months <- get_age_in_months(
+        current_date = visit_date,
+        dob_mapping = dob_mapping,
+        participant_id = record[["guid"]])
   dmr_record <- tibble(
-      `Required Fields.VisitTypPDBP` = visit_type,
+      VisitTypPDBP = visit_type,
+      VisitDate = as.character(visit_date),
+      AgeVal = as.character(age_in_months),
       `Parkinson's Disease Medications.MedctnPriorConcomRteTyp` = case_when(
-        is_pd_med && !is.na(route) ~ route,
-        is_pd_med && !is.na(route_oth) ~ route_oth,
+        recognized_pd_med && !is.na(route) ~ route,
+        recognized_pd_med && !is.na(route_oth) ~ route_oth,
         TRUE ~ NA_character_),
       `Other Medications.MedctnPriorConcomRteTyp` = case_when(
-        !is_pd_med && !is.na(route) ~ route,
-        !is_pd_med && !is.na(route_oth) ~ route_oth,
+        is_other_medication && !is.na(route) ~ route,
+        is_other_medication && !is.na(route_oth) ~ route_oth,
         TRUE ~ NA_character_),
       `Parkinson's Disease Medications.MedctnPriorConcomPD` = case_when(
-        is_pd_med && !is.na(pd_meds) ~ pd_meds,
-        is_pd_med && !is.na(pd_med_other) ~ pd_med_other,
+        recognized_pd_med && !is.na(pd_meds) ~ pd_meds,
+        recognized_pd_med && !is.na(pd_med_other) ~ pd_med_other,
       TRUE ~ NA_character_),
       `Other Medications.MedctnPriorConcomName` = case_when(
-        !is_pd_med ~ record$non_pd_med,
+        is_other_medication && !is_pd_med ~ record$non_pd_med,
+        is_other_medication && record$pd_meds != "Other" ~ record$pd_meds,
+        is_other_medication && !is.na(record$pd_med_other) ~ record$pd_med_other,
         TRUE ~ NA_character_),
-      `Other Medications.MedctnPriorConcomIndTxt` = record$indication,
+      `Other Medications.MedctnPriorConcomIndTxt` = tolower(indication),
       `Parkinson's Disease Medications.MedctnPriorConcomFreqTxt` = case_when(
-        is_pd_med && !is.na(freq) ~ freq,
-        is_pd_med && !is.na(freq_oth) ~ freq_oth,
+        recognized_pd_med && !is.na(freq) ~ freq,
+        recognized_pd_med && !is.na(freq_oth) ~ freq_oth,
         TRUE ~ NA_character_),
       `Other Medications.MedctnPriorConcomFreqTxt` = case_when(
-        !is_pd_med && !is.na(freq) ~ freq,
-        !is_pd_med && !is.na(freq_oth) ~ freq_oth,
+        is_other_medication && !is.na(freq) ~ freq,
+        is_other_medication && !is.na(freq_oth) ~ freq_oth,
         TRUE ~ NA_character_),
       `Parkinson's Disease Medications.MedctnPriorConcomDoseMsrTxt` =
         case_when(
-          is_pd_med ~ record$dose,
+          recognized_pd_med ~ record$dose,
           TRUE ~ NA_character_),
       `Other Medications.MedctnPriorConcomDoseMsrTxt` =
         case_when(
-          !is_pd_med ~ record$dose,
+          is_other_medication ~ record$dose,
           TRUE ~ NA_character_),
       `Parkinson's Disease Medications.MedctnPriorConcomDoseUoM` = case_when(
-        is_pd_med && record$units == "other" ~ ifelse(!is.na(units_oth), units_oth, NA_character_),
-        is_pd_med && !is.na(units) ~ units,
-        is_pd_med && !is.na(units_oth) ~ units_oth,
+        recognized_pd_med && record$units == "other" ~ ifelse(!is.na(units_oth), units_oth, NA_character_),
+        recognized_pd_med && !is.na(units) ~ units,
+        recognized_pd_med && !is.na(units_oth) ~ units_oth,
         TRUE ~ NA_character_),
       `Other Medications.MedctnPriorConcomDoseUoM` = case_when(
-        !is_pd_med && record$units == "other" ~ ifelse(!is.na(units_oth), units_oth, NA_character_),
-        !is_pd_med && !is.na(units) ~ units,
-        !is_pd_med && !is.na(units_oth) ~ units_oth,
+        is_other_medication && record$units == "other" ~ ifelse(!is.na(units_oth), units_oth, NA_character_),
+        is_other_medication && !is.na(units) ~ units,
+        is_other_medication && !is.na(units_oth) ~ units_oth,
         TRUE ~ NA_character_),
       `Parkinson's Disease Medications.MedctnPriorConcomMinsLstDose` = NA_character_,
       `Parkinson's Disease Medications.MedctnPriorConcomHrsLstDose` = NA_character_)
+  dmr_record[["AgeYrs"]] <- as.character(as.integer(
+    dmr_record[["AgeVal"]]) %/% 12)
+  dmr_record[["AgeRemaindrMonths"]] <- as.character(as.integer(
+    dmr_record[["AgeVal"]]) %% 12)
   return(dmr_record)
 }
 
+#' Remove duplicates from DMR-formatted concomitant medications
+#'
+#' For medications which do not have a start date (AHPD cohort) and were all
+#' given VisitTypPDBP = 'Baseline', or for repeat medications (SUPER-PD cohort),
+#' keep only unique medication names per each visit, keeping the most recently
+#' reported medication.
+remove_duplicate_concomitant_medication_record <- function(concomitant_medications) {
+  # reverse order so that we keep most recent entry
+  concomitant_medications_pd <- concomitant_medications %>%
+    filter(!is.na(`Parkinson's Disease Medications.MedctnPriorConcomPD`)) %>%
+    arrange(desc(row_number())) %>%
+    distinct(GUID,
+             VisitTypPDBP,
+             `Parkinson's Disease Medications.MedctnPriorConcomPD`,
+             .keep_all=TRUE)
+  concomitant_medications_other <- concomitant_medications %>%
+    filter(!is.na(`Other Medications.MedctnPriorConcomName`)) %>%
+    arrange(desc(row_number())) %>%
+    distinct(GUID,
+             VisitTypPDBP,
+             `Other Medications.MedctnPriorConcomName`,
+             .keep_all=TRUE)
+  concomitant_medications_clean <- bind_rows(
+     concomitant_medications_pd,
+     concomitant_medications_other)
+  return(concomitant_medications_clean)
+}
 
 #' Parse concomitant medication record for DMR, SUPER PD Cohort
 #'
@@ -300,11 +365,19 @@ parse_concomitant_medication_record_spd <- function(record, value_mapping) {
   med_map <- value_mapping[["concomitant_medications"]]
   num_medications <- as.integer(record$conmed_num)
   dmr_records <- purrr::map_dfr(1:num_medications, function(n) {
-    if (!hasName(record, glue("conmed_{n}"))) {
+    if (!hasName(record, glue("conmed_{n}")) || is.na(record[[glue("conmed_{n}")]])) {
       return(tibble())
     }
-    is_pd_med <- record[[glue("conmed_pd_{n}")]] == "Yes"
     conmed <- value_map(med_map, "conmed", record[[glue("conmed_{n}")]])
+    is_pd_med <- !is.na(conmed) || record[[glue("conmed_pd_{n}")]] == "Yes"
+    recognized_pd_med <- is_pd_med && !is.na(conmed)
+    if (is_pd_med && !recognized_pd_med) {
+      conmed_raw <- record[[glue("conmed_{n}")]]
+      log_warn(glue("{conmed_raw} is not a recognized PD medication.",
+                    " We will include this medication",
+                    " under the field `Other Medications.MedctnPriorConcomName`"))
+    }
+    is_other_medication <- !recognized_pd_med
     conmed_dose_amt <- as.character(record[[glue("conmed_dose_amt_{n}")]])
     conmed_dose_unit <- value_map(
       med_map, "conmed_dose_unit", record[[glue("conmed_dose_unit_{n}")]])
@@ -320,33 +393,54 @@ parse_concomitant_medication_record_spd <- function(record, value_mapping) {
       med_map, "conmed_dose_route", record[[glue("conmed_dose_route_{n}")]])
     conmed_dose_route_other <- value_map(
       med_map, "conmed_dose_route_other", record[[glue("conmed_dose_route_other_{n}")]])
-    conmed_indication <- record[[glue("conmed_indication_{n}")]]
+    conmed_indication <- value_map(
+      med_map, "conmed_indication", record[[glue("conmed_indication_{n}")]], as_is=TRUE)
     dmr_record <- tibble(
-        MedctnPriorConcomRteTyp = case_when(
-          !is.na(conmed_dose_route) ~ conmed_dose_route,
-          !is.na(conmed_dose_route_other) ~ conmed_dose_route_other,
+      `Parkinson's Disease Medications.MedctnPriorConcomRteTyp` = case_when(
+        recognized_pd_med && !is.na(conmed_dose_route) ~ conmed_dose_route,
+        recognized_pd_med && !is.na(conmed_dose_route_other) ~ conmed_dose_route_other,
+        TRUE ~ NA_character_),
+      `Other Medications.MedctnPriorConcomRteTyp` = case_when(
+        is_other_medication && !is.na(conmed_dose_route) ~ conmed_dose_route,
+        is_other_medication && !is.na(conmed_dose_route_other) ~ conmed_dose_route_other,
+        TRUE ~ NA_character_),
+      `Parkinson's Disease Medications.MedctnPriorConcomPD` = case_when(
+        recognized_pd_med ~ conmed,
+        TRUE ~ NA_character_),
+      `Other Medications.MedctnPriorConcomName` = case_when(
+        is_other_medication ~ record[[glue("conmed_{n}")]],
+        TRUE ~ NA_character_),
+      `Other Medications.MedctnPriorConcomIndTxt` = tolower(conmed_indication),
+      `Parkinson's Disease Medications.MedctnPriorConcomFreqTxt` = case_when(
+        recognized_pd_med && !is.na(conmed_dose_frequency) ~ conmed_dose_frequency,
+        recognized_pd_med && !is.na(conmed_dose_frequency_other) ~ conmed_dose_frequency_other,
+        TRUE ~ NA_character_),
+      `Other Medications.MedctnPriorConcomFreqTxt` = case_when(
+        is_other_medication && !is.na(conmed_dose_frequency) ~ conmed_dose_frequency,
+        is_other_medication && !is.na(conmed_dose_frequency_other) ~ conmed_dose_frequency_other,
+        TRUE ~ NA_character_),
+      `Parkinson's Disease Medications.MedctnPriorConcomDoseMsrTxt` =
+        case_when(
+          recognized_pd_med ~ conmed_dose_amt,
           TRUE ~ NA_character_),
-        MedctnPriorConcomPD = case_when(
-          !is.na(conmed) ~ conmed,
+      `Other Medications.MedctnPriorConcomDoseMsrTxt` =
+        case_when(
+          is_other_medication ~ conmed_dose_amt,
           TRUE ~ NA_character_),
-        MedctnPriorConcomName = case_when(
-          is.na(conmed) ~ record[[glue("conmed_{n}")]],
-          !is.null(conmed) && !is.na(conmed) ~ conmed,
-          TRUE ~ NA_character_),
-        MedctnPriorConcomIndTxt = conmed_indication,
-        MedctnPriorConcomFreqTxt = case_when(
-          !is.na(conmed_dose_frequency) ~ conmed_dose_frequency,
-          !is.na(conmed_dose_frequency_other) ~ conmed_dose_frequency_other,
-          TRUE ~ NA_character_),
-        MedctnPriorConcomDoseMsrTxt = conmed_dose_amt,
-        MedctnPriorConcomDoseUoM = case_when(
-          record[[glue("conmed_dose_unit_{n}")]] == "other" ~ ifelse(
+      `Parkinson's Disease Medications.MedctnPriorConcomDoseUoM` = case_when(
+        recognized_pd_med && record[[glue("conmed_dose_unit_{n}")]] == "other" ~ ifelse(
               !is.na(conmed_dose_unit_other), conmed_dose_unit_other, NA_character_),
-          !is.na(conmed_dose_unit) ~ conmed_dose_unit,
-          !is.na(conmed_dose_unit_other) ~ conmed_dose_unit_other,
-          TRUE ~ NA_character_),
-        MedctnPriorConcomMinsLstDose = NA_character_,
-        MedctnPriorConcomHrsLstDose = NA_character_)
+        recognized_pd_med && !is.na(conmed_dose_unit) ~ conmed_dose_unit,
+        recognized_pd_med && !is.na(conmed_dose_unit_other) ~ conmed_dose_unit_other,
+        TRUE ~ NA_character_),
+      `Other Medications.MedctnPriorConcomDoseUoM` = case_when(
+        is_other_medication && record[[glue("conmed_dose_unit_{n}")]] == "other" ~ ifelse(
+              !is.na(conmed_dose_unit_other), conmed_dose_unit_other, NA_character_),
+        is_other_medication && !is.na(conmed_dose_unit) ~ conmed_dose_unit,
+        is_other_medication && !is.na(conmed_dose_unit_other) ~ conmed_dose_unit_other,
+        TRUE ~ NA_character_),
+      `Parkinson's Disease Medications.MedctnPriorConcomMinsLstDose` = NA_character_,
+      `Parkinson's Disease Medications.MedctnPriorConcomHrsLstDose` = NA_character_)
     return(dmr_record)
   })
   return(dmr_records)
@@ -393,6 +487,9 @@ parse_mdsupdrs_ahpd <- function(record, field_mapping, value_mapping,
         participant_id = record$guid,
         date_of_exam = as.Date(record[[date_field]]))
   } else {
+    log_warn(glue("Did not find MDS-UPDRS section scores for",
+                  " {record$guid} at visit {this_visit} and",
+                  " date {record[[date_field]]}"))
     section_scores <- tibble(
         name = character(),
         value = character())
@@ -526,8 +623,6 @@ parse_mdsupdrs_fox <- function(record, field_mapping, scores=NULL, date_field=NU
       scores = scores,
       participant_id = record[["guid"]],
       date_of_exam = as.Date(record[[date_field]]))
-  #message(dmr_record)
-  #message(section_scores)
   dmr_record <- dmr_record %>%
     anti_join(section_scores, by = "name") %>%
     bind_rows(section_scores) %>%
@@ -784,7 +879,6 @@ parse_demographics_ahpd <- function(record, field_mapping, value_mapping) {
   return(dmr_record)
 }
 
-
 #' Parse Demographic info for the SUPER PD cohort
 #'
 #' Get fields unique to DMR Demographics form.
@@ -833,7 +927,8 @@ parse_demographics_spd <- function(record, field_mapping, value_mapping) {
 #' @param value_mapping The value mapping. A list with
 #' heirarchy (form) > (field identifier) > (values).
 #' @return A tibble with fields specific to the DMR AdverseEvents form
-parse_reportable_event <- function(record, field_mapping, value_mapping) {
+parse_reportable_event <- function(record, field_mapping,
+                                   value_mapping, visit_date_mapping, dob_mapping) {
   this_field_mapping <- field_mapping %>%
     filter(form_name == "AdverseEvents",
            cohort == "at-home-pd",
@@ -856,6 +951,7 @@ parse_reportable_event <- function(record, field_mapping, value_mapping) {
       })
   dmr_record <- dmr_record %>%
     pivot_wider(names_from = name, values_from = value)
+  dmr_record$AdvrsEvntDuringStudyInd <- "Yes"
   serious_event_codes <- c(
       record$evntcode___4, record$evntcode___5, record$evntcode___6,
       record$evntcode___8, record$evntcode___9, record$evntcode___10,
@@ -875,6 +971,22 @@ parse_reportable_event <- function(record, field_mapping, value_mapping) {
    record$evntcode___5  == "Checked" ~ "Severe",
    record$evntcode___6  == "Checked" ~ "Severe",
    dmr_record$SeriousAdvrsEvntInd == "Yes" ~ NA_character_)
+  # Set Visit Date and Age fields based on visit type
+  visits <- visit_date_mapping %>%
+    filter(guid == record$guid)
+  visit_date <- visits[visits$redcap_event_name == record$redcap_event_name,][["visstatdttm"]]
+  visit_type <- visits[visits$redcap_event_name == record$redcap_event_name,][["VisitTypPDBP"]]
+  age_in_months <- get_age_in_months(
+        current_date = visit_date,
+        dob_mapping = dob_mapping,
+        participant_id = record[["guid"]])
+  dmr_record[["VisitTypPDBP"]] <- visit_type
+  dmr_record[["VisitDate"]] <- as.character(visit_date)
+  dmr_record[["AgeVal"]] <- as.character(age_in_months)
+  dmr_record[["AgeYrs"]] <- as.character(as.integer(
+    dmr_record[["AgeVal"]]) %/% 12)
+  dmr_record[["AgeRemaindrMonths"]] <- as.character(as.integer(
+    dmr_record[["AgeVal"]]) %% 12)
   return(dmr_record)
 }
 
@@ -1073,7 +1185,7 @@ parse_mod_schwab_and_england <- function(record, field_mapping, value_mapping) {
   return(dmr_record)
 }
 
-parse_fox_about_you <- function(dob_mapping, field_mapping) {
+parse_fox_about_you <- function(dob_mapping, field_mapping, visit_date_mapping) {
   about_you <- read_synapse_csv("syn21670545")
   dmr_records <- purrr::pmap_dfr(about_you, function(...) {
     record <- list(...)
@@ -1089,6 +1201,8 @@ parse_fox_about_you <- function(dob_mapping, field_mapping) {
     vital_signs <- bind_cols(universal_fields, vital_signs)
     return(vital_signs)
   })
+  dmr_records <- dmr_records %>%
+    mutate(VisitTypPDBP = get_associated_visit_type(GUID, VisitDate, visit_date_mapping))
   all_names <- field_mapping %>%
     filter(form_name == "Vital Signs") %>%
     distinct(dmr_variable)
@@ -1100,7 +1214,7 @@ parse_fox_about_you <- function(dob_mapping, field_mapping) {
   return(dmr_records)
 }
 
-parse_fox_environmental_exposure <- function(dob_mapping, field_mapping) {
+parse_fox_environmental_exposure <- function(dob_mapping, field_mapping, visit_date_mapping) {
   alcohol <- read_synapse_csv("syn21670561")
   smoking <- read_synapse_csv("syn21670551")
   dmr_alcohol <- purrr::pmap_dfr(alcohol, function(...) {
@@ -1136,7 +1250,8 @@ parse_fox_environmental_exposure <- function(dob_mapping, field_mapping) {
   dmr_behavior <- full_join(
       dmr_alcohol, dmr_smoking,
       by = c("GUID", "VisitDate", "SiteName", "AgeVal",
-             "VisitTypPDBP", "AgeYrs", "AgeRemaindrMonths"))
+             "VisitTypPDBP", "AgeYrs", "AgeRemaindrMonths")) %>%
+    mutate(VisitTypPDBP = get_associated_visit_type(GUID, VisitDate, visit_date_mapping))
   all_names <- field_mapping %>%
     filter(form_name == "BehavioralHistory") %>%
     distinct(dmr_variable)
@@ -1195,12 +1310,12 @@ get_associated_visit_type <- function(guids, study_dates, visit_date_mapping) {
         # most recent visit. We associate this with the next visit, or the last possible visit.
         last_available_visit_type <- dplyr::last(visits$VisitTypPDBP)
         visit_type <- case_when(
-          last_available_visit_type == "Baseline" ~ "Month 12",
-          last_available_visit_type == "Month 12" ~ "Month 24",
-          last_available_visit_type == "Month 24" ~ "Month 36",
-          last_available_visit_type == "Month 36" ~ "Month 48",
-          last_available_visit_type == "Month 48" ~ "Month 60",
-          last_available_visit_type == "Month 60" ~ "Month 60",
+          last_available_visit_type == "Baseline" ~ "12 months",
+          last_available_visit_type == "12 months" ~ "24 months",
+          last_available_visit_type == "24 months" ~ "36 months",
+          last_available_visit_type == "36 months" ~ "48 months",
+          last_available_visit_type == "48 months" ~ "60 months",
+          last_available_visit_type == "60 months" ~ "60 months",
         )
       }
       return(visit_type)
@@ -1239,7 +1354,7 @@ parse_fox_movement <- function(visit_date_mapping) {
   return(section_2)
 }
 
-parse_fox_family_history <- function(dob_mapping, field_mapping) {
+parse_fox_family_history <- function(dob_mapping, field_mapping, visit_date_mapping) {
   family_history <- read_synapse_csv("syn21670518")
   conditions <- list(
       Parkinson = "Parkinson's disease", Alzheimer = "Alzheimer's disease",
@@ -1294,6 +1409,8 @@ parse_fox_family_history <- function(dob_mapping, field_mapping) {
     dmr_family_history <- bind_cols(universal_fields, condition_records)
     return(dmr_family_history)
   })
+  dmr_family_history <- dmr_family_history %>%
+    mutate(VisitTypPDBP = get_associated_visit_type(GUID, VisitDate, visit_date_mapping))
   irrelevant_conditions <- c(
     "Ataxia", "Brain aneurysm", "Cancer", "Dementia", "Depression",
     "Diabetes mellitus", "Heart disease", "Hypertension",
@@ -1346,8 +1463,10 @@ value_map <- function(mapping, field, key, as_is = FALSE, other_specify=FALSE) {
 #' @param field The name of the clinical variable in `record` to map
 #' @return An integer MDS-UPDRS score
 value_map_updrs <- function(mapping, record, field) {
-  # IF (This DMR field has no mapping to the clinical data ||
-  #     The clinical field is empty in the clinical data)
+  # IF (
+  # This DMR field has no mapping to the clinical data
+  #   OR
+  # The clinical field is empty in the clinical data)
   if (is.na(field) || is.null(record[[field]])) {
     return(NA_character_)
   }
@@ -1479,6 +1598,13 @@ modify_header <- function(records, form_name, form_to_header_mapping) {
   return(records[actual_headers])
 }
 
+configure_logger <- function(guid, redcap_event_name) {
+  identifier <- glue("{guid}/{redcap_event_name}")
+  logger_layout <- logger::layout_glue_generator(
+      format=paste0("{level} [", identifier, "/{fn}]: {msg}"))
+  logger::log_layout(logger_layout)
+}
+
 parse_form <- function(record, form, field_mapping, value_mapping, ...) {
   kwargs <- list(...)
   parsed_form <- tibble()
@@ -1506,7 +1632,8 @@ parse_form <- function(record, form, field_mapping, value_mapping, ...) {
     parsed_form <- parse_concomitant_medication_record_ahpd(
         record = record,
         visit_date_mapping = kwargs$visit_date_mapping,
-        value_mapping = value_mapping)
+        value_mapping = value_mapping,
+        dob_mapping = kwargs$dob_mapping)
   } else if (form == "concomitant_medications") {
     parsed_form <- parse_concomitant_medication_record_spd(
         record = record,
@@ -1547,11 +1674,15 @@ parse_form <- function(record, form, field_mapping, value_mapping, ...) {
     parsed_form <- parse_pdq_39(
         record = record,
         field_mapping = field_mapping)
-  } else if (form == "reportable_event") {
+  } else if (form == "reportable_event" &&
+             !is.na(record$reportableeventyn) &&
+             record$reportableeventyn == "Yes") {
     parsed_form <- parse_reportable_event(
         record = record,
         field_mapping = field_mapping,
-        value_mapping = value_mapping)
+        value_mapping = value_mapping,
+        visit_date_mapping = kwargs$visit_date_mapping,
+        dob_mapping = kwargs$dob_mapping)
   } else if (form == "conclusion") {
     parsed_form <- parse_conclusion(
         record = record,
@@ -1567,7 +1698,8 @@ parse_form <- function(record, form, field_mapping, value_mapping, ...) {
 #' SUPER PD participants have one screening event, one baseline event, and
 #' one physician visit. AT-HOME PD participants have a screening event,
 #' a baseline visit, a pre 12 month event, a 12 month event, a pre 24 month
-#' event, and a 24 month event.
+#' event, a 24 month event, and month 36, 48, and 60 events. Concomitant
+#' medications are not associated with an event in the redcap data.
 main <- function() {
   synapser::synLogin()
   # Load all reference material and clinical data
@@ -1588,9 +1720,12 @@ main <- function() {
     "Physician_ON" = read_synapse_csv(SUPER_ON_MDSUPDRS_SCORES),
     "Physician_OFF" = read_synapse_csv(SUPER_OFF_MDSUPDRS_SCORES))
   fox_mdsupdrs_scores <- read_synapse_csv(FOX_MDSUPDRS_SCORES)
+
   # Row-wise map each record conditional on its contents
   dmr_records <- purrr::pmap(clinical, function(...) {
     clinical_record <- list(...)
+    configure_logger(guid = clinical_record[["guid"]],
+                     redcap_event_name = clinical_record[["redcap_event_name"]])
     cohort <- clinical_record$study_cohort
     # Iterate through list of potential clinical forms we can parse from
     # this record. Given the clinical form, we can extract the universal fields
@@ -1599,7 +1734,9 @@ main <- function() {
       dmr_records <- purrr::map(AHPD_CLINICAL_FORMS, function(clinical_form) {
         visit_date_col <- form_to_datetime_mapping[[clinical_form]]
         if (!has_form_info(record = clinical_record,
+                           form_name = clinical_form,
                            visit_date_col = visit_date_col)) {
+          log_debug(glue("Missing data for clinical form {clinical_form}"))
           return(tibble())
         }
         universal_fields <- get_universal_fields(
@@ -1613,10 +1750,11 @@ main <- function() {
             form = clinical_form,
             field_mapping = field_mapping,
             value_mapping = value_mapping,
-            visit_date_mapping = visit_date_mapping)
-        if (clinical_form == "concomitant_medication_log") {
+            visit_date_mapping = visit_date_mapping,
+            dob_mapping = dob_mapping)
+        if (clinical_form %in% c("concomitant_medication_log", "reportable_event")) {
           universal_fields <- universal_fields %>%
-            select(-VisitTypPDBP)
+            select(-VisitTypPDBP, -VisitDate, -AgeYrs, -AgeVal, -AgeRemaindrMonths)
         }
         dmr_record <- bind_cols(universal_fields, form_specific_fields)
         return(dmr_record)
@@ -1626,7 +1764,9 @@ main <- function() {
       dmr_records <- purrr::map(SUPER_CLINICAL_FORMS, function(clinical_form) {
         visit_date_col <- form_to_datetime_mapping[[clinical_form]]
         if (!has_form_info(record = clinical_record,
+                           form_name = clinical_form,
                            visit_date_col = visit_date_col)) {
+          log_debug(glue("Missing data for clinical form {clinical_form}"))
           return(tibble())
         }
         universal_fields <- get_universal_fields(
@@ -1646,6 +1786,7 @@ main <- function() {
       })
       names(dmr_records) <- SUPER_CLINICAL_FORMS
     } else {
+      log_error(glue("Unknown cohort encounted for GUID { clinical_record$guid }"))
       stop(glue("Unknown cohort encounted for GUID { clinical_record$guid }"))
     }
     return(dmr_records)
@@ -1664,6 +1805,14 @@ main <- function() {
     return(all_forms_of_this_type)
   })
   names(clinical_forms) <- all_form_names
+
+  # Clean up same-visit repeat concomitant medication records
+  clinical_forms[["concomitant_medication_log"]] <-
+    remove_duplicate_concomitant_medication_record(
+      concomitant_medications = clinical_forms[["concomitant_medication_log"]])
+  clinical_forms[["concomitant_medications"]] <-
+    remove_duplicate_concomitant_medication_record(
+      concomitant_medications = clinical_forms[["concomitant_medications"]])
 
   #' The DMR's InformedConsent form has its info spread across two of the
   #' clinical forms. Fortunately, it is easy to stitch together.
@@ -1730,35 +1879,67 @@ main <- function() {
   # previsit_survey/mdsupdrs for the month 12 and 24 visits, and annual_survey
   # for the month 36, 48, and 60 visits. For these latter visits, only part of
   # Part 1 and all of Part 2 of MDSUPDRS is included in the annual_survey form.
-  ahpd_baseline_mdsupdrs <- get_event_and_form_fields(
+  ahpd_pre_baseline_mdsupdrs <- get_event_and_form_fields(
       clinical = clinical,
       clinical_dic = clinical_data_dictionary,
-      event_name = c("Baseline PreVisit Survey (Arm 1: Arm 1)",
-                     "Baseline (Arm 1: Arm 1)"),
-      form_name = c("prebaseline_survey", "mdsupdrs"),
-      visit_date_col = "mdsupdrs_dttm")
-  ahpd_month_12_mdsupdrs <- get_event_and_form_fields(
+      event_name = "Baseline Pre Visit Survey (Arm 1: Arm 1)",
+      form_name = "prebaseline_survey",
+      visit_date_col = "assessdate_fall")
+  ahpd_actual_baseline_mdsupdrs <- get_event_and_form_fields(
       clinical = clinical,
       clinical_dic = clinical_data_dictionary,
-      event_name = c("Month 12 PreVisit Survey (Arm 1: Arm 1)",
-                     "Month 12 (Arm 1: Arm 1)"),
-      form_name = c("previsit_survey", "mdsupdrs"),
+      event_name = "Baseline (Arm 1: Arm 1)",
+      form_name = "mdsupdrs",
       visit_date_col = "mdsupdrs_dttm")
-  ahpd_month_24_mdsupdrs <- get_event_and_form_fields(
+  ahpd_baseline_mdsupdrs <- full_join(
+      ahpd_pre_baseline_mdsupdrs, ahpd_actual_baseline_mdsupdrs, by="guid") %>%
+      mutate(mdsupdrs_dttm = case_when(
+                 is.na(mdsupdrs_dttm) ~ assessdate_fall,
+                 !is.na(mdsupdrs_dttm) ~ mdsupdrs_dttm),
+             visittyppdbpmds = "Baseline") %>%
+      select(-assessdate_fall)
+  ahpd_pre_month_12_mdsupdrs <- get_event_and_form_fields(
       clinical = clinical,
       clinical_dic = clinical_data_dictionary,
-      event_name = c("Month 24 PreVisit Survey (Arm 1: Arm 1)",
-                     "Month 24 (Arm 1: Arm 1)"),
-      form_name = c("previsit_survey", "mdsupdrs"),
+      event_name = "Month 12 Pre Visit Survey (Arm 1: Arm 1)",
+      form_name = "previsit_survey",
+      visit_date_col = "assessdate_fall_m12")
+  ahpd_actual_month_12_mdsupdrs <- get_event_and_form_fields(
+      clinical = clinical,
+      clinical_dic = clinical_data_dictionary,
+      event_name = "Month 12 (Arm 1: Arm 1)",
+      form_name = "mdsupdrs",
       visit_date_col = "mdsupdrs_dttm")
+  ahpd_month_12_mdsupdrs <- full_join(
+      ahpd_pre_month_12_mdsupdrs, ahpd_actual_month_12_mdsupdrs, by="guid") %>%
+      mutate(mdsupdrs_dttm = case_when(
+                 is.na(mdsupdrs_dttm) ~ assessdate_fall_m12,
+                 !is.na(mdsupdrs_dttm) ~ mdsupdrs_dttm),
+             visittyppdbpmds = "12 months") %>%
+      select(-assessdate_fall_m12)
+  ahpd_pre_month_24_mdsupdrs <- get_event_and_form_fields(
+      clinical = clinical,
+      clinical_dic = clinical_data_dictionary,
+      event_name = "Month 24 Pre Visit Survey (Arm 1: Arm 1)",
+      form_name = "previsit_survey",
+      visit_date_col = "assessdate_fall_m12")
+  ahpd_actual_month_24_mdsupdrs <- get_event_and_form_fields(
+      clinical = clinical,
+      clinical_dic = clinical_data_dictionary,
+      event_name = "Month 24 (Arm 1: Arm 1)",
+      form_name = "mdsupdrs",
+      visit_date_col = "mdsupdrs_dttm")
+  ahpd_month_24_mdsupdrs <- full_join(
+      ahpd_pre_month_24_mdsupdrs, ahpd_actual_month_24_mdsupdrs, by="guid") %>%
+      mutate(mdsupdrs_dttm = case_when(
+                 is.na(mdsupdrs_dttm) ~ assessdate_fall_m12,
+                 !is.na(mdsupdrs_dttm) ~ mdsupdrs_dttm),
+             visittyppdbpmds = "24 months") %>%
+      select(-assessdate_fall_m12)
   ahpd_mdsupdrs_baseline_12_24 <- bind_rows(
       ahpd_baseline_mdsupdrs,
       ahpd_month_12_mdsupdrs,
-      ahpd_month_24_mdsupdrs) %>%
-    mutate(visittyppdbpmds = case_when(
-      visittyppdbpmds == "12 months" ~ "Month 12",
-      visittyppdbpmds == "24 months" ~ "Month 24",
-      TRUE ~ visittyppdbpmds))
+      ahpd_month_24_mdsupdrs)
   dmr_records_ahpd_mdsupdrs_baseline_12_24 <- purrr::pmap_dfr(
         ahpd_mdsupdrs_baseline_12_24, function(...) {
     mdsupdrs_record <- list(...)
@@ -1812,9 +1993,9 @@ main <- function() {
       ahpd_month_48_mdsupdrs,
       ahpd_month_60_mdsupdrs) %>%
     mutate(visittyppdbpmds = case_when(
-      startsWith(redcap_event_name, "Month 36") ~ "Month 36",
-      startsWith(redcap_event_name, "Month 48") ~ "Month 48",
-      startsWith(redcap_event_name, "Month 60") ~ "Month 60")) %>%
+      startsWith(redcap_event_name, "Month 36") ~ "36 months",
+      startsWith(redcap_event_name, "Month 48") ~ "48 months",
+      startsWith(redcap_event_name, "Month 60") ~ "60 months")) %>%
     select(-redcap_event_name)
   dmr_records_ahpd_mdsupdrs_36_48_60 <- purrr::pmap_dfr(
         ahpd_mdsupdrs_36_48_60, function(...) {
@@ -1834,7 +2015,6 @@ main <- function() {
     dmr_record <- bind_cols(universal_fields, form_specific_fields)
     return(dmr_record)
   })
-
 
   # And again, Fox Movement survey has an entirely different format
   fox_movement <- parse_fox_movement(visit_date_mapping = visit_date_mapping)
@@ -1877,19 +2057,21 @@ main <- function() {
   # which only have representative fields from Fox
   dmr_forms[["VitalSigns"]] <- parse_fox_about_you(
       dob_mapping = dob_mapping,
-      field_mapping = field_mapping)
+      field_mapping = field_mapping,
+      visit_date_mapping = visit_date_mapping)
   dmr_forms[["BehavioralHistory"]] <- parse_fox_environmental_exposure(
       dob_mapping = dob_mapping,
-      field_mapping = field_mapping)
+      field_mapping = field_mapping,
+      visit_date_mapping = visit_date_mapping)
   dmr_forms[["FamilyHistory"]] <- parse_fox_family_history(
       dob_mapping = dob_mapping,
-      field_mapping = field_mapping)
+      field_mapping = field_mapping,
+      visit_date_mapping = visit_date_mapping)
 
   # Store to Synapse
   purrr::map(names(dmr_forms), function(dmr_form_name) {
     form_data <- dmr_forms[[dmr_form_name]] %>%
-      mutate(GUID = stringr::str_replace_all(GUID, "-", "")) %>%
-    select(dplyr::everything())
+      mutate(GUID = stringr::str_replace_all(GUID, "-", ""))
     form_data <- modify_header(
         records = form_data,
         form_name = dmr_form_name,
