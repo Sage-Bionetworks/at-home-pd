@@ -1327,7 +1327,7 @@ parse_fox_movement <- function(visit_date_mapping) {
   movement_survey <- read_csv(synGet("syn21670565")$path)
   section_2 <- movement_survey %>%
     dplyr::mutate(
-      visit = get_associated_visit_type(guid, study_date, visit_date_mapping),
+      visittyppdbpmds = "Baseline", # Set later in `main`
       MoveWho = dplyr::case_when(
           MoveWho == 1 ~ 2,
           MoveWho == 2 ~ 1,
@@ -1335,7 +1335,7 @@ parse_fox_movement <- function(visit_date_mapping) {
       study_date = as.character(study_date)) %>%
     dplyr::select(
       guid = guid,
-      visittyppdbpmds = visit,
+      visittyppdbpmds,
       mdsupdrs_dttm = study_date,
       mdsupdrschwngswllwngscore = MoveChew,
       mdsupdrsdressingscore = MoveDress,
@@ -1915,7 +1915,7 @@ main <- function() {
       mutate(mdsupdrs_dttm = case_when(
                  is.na(mdsupdrs_dttm) ~ assessdate_fall_m12,
                  !is.na(mdsupdrs_dttm) ~ mdsupdrs_dttm),
-             visittyppdbpmds = "12 months") %>%
+             visittyppdbpmds = "Month 12") %>%
       select(-assessdate_fall_m12)
   ahpd_pre_month_24_mdsupdrs <- get_event_and_form_fields(
       clinical = clinical,
@@ -1934,7 +1934,7 @@ main <- function() {
       mutate(mdsupdrs_dttm = case_when(
                  is.na(mdsupdrs_dttm) ~ assessdate_fall_m12,
                  !is.na(mdsupdrs_dttm) ~ mdsupdrs_dttm),
-             visittyppdbpmds = "24 months") %>%
+             visittyppdbpmds = "Month 24") %>%
       select(-assessdate_fall_m12)
   ahpd_mdsupdrs_baseline_12_24 <- bind_rows(
       ahpd_baseline_mdsupdrs,
@@ -1993,9 +1993,9 @@ main <- function() {
       ahpd_month_48_mdsupdrs,
       ahpd_month_60_mdsupdrs) %>%
     mutate(visittyppdbpmds = case_when(
-      startsWith(redcap_event_name, "Month 36") ~ "36 months",
-      startsWith(redcap_event_name, "Month 48") ~ "48 months",
-      startsWith(redcap_event_name, "Month 60") ~ "60 months")) %>%
+      startsWith(redcap_event_name, "Month 36") ~ "Month 36",
+      startsWith(redcap_event_name, "Month 48") ~ "Month 48",
+      startsWith(redcap_event_name, "Month 60") ~ "Month 60")) %>%
     select(-redcap_event_name)
   dmr_records_ahpd_mdsupdrs_36_48_60 <- purrr::pmap_dfr(
         ahpd_mdsupdrs_36_48_60, function(...) {
@@ -2025,7 +2025,9 @@ main <- function() {
       visit_date_col = "mdsupdrs_dttm",
       dob_mapping = dob_mapping,
       cohort = "at-home-pd",
-      redcap_event_name = mdsupdrs_record[["visittyppdbpmds"]])
+      redcap_event_name = mdsupdrs_record[["visittyppdbpmds"]]) %>%
+      mutate(VisitTypPDBP = get_associated_visit_type(
+                GUID, VisitDate, visit_date_mapping))
     form_specific_fields <- parse_mdsupdrs_fox(
         record = mdsupdrs_record,
         field_mapping = field_mapping,
