@@ -104,7 +104,7 @@ def process_request(bridge, participant_info, phone_number, external_id,
                      "checkForConsent": False,
                      "phone": {"number": phone_number,
                                "regionCode": "US"},
-                     "dataGroups": engagement_groups + ["clinical_consent"],
+                     "dataGroups": engagement_groups + ["clinical_consent", "show_3_cognitive"],
                      "sharingScope": "all_qualified_researchers"}) # assume US?
             return "Success: User account created"
         except Exception as e:
@@ -119,6 +119,8 @@ def process_request(bridge, participant_info, phone_number, external_id,
             user_info = bridge.restGET("/v3/participants/{}".format(user_id))
             if "clinical_consent" not in user_info["dataGroups"]:
                 user_info["dataGroups"] = user_info["dataGroups"] + ["clinical_consent"]
+            if "show_3_cognitive" not in user_info["dataGroups"]:
+                user_info["dataGroups"] = user_info["dataGroups"] + ["show_3_cognitive"]
             if not ("gr_SC_DB" in user_info["dataGroups"] or
                     "gr_SC_CS" in user_info["dataGroups"]):
                 user_info["dataGroups"] = user_info["dataGroups"] + \
@@ -141,16 +143,16 @@ def process_request(bridge, participant_info, phone_number, external_id,
                     {"userId": user_id, "consentRequired": False,
                      "externalId": external_id})
             return ("Success: Preexisting user account found. "
-                    "New External ID assigned.")
+                    "Enrolled in new study.")
         except Exception as e:
             return ("Error: Preexising user account found. "
-                    "Could not assign new external ID. "
+                    "Could not enroll in new study. "
                     "Console output: {0}".format(e))
     elif participant_info['items'][0]['externalIds'][substudy] != external_id:
         # phone and external ID have already been assigned
-        return ("Error: Preexisting account found with guid {}. "
+        return ("Error: Preexisting account found with GUID {}. "
                 "Please contact {} "
-                "if you would like to assign a new guid.".format(
+                "if you would like to assign a new GUID.".format(
                     participant_info['items'][0]['externalIds'][substudy], support_email))
     elif participant_info['items'][0]['externalIds'][substudy] == external_id:
         # account exists and is correct, do nothing
@@ -212,7 +214,7 @@ def is_valid_phone_number(phone_number):
 
 
 def is_valid_guid(guid, substudy):
-    if substudy == "at-home-pd":
+    if substudy == "at-home-pd" or substudy == "at-home-PD2":
         p = re.compile("(NIH-)?\w{4}-\w{3}-\w{3}")
     elif substudy == "Udall-superusers":
         p = re.compile("(NIH)?\w{4}\w{3}\w{3}")

@@ -153,6 +153,16 @@ parse_mds_updrs_notes <- function(s) {
     return(s_split)
 }
 
+select_survey <- function(clinical, survey_name, .clinical_dic = clinical_dic) {
+  survey_fields <- .clinical_dic %>%
+    dplyr::filter(`Form Name` == survey_name) %>%
+    dplyr::select(`Variable / Field Name`) %>%
+    unlist() %>%
+    as.vector()
+  clinical_data <- clinical %>%
+    dplyr::select(guid, redcap_event_name, tidyselect::any_of(survey_fields), study_cohort) # checkbox fields not included
+  return(clinical_data)
+}
 
 #' Return the clinical forms this record contains
 has_forms <- function(record) {
