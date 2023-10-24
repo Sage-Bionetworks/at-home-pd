@@ -1,0 +1,11 @@
+{
+  "InclExclCriteria": ["inclusion_exclusion", "inclusion_exclusion_spd"],
+  "Demographics": ["participant_demographics", "demographics_spd"],
+  "MoCA": ["moca", "substudy_moca", "moca_spd"],
+  "ModSchwabAndEnglandScale": ["modified_schwab_and_england_adl"],
+  "PriorAndConcomitantMeds": ["concomitant_medication_log", "concomitant_medications"],
+  "MDS-UPDRS": ["substudy_mdsupdrs_part_iii", "mdsupdrs_physician_exam", "mdsupdrs"],
+  "PDQ-39": ["pdq39"],
+  "AdverseEvents": ["reportable_event"],
+  "EarlyTerminationQuest": ["conclusion"]
+}

@@ -1,0 +1,322 @@
+{
+    "concomitant_medication_log": {
+        "pd_meds": {
+            "Amantadine (Symmetrel)": "Amantadine (Symmetrel)",
+            "Amantadine ER (Gocovri)": "Amantadine (Symmetrel)",
+            "Benztropine (Cogentin)": "Benztropine (Cogentin)",
+            "Carbidopa": "Carbidopa/levodopa orally disintegrating (Parcopa)",
+            "Carbidopa-Levodopa CR (Rytary)": "Carbidopa/levodopa sustained release (Sinemet CR)",
+            "Carbidopa/Levodopa (Atamet, Sinemet)": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "Carbidopa/Levodopa Orally Disintegrating (Parcopa)": "Carbidopa/levodopa orally disintegrating (Parcopa)",
+            "Carbidopa/Levodopa Substained Release (Sinemet CR)": "Carbidopa/levodopa sustained release (Sinemet CR)",
+            "Carbidopa/Levodopa/Entacapone (Stalevo)": "Carbidopa/levodopa/entacapone (Stalevo)",
+            "Entacapone (Comtan)": "Entacapone (Comtan)",
+            "Pramipexole (Mirapex)": "Pramipexole (Mirapex)",
+            "Pramipexole Extended Release (Mirapex ER)": "Pramipexole extended release (Mirapex ER)",
+            "Rasagiline (Azilect)": "Rasagiline (Azilect)",
+            "Ropinirole (Requip)": "Ropinirole (Requip)",
+            "Ropinirole Extended Release (Requip Xl)": "Ropinirole extended release (Requip XL)",
+            "Rotigotine Transdermal Patch (Neupro)": "Rotigotine transdermal patch (Neupro)",
+            "Selegiline (Eldepryl)": "Selegiline (Eldepryl)",
+            "Selegiline Orally Disintegrating (Zelapar)": "Selegiline orally disintegrating (Zelapar)",
+            "Trihexyphenidyl (Artane, Tremin)": "Trihexyphenidyl (Artane, Tremin)"
+        },
+        "pd_med_other": {
+            "carbidopa levodopa er": "Carbidopa/levodopa sustained release (Sinemet CR)",
+            "Rivastigmine": "Rivastigmine (Exelon)"
+        },
+        "route": {
+            "Oral": "Oral",
+            "IH (Inhaled)": "Inhaled",
+            "IM (Intramuscular)": "Intramuscular",
+            "SQ (Subcutaneous)": "Subcutaneous",
+            "Other": "Unknown",
+            "Topical": "Topical",
+            "IV (Intravenous)": "Intravenous"
+        },
+        "route_oth": {
+            "sublingual": "Sublingual",
+            "Sublingual": "Sublingual",
+            "injection": "Unknown",
+            "suppository": "Rectal",
+            "nasal": "Nasal",
+            "nasal spray": "Nasal",
+            "Nasal": "Nasal",
+            "transdermal patch": "Transdermal",
+            "Injection, right foot": "Unknown",
+            "transdermal": "Transdermal",
+            "intranasal": "Topical",
+            "Intrathecal": "Intrathecal",
+            "eye drops": "Topical"
+        },
+        "freq": {
+            "Four times daily": "QID",
+            "Monthly": "Monthly",
+            "Once daily": "QD",
+            "Other": "Other",
+            "Three times daily": "TID",
+            "Twice daily": "BID",
+            "Weekly": "Weekly",
+            "As needed": "Other, specify"
+        },
+        "freq_oth": {
+            "1-2 times daily": "QD",
+            "1-2x a day": "QD",
+            "112 six days a week, 75 for one day a week": "QD",
+            "4x a day; 1 morning, 2 mid-day, 1 evening": "QID",
+            "as needed once a day": "QD",
+            "once daily and then as needed up to twice daily": "QD",
+            "once daily as needed": "QD",
+            "once daily, on Sundays and Wednesdays takes half dose": "QD",
+            "once or twice a day as needed": "QD",
+            "takes once daily then as needed up to 3 times daily": "QD",
+            ".5 tablet in the morning, then 1 tablet every four hours (4 times per day)": "QID",
+            "1 tablet morning, 0.5 tablet afternoon": "BID",
+            "4 times a day, 1 pill late night": "QID",
+            "6 days on, 1 day off": "QD",
+            "four to five times daily": "QID",
+            "four to six times a day": "QID",
+            "three times daily, plus one half-pill": "QID"
+        },
+        "units": {
+            "application": "Unknown",
+            "capsule": "Unknown",
+            "mL": "mL",
+            "mcg": "mcg",
+            "mg": "mg",
+            "other": "",
+            "puff": "Unknown",
+            "tablet": "Unknown"
+        },
+        "units_oth": {
+            "g": "g",
+            "gram": "g",
+            "grams": "g",
+            "mcg": "mcg",
+            "ounces": "oz",
+            "ug": "mcg",
+            "mg": "mg"
+        },
+        "indication": {
+            "sleep aid": "sleep",
+            "Sleep Aid": "sleep"
+        }
+    },
+    "concomitant_medications": {
+        "conmed": {
+            "amantadine": "Amantadine (Symmetrel)",
+            "amantidine": "Amantadine (Symmetrel)",
+            "Amantadine": "Amantadine (Symmetrel)",
+            "Apomorphine": "Apomorphine (Apokyn)",
+            "Carbidopa-levodopa 25/100": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa 25-100mg": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa levodopa 25-100": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa ER 25-100": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa/levodopa": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "Carbidopa-levodopa 25/100 ER": "Carbidopa/levodopa sustained release (Sinemet CR)",
+            "Carbidopa-levodopa 25/100 ODT": "Carbidopa/levodopa orally disintegrating (Parcopa)",
+            "Carbidopa-levodopa ER 50/200": "Carbidopa/levodopa sustained release (Sinemet CR)",
+            "carbidopa-levodopa ER 36.25-145mg": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa 25-100": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa 25-100 mg": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa 25/100": "Carbidopa/levodopa (Atamet, Sinemet)",
+            "carbidopa-levodopa CR": "Carbidopa/levodopa sustained release (Sinemet CR)",
+            "carbidopa-levodopa ER": "Carbidopa/levodopa sustained release (Sinemet CR)",
+            "Entacapone": "Entacapone (Comtan)",
+            "entacapone": "Entacapone (Comtan)",
+            "Neupro": "Rotigotine transdermal patch (Neupro)",
+            "Pramipexole": "Pramipexole (Mirapex)",
+            "pramipexole": "Pramipexole (Mirapex)",
+            "pramapexole (extended release)": "Pramipexole extended release (Mirapex ER)",
+            "Rasagiline": "Rasagiline (Azilect)",
+            "rasagiline": "Rasagiline (Azilect)",
+            "rasagaline": "Rasagiline (Azilect)",
+            "Ropinirole": "Ropinirole (Requip)",
+            "ropinirole": "Ropinirole (Requip)",
+            "ropinerole": "Ropinirole (Requip)",
+            "ropinerole ER": "Ropiniole extended release (Requip XL)",
+            "Rivastigmine": "Rivastigmine (Exelon)",
+            "Selegiline": "Selegiline (Eldepryl)",
+            "selegiline HCL": "Selegiline (Eldepryl)",
+            "trihexyphenydyl": "Trihexyphenidyl (Artane, Tremin)",
+            "trihexyphenidyl": "Trihexyphenidyl (Artane, Tremin)"
+        },
+        "conmed_dose_unit": {
+            "application": "Unknown",
+            "capsule": "Unknown",
+            "mL": "mL",
+            "mcg": "mcg",
+            "mg": "mg",
+            "other": "",
+            "puff": "Unknown",
+            "tablet": "Unknown"
+        },
+        "conmed_dose_unit_oth": {
+            "g": "g",
+            "grams": "g",
+            "gram": "g"
+        },
+        "conmed_dose_frequency": {
+            "BID": "BID",
+            "QD": "QD",
+            "QID": "QID",
+            "TID": "TID"
+        },
+        "conmed_dose_frequency_other": {
+            "2 tabs qd": "QD",
+            "2 tabs tid": "TID",
+            "7 tab qd": "QD",
+            "QED": "QD"
+        },
+        "conmed_dose_route": {
+            "IV": "Intravenous",
+            "Inhaled": "Inhaled",
+            "Other": "Other, specify",
+            "PO": "Oral",
+            "Topical": "Topical",
+            "IM": "Intramuscular",
+            "Sublingual": "Sublingual"
+        },
+        "conmed_dose_route_other": {
+            "applied to ears": "By ear",
+            "applied to eyes": "Topical"
+        },
+        "conmed_indication": {
+            "parkinson's disease": "pd",
+            "Parkinson disease": "pd",
+            "Parkinson's Disease": "pd",
+            "Parkinson's disease": "pd",
+            "sleep aid": "sleep"
+        }
+    },
+    "mdsupdrs": {
+
+    },
+    "substudy_mdsupdrs_part_iii": {
+        "mdsupdrsptclinstateprknsnm_v2": {
+            "ON: On is the typical functional state when patients are receiving medication and have a good response.": "ON",
+            "OFF: Off is the typical functional state when patients have a poor response in spite of taking medications.": "OFF"
+        },
+        "neck_4": {
+            "Unable to Rate.": "555"
+        },
+        "neck_2": {
+            "Unable to Rate.": "555"
+        },
+        "neck_3": {
+            "Unable to Rate.": "555"
+        },
+        "postinst_instr": {
+            "Unable to Rate.": "555"
+        },
+        "neck_5": {
+            "Unable to Rate.": "555"
+        }
+    },
+    "participant_mdsupdrs_survey": {
+
+    },
+    "mdsupdrs_physician_exam": {
+        "mdsupdrsptclinstateprknsnm": {
+            "ON (On is the typical functional state when patients are receiving medication and have a good response)": "ON",
+            "OFF (Off is the typical functional state when patients have a poor response in spite of taking medications.)": "OFF"
+        }
+    },
+    "moca_spd": {
+
+    },
+    "substudy_moca": {
+      "moca_eduind_v2": {
+          "0 (Subject has more than 12 years)": "1",
+          "1 (Subject has less than or equal to 12 years)": "0"
+      }
+    },
+    "moca": {
+      "moca_eduind": {
+          "0 (Subject has more than 12 years)": "1",
+          "1 (Subject has less than or equal to 12 years)": "0"
+      }
+    },
+    "participant_demographics": {
+        "education": {
+          "Associate's degree": "Associate degree: academic program",
+          "Bachelor's degree": "Bachelor's degree (e.g., BA, AB, BS, BBA)",
+          "Doctorate degree (PhD, EdD, etc)": "Doctoral degree (e.g., PhD, EdD)",
+          "High school diploma (GED or equivalent)": "High school graduate",
+          "Master's degree": "Master's degree (e.g., MA, MS, MEng, MEd, MBA)",
+          "Professional school degree (MD, DDC, JD, etc)": "Professional school degree (e.g., MD, DDS, DVM, JD)",
+          "Some college (1-4 years, no degree)": "Some college, no degree"
+        },
+        "employment": {
+            "Disabled (unable to work)": "Disabled, permanently or temporarily",
+            "Employed, full time": "Working Now",
+            "Employed, part-time": "Working Now",
+            "Homemaker": "Keeping house",
+            "Prefer not to answer": "Unknown",
+            "Retired": "Retired",
+            "Unemployed": "Looking for work, unemployed"
+        }
+    },
+    "demographics_spd": {
+        "demo_education": {
+          "Associate's degree": "Associate degree: academic program",
+          "Bachelor's degree": "Bachelor's degree (e.g., BA, AB, BS, BBA)",
+          "Doctorate degree (PhD, EdD, etc)": "Doctoral degree (e.g., PhD, EdD)",
+          "High school diploma (GED or equivalent)": "High school graduate",
+          "Master's degree": "Master's degree (e.g., MA, MS, MEng, MEd, MBA)",
+          "Professional school degree (MD, DDC, JD, etc)": "Professional school degree (e.g., MD, DDS, DVM, JD)",
+          "Some college (1-4 years, no degree)": "Some college, no degree"
+        },
+        "demo_employment": {
+            "Disabled (unable to work)": "Disabled, permanently or temporarily",
+            "Employed, full time": "Working Now",
+            "Employed, part-time": "Working Now",
+            "Homemaker": "Keeping house",
+            "Prefer not to answer": "Unknown",
+            "Retired": "Retired",
+            "Unemployed": "Looking for work, unemployed"
+        },
+        "demo_ethnicity": {
+            "Not Hispanic/Latino": "Not Hispanic or Latino",
+            "Hispanic/Latino": "Hispanic or Latino"
+        }
+    },
+    "reportable_event": {
+        "relatoption": {
+            "Probably Unrelated": "Unlikely",
+            "Probably Related": "Probable"
+        }
+    },
+    "conclusion": {
+        "reasonpw": {
+            "Lost to follow-up": "Other, specify",
+            "Reason specified by the protocol": "Other, specify",
+            "Unwilling/unable to commit time and/or resources, moved from area, etc.": "I didn't have time/Being in the study wasn't worth my time",
+            "Reportable Event (complete Reportable Event log)": "Other, specify",
+            "Other, specify": "Other, specify"
+        }
+    },
+    "inclusion_exclusion": {
+
+    },
+    "inclusion_exclusion_spd": {
+
+    },
+    "modified_schwab_and_england_adl": {
+      "tscaleschengdallivscl": {
+        "(100% - Completely independent. Able to do all chores without slowness, difficulty or impairment. Essentially normal. Unaware of any difficulty)": "1",
+        "(90% - Completely independent. Able to do all chores with some degree of slowness, difficulty and impairment. Might take twice as long. Beginning to be aware of difficulty)": "0.9",
+        "(80% - Completely independent in most chores. Takes twice as long. Conscious of difficulty and slowness)": "0.8",
+        "(70% - Not completely independent. More difficulty with some chores. Three to four times as long in some. Must spend a large part of the day with chores)": "0.7",
+        "(60% - Some dependency. Can do most chores, but exceedingly slowly and with much effort)": "0.6",
+        "(50% - More dependent. Help with half, slower, etc. Difficulty with everything)": "0.5",
+        "(40% - Very dependent. Can assist with all chores, but few alone)": "0.4",
+        "(30% - With effort, now and then does a few chores alone or begins alone. Much help needed)": "0.3",
+        "(20% - Nothing alone. Can be a slight help with some chores. Severe invalid)": "0.2",
+        "(10% - Totally dependent, helpless. Complete invalid)": "0.1",
+        "(0% - Vegetative functions such as swallowing, bladder and bowel functions are not functioning. Bedridden)": "0"
+      }
+    }
+}

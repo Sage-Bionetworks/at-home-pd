@@ -1,0 +1,15 @@
+{
+  "AdverseEvents": "syn26118356",
+  "BehavioralHistory": "syn26118358",
+  "Demographics": "syn26118359",
+  "EarlyTerminationQuest": "syn26118355",
+  "FamilyHistory": "syn26118354",
+  "InformedConsent": "syn26118348",
+  "MDS-UPDRS": "syn26118353",
+  "MoCA": "syn26118352",
+  "ModSchwabAndEnglandScale": "syn26118351",
+  "InclExclCriteria": "syn26118357",
+  "PDQ-39": "syn26118350",
+  "PriorAndConcomitantMeds": "syn26118349",
+  "VitalSigns": "syn26118347"
+}

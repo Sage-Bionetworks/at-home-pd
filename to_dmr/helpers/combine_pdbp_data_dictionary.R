@@ -1,4 +1,4 @@
-#' Combine PDBP data dictionaries into a single data dictionary file which
+#' Combine PDBP/DMR data dictionaries into a single data dictionary file which
 #' contains all possible fields exactly once and store to `OUTPUT_PARENT`.
 
 library(tidyverse)
@@ -13,8 +13,17 @@ fetch_dictionaries <- function(dictionary_parent) {
   dictionary_entities <- dictionary_entities$asList()
   combined_dictionaries <- purrr::map_dfr(dictionary_entities, function(dict) {
     f <- synGet(dict$id)
+    form_name <- f$get("name") %>%
+      stringr::str_remove("PDBP_") %>%
+      stringr::str_remove("_dataElementExport.csv")
+    non_form_specific_fields <- c(
+          "GUID", "VisitDate", "SiteName", "AgeVal",
+          "VisitTypPDBP", "AgeYrs", "AgeRemaindrMonths")
     df <- read_csv(f$path) %>%
-      rename(field_name = `variable name`)
+      rename(field_name = `variable name`) %>%
+      mutate(form_name = case_when(
+          field_name %in% non_form_specific_fields ~ "",
+          TRUE ~ form_name)) %>%
     return(df)
   })
   return(combined_dictionaries)
@@ -36,7 +45,8 @@ main <- function() {
   sorted_dictionary <- sorted_fields %>%
     inner_join(dictionaries) %>%
     arrange(desc(n)) %>%
-    distinct(field_name, .keep_all = TRUE) %>%
+    distinct(field_name, form_name, .keep_all = TRUE) %>%
+    select(field_name, form_name, dplyr::everything()) %>%
     select(-n)
   store_to_synapse(sorted_dictionary, parent = OUTPUT_PARENT)
 }

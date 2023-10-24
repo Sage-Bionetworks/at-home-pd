@@ -1,0 +1,2605 @@
+dmr_variable,form_name,cohort,visit,clinical_variable
+SubjectCaseInd,InclExclCriteria,at-home-pd,Baseline,NA
+SubjectCaseInd,LBD InclusnXclusn,at-home-pd,Baseline,NA
+SubjectCaseInd,InclExclCriteria,at-home-pd,12 months,NA
+SubjectCaseInd,LBD InclusnXclusn,at-home-pd,12 months,NA
+SubjectCaseInd,InclExclCriteria,at-home-pd,24 months,NA
+SubjectCaseInd,LBD InclusnXclusn,at-home-pd,24 months,NA
+SubjectCaseInd,InclExclCriteria,at-home-pd,36 months,NA
+SubjectCaseInd,LBD InclusnXclusn,at-home-pd,36 months,NA
+SubjectCaseInd,InclExclCriteria,super-pd,Baseline,cohort
+SubjectCaseInd,LBD InclusnXclusn,super-pd,Baseline,cohort
+SubjectCaseInd,InclExclCriteria,super-pd,Physician_ON,cohort
+SubjectCaseInd,LBD InclusnXclusn,super-pd,Physician_ON,cohort
+SubjectCaseInd,InclExclCriteria,super-pd,Physician_OFF,cohort
+SubjectCaseInd,LBD InclusnXclusn,super-pd,Physician_OFF,cohort
+SiteName,NA,at-home-pd,Baseline,NA
+SiteName,NA,at-home-pd,12 months,NA
+SiteName,NA,at-home-pd,24 months,NA
+SiteName,NA,at-home-pd,36 months,NA
+SiteName,NA,super-pd,Baseline,NA
+SiteName,NA,super-pd,Physician_ON,NA
+SiteName,NA,super-pd,Physician_OFF,NA
+AgeVal,NA,at-home-pd,Baseline,NA
+AgeVal,NA,at-home-pd,12 months,NA
+AgeVal,NA,at-home-pd,24 months,NA
+AgeVal,NA,at-home-pd,36 months,NA
+AgeVal,NA,super-pd,Baseline,demo_age
+AgeVal,NA,super-pd,Physician_ON,demo_age
+AgeVal,NA,super-pd,Physician_OFF,demo_age
+PDBPLBDInclusnCritCaseSubjTyp,LBD InclusnXclusn,at-home-pd,Baseline,NA
+PDBPLBDInclusnCritCaseSubjTyp,LBD InclusnXclusn,at-home-pd,12 months,NA
+PDBPLBDInclusnCritCaseSubjTyp,LBD InclusnXclusn,at-home-pd,24 months,NA
+PDBPLBDInclusnCritCaseSubjTyp,LBD InclusnXclusn,at-home-pd,36 months,NA
+PDBPLBDInclusnCritCaseSubjTyp,LBD InclusnXclusn,super-pd,Baseline,NA
+PDBPLBDInclusnCritCaseSubjTyp,LBD InclusnXclusn,super-pd,Physician_ON,NA
+PDBPLBDInclusnCritCaseSubjTyp,LBD InclusnXclusn,super-pd,Physician_OFF,NA
+GUID,NA,at-home-pd,Baseline,guid
+GUID,NA,at-home-pd,12 months,guid
+GUID,NA,at-home-pd,24 months,guid
+GUID,NA,at-home-pd,36 months,NA
+GUID,NA,super-pd,Baseline,guid
+GUID,NA,super-pd,Physician_ON,guid
+GUID,NA,super-pd,Physician_OFF,guid
+SubjectCntrlInd,InclExclCriteria,at-home-pd,Baseline,NA
+SubjectCntrlInd,LBD InclusnXclusn,at-home-pd,Baseline,NA
+SubjectCntrlInd,InclExclCriteria,at-home-pd,12 months,NA
+SubjectCntrlInd,LBD InclusnXclusn,at-home-pd,12 months,NA
+SubjectCntrlInd,InclExclCriteria,at-home-pd,24 months,NA
+SubjectCntrlInd,LBD InclusnXclusn,at-home-pd,24 months,NA
+SubjectCntrlInd,InclExclCriteria,at-home-pd,36 months,NA
+SubjectCntrlInd,LBD InclusnXclusn,at-home-pd,36 months,NA
+SubjectCntrlInd,InclExclCriteria,super-pd,Baseline,cohort
+SubjectCntrlInd,LBD InclusnXclusn,super-pd,Baseline,cohort
+SubjectCntrlInd,InclExclCriteria,super-pd,Physician_ON,cohort
+SubjectCntrlInd,LBD InclusnXclusn,super-pd,Physician_ON,cohort
+SubjectCntrlInd,InclExclCriteria,super-pd,Physician_OFF,cohort
+SubjectCntrlInd,LBD InclusnXclusn,super-pd,Physician_OFF,cohort
+VisitTypPDBP,NA,at-home-pd,Baseline,Baseline
+VisitTypPDBP,NA,at-home-pd,12 months,12 months
+VisitTypPDBP,NA,at-home-pd,24 months,24 months
+VisitTypPDBP,NA,at-home-pd,36 months,NA
+VisitTypPDBP,NA,super-pd,Baseline,Baseline
+VisitTypPDBP,NA,super-pd,Physician_ON,NA
+VisitTypPDBP,NA,super-pd,Physician_OFF,NA
+PDBPLBDInclusnCritCntrlSubjTyp,LBD InclusnXclusn,at-home-pd,Baseline,NA
+PDBPLBDInclusnCritCntrlSubjTyp,LBD InclusnXclusn,at-home-pd,12 months,NA
+PDBPLBDInclusnCritCntrlSubjTyp,LBD InclusnXclusn,at-home-pd,24 months,NA
+PDBPLBDInclusnCritCntrlSubjTyp,LBD InclusnXclusn,at-home-pd,36 months,NA
+PDBPLBDInclusnCritCntrlSubjTyp,LBD InclusnXclusn,super-pd,Baseline,NA
+PDBPLBDInclusnCritCntrlSubjTyp,LBD InclusnXclusn,super-pd,Physician_ON,NA
+PDBPLBDInclusnCritCntrlSubjTyp,LBD InclusnXclusn,super-pd,Physician_OFF,NA
+VisitDate,NA,at-home-pd,Baseline,visstatdttm
+VisitDate,NA,at-home-pd,12 months,visstatdttm
+VisitDate,NA,at-home-pd,24 months,visstatdttm
+VisitDate,NA,at-home-pd,36 months,NA
+VisitDate,NA,super-pd,Baseline,visstatdttm
+VisitDate,NA,super-pd,Physician_ON,time_mdsupdrs_off
+VisitDate,NA,super-pd,Physician_OFF,time_mdsupdrs
+AgeRemaindrMonths,NA,at-home-pd,Baseline,NA
+AgeRemaindrMonths,NA,at-home-pd,12 months,NA
+AgeRemaindrMonths,NA,at-home-pd,24 months,NA
+AgeRemaindrMonths,NA,at-home-pd,36 months,NA
+AgeRemaindrMonths,NA,super-pd,Baseline,NA
+AgeRemaindrMonths,NA,super-pd,Physician_ON,demo_age
+AgeRemaindrMonths,NA,super-pd,Physician_OFF,demo_age
+AgeYrs,NA,at-home-pd,Baseline,NA
+AgeYrs,NA,at-home-pd,12 months,NA
+AgeYrs,NA,at-home-pd,24 months,NA
+AgeYrs,NA,at-home-pd,36 months,NA
+AgeYrs,NA,super-pd,Baseline,NA
+AgeYrs,NA,super-pd,Physician_ON,demo_age
+AgeYrs,NA,super-pd,Physician_OFF,demo_age
+HeartRate,Vital Signs,at-home-pd,Baseline,NA
+HeartRate,Vital Signs,at-home-pd,12 months,NA
+HeartRate,Vital Signs,at-home-pd,24 months,NA
+HeartRate,Vital Signs,at-home-pd,36 months,NA
+HeartRate,Vital Signs,super-pd,Baseline,NA
+HeartRate,Vital Signs,super-pd,Physician_ON,NA
+HeartRate,Vital Signs,super-pd,Physician_OFF,NA
+WgtMeasr,Vital Signs,at-home-pd,Baseline,NA
+WgtMeasr,Vital Signs,at-home-pd,12 months,NA
+WgtMeasr,Vital Signs,at-home-pd,24 months,NA
+WgtMeasr,Vital Signs,at-home-pd,36 months,NA
+WgtMeasr,Vital Signs,super-pd,Baseline,NA
+WgtMeasr,Vital Signs,super-pd,Physician_ON,NA
+WgtMeasr,Vital Signs,super-pd,Physician_OFF,NA
+HgtMeasr,Vital Signs,at-home-pd,Baseline,NA
+HgtMeasr,Vital Signs,at-home-pd,12 months,NA
+HgtMeasr,Vital Signs,at-home-pd,24 months,NA
+HgtMeasr,Vital Signs,at-home-pd,36 months,NA
+HgtMeasr,Vital Signs,super-pd,Baseline,NA
+HgtMeasr,Vital Signs,super-pd,Physician_ON,NA
+HgtMeasr,Vital Signs,super-pd,Physician_OFF,NA
+TempMeasr,Vital Signs,at-home-pd,Baseline,NA
+TempMeasr,Vital Signs,at-home-pd,12 months,NA
+TempMeasr,Vital Signs,at-home-pd,24 months,NA
+TempMeasr,Vital Signs,at-home-pd,36 months,NA
+TempMeasr,Vital Signs,super-pd,Baseline,NA
+TempMeasr,Vital Signs,super-pd,Physician_ON,NA
+TempMeasr,Vital Signs,super-pd,Physician_OFF,NA
+VitalSgnDateTime,Vital Signs,at-home-pd,Baseline,NA
+VitalSgnDateTime,Vital Signs,at-home-pd,12 months,NA
+VitalSgnDateTime,Vital Signs,at-home-pd,24 months,NA
+VitalSgnDateTime,Vital Signs,at-home-pd,36 months,NA
+VitalSgnDateTime,Vital Signs,super-pd,Baseline,NA
+VitalSgnDateTime,Vital Signs,super-pd,Physician_ON,NA
+VitalSgnDateTime,Vital Signs,super-pd,Physician_OFF,NA
+TempMeasrAntmicSite,Vital Signs,at-home-pd,Baseline,NA
+TempMeasrAntmicSite,Vital Signs,at-home-pd,12 months,NA
+TempMeasrAntmicSite,Vital Signs,at-home-pd,24 months,NA
+TempMeasrAntmicSite,Vital Signs,at-home-pd,36 months,NA
+TempMeasrAntmicSite,Vital Signs,super-pd,Baseline,NA
+TempMeasrAntmicSite,Vital Signs,super-pd,Physician_ON,NA
+TempMeasrAntmicSite,Vital Signs,super-pd,Physician_OFF,NA
+RespRate,Vital Signs,at-home-pd,Baseline,NA
+RespRate,Vital Signs,at-home-pd,12 months,NA
+RespRate,Vital Signs,at-home-pd,24 months,NA
+RespRate,Vital Signs,at-home-pd,36 months,NA
+RespRate,Vital Signs,super-pd,Baseline,NA
+RespRate,Vital Signs,super-pd,Physician_ON,NA
+RespRate,Vital Signs,super-pd,Physician_OFF,NA
+BldPressrSystMeasr,Vital Signs,at-home-pd,Baseline,NA
+BldPressrSystMeasr,Vital Signs,at-home-pd,12 months,NA
+BldPressrSystMeasr,Vital Signs,at-home-pd,24 months,NA
+BldPressrSystMeasr,Vital Signs,at-home-pd,36 months,NA
+BldPressrSystMeasr,Vital Signs,super-pd,Baseline,NA
+BldPressrSystMeasr,Vital Signs,super-pd,Physician_ON,NA
+BldPressrSystMeasr,Vital Signs,super-pd,Physician_OFF,NA
+BldPressrDiastlMeasr,Vital Signs,at-home-pd,Baseline,NA
+BldPressrDiastlMeasr,Vital Signs,at-home-pd,12 months,NA
+BldPressrDiastlMeasr,Vital Signs,at-home-pd,24 months,NA
+BldPressrDiastlMeasr,Vital Signs,at-home-pd,36 months,NA
+BldPressrDiastlMeasr,Vital Signs,super-pd,Baseline,NA
+BldPressrDiastlMeasr,Vital Signs,super-pd,Physician_ON,NA
+BldPressrDiastlMeasr,Vital Signs,super-pd,Physician_OFF,NA
+BldPressrMeasrPositionTyp,Vital Signs,at-home-pd,Baseline,NA
+BldPressrMeasrPositionTyp,Vital Signs,at-home-pd,12 months,NA
+BldPressrMeasrPositionTyp,Vital Signs,at-home-pd,24 months,NA
+BldPressrMeasrPositionTyp,Vital Signs,at-home-pd,36 months,NA
+BldPressrMeasrPositionTyp,Vital Signs,super-pd,Baseline,NA
+BldPressrMeasrPositionTyp,Vital Signs,super-pd,Physician_ON,NA
+BldPressrMeasrPositionTyp,Vital Signs,super-pd,Physician_OFF,NA
+MDSUPDRSGaitScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsgaitscore
+MDSUPDRSGaitScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRSGaitScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRSGaitScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSGaitScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsgaitscore_v2
+MDSUPDRSGaitScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsgaitscore_2
+MDSUPDRSGaitScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsgaitscore_spd
+MDSUPDRSWlkngBalanceScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrswlkngbalancescore
+MDSUPDRSWlkngBalanceScore,MDS-UPDRS,at-home-pd,12 months,wlkngbalancescore_m12
+MDSUPDRSWlkngBalanceScore,MDS-UPDRS,at-home-pd,24 months,wlkngbalancescore_m12
+MDSUPDRSWlkngBalanceScore,MDS-UPDRS,at-home-pd,36 months,wlkngbalancescore_m12_as
+MDSUPDRSWlkngBalanceScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSWlkngBalanceScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSWlkngBalanceScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrswlkngbalancescore_spd
+MDSUPDRSHobbieOthrActScore,MDS-UPDRS,at-home-pd,Baseline,hobbieothractscore
+MDSUPDRSHobbieOthrActScore,MDS-UPDRS,at-home-pd,12 months,hobbieothractscore_m12
+MDSUPDRSHobbieOthrActScore,MDS-UPDRS,at-home-pd,24 months,hobbieothractscore_m12
+MDSUPDRSHobbieOthrActScore,MDS-UPDRS,at-home-pd,36 months,hobbieothractscore_m12_as
+MDSUPDRSHobbieOthrActScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSHobbieOthrActScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSHobbieOthrActScore,MDS-UPDRS,super-pd,Physician_OFF,hobbieothractscore_spd
+MDSUPDRSPostureScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsposturescore
+MDSUPDRSPostureScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsposturescore
+MDSUPDRSPostureScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsposturescore
+MDSUPDRSPostureScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPostureScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsposturescore_v2
+MDSUPDRSPostureScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsposturescore_2
+MDSUPDRSPostureScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsposturescore_spd
+MDSUPDRSGlblSpontntyMvmntScore,MDS-UPDRS,at-home-pd,Baseline,glblspontntymvmnts
+MDSUPDRSGlblSpontntyMvmntScore,MDS-UPDRS,at-home-pd,12 months,glblspontntymvmnts
+MDSUPDRSGlblSpontntyMvmntScore,MDS-UPDRS,at-home-pd,24 months,glblspontntymvmnts
+MDSUPDRSGlblSpontntyMvmntScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSGlblSpontntyMvmntScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsglblspontntymvmnts_v2
+MDSUPDRSGlblSpontntyMvmntScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsglblspontntymvmnts_2
+MDSUPDRSGlblSpontntyMvmntScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsglblspontntymvmnts
+MDSUPDRSTtlHrAwkDyskNum,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsttlhrawkdysknum
+MDSUPDRSTtlHrAwkDyskNum,MDS-UPDRS,at-home-pd,12 months,mdsupdrsttlhrawkdysknum
+MDSUPDRSTtlHrAwkDyskNum,MDS-UPDRS,at-home-pd,24 months,mdsupdrsttlhrawkdysknum
+MDSUPDRSTtlHrAwkDyskNum,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSTtlHrAwkDyskNum,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTtlHrAwkDyskNum,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTtlHrAwkDyskNum,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsttlhrawkdysknum_spd
+MDSUPDRSPrcntOffDystniaVal,MDS-UPDRS,at-home-pd,Baseline,prcntoffdystniaval
+MDSUPDRSPrcntOffDystniaVal,MDS-UPDRS,at-home-pd,12 months,prcntoffdystniaval
+MDSUPDRSPrcntOffDystniaVal,MDS-UPDRS,at-home-pd,24 months,prcntoffdystniaval
+MDSUPDRSPrcntOffDystniaVal,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPrcntOffDystniaVal,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSPrcntOffDystniaVal,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSPrcntOffDystniaVal,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsprcntoffdystniaval
+MDSUPDRSChwngSwllwngScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrschwngswllwngscore
+MDSUPDRSChwngSwllwngScore,MDS-UPDRS,at-home-pd,12 months,chwngswllwngscore_m12
+MDSUPDRSChwngSwllwngScore,MDS-UPDRS,at-home-pd,24 months,chwngswllwngscore_m12
+MDSUPDRSChwngSwllwngScore,MDS-UPDRS,at-home-pd,36 months,chwngswllwngscore_m12_as
+MDSUPDRSChwngSwllwngScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSChwngSwllwngScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSChwngSwllwngScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrschwngswllwngscore_spd
+MDSUPDRSFreezingGaitScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsfreezinggaitscore
+MDSUPDRSFreezingGaitScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsfreezinggaitscore
+MDSUPDRSFreezingGaitScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsfreezinggaitscore
+MDSUPDRSFreezingGaitScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSFreezingGaitScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsfreezinggaitscore_v2
+MDSUPDRSFreezingGaitScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsfreezinggaitscore_2
+MDSUPDRSFreezingGaitScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsfreezinggaitscore_spd
+MDSUPDRSSlivaDroolScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsslivadroolscore
+MDSUPDRSSlivaDroolScore,MDS-UPDRS,at-home-pd,12 months,slivadroolscore_m12
+MDSUPDRSSlivaDroolScore,MDS-UPDRS,at-home-pd,24 months,slivadroolscore_m12
+MDSUPDRSSlivaDroolScore,MDS-UPDRS,at-home-pd,36 months,slivadroolscore_m12_as
+MDSUPDRSSlivaDroolScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSSlivaDroolScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSSlivaDroolScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsslivadroolscore_spd
+MDSUPDRSDyskChreaDystnaPrsScr,MDS-UPDRS,at-home-pd,Baseline,dyskchreadystnaprs
+MDSUPDRSDyskChreaDystnaPrsScr,MDS-UPDRS,at-home-pd,12 months,dyskchreadystnaprs
+MDSUPDRSDyskChreaDystnaPrsScr,MDS-UPDRS,at-home-pd,24 months,dyskchreadystnaprs
+MDSUPDRSDyskChreaDystnaPrsScr,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSDyskChreaDystnaPrsScr,MDS-UPDRS,super-pd,Baseline,mdsupdrsdyskchreadystnaprs_v2
+MDSUPDRSDyskChreaDystnaPrsScr,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsdyskchreadystnaprs_2
+MDSUPDRSDyskChreaDystnaPrsScr,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsdyskchreadystnaprs
+MDSUPDRSPainflOffStatDystnaScr,MDS-UPDRS,at-home-pd,Baseline,painfloffstatdystn
+MDSUPDRSPainflOffStatDystnaScr,MDS-UPDRS,at-home-pd,12 months,painfloffstatdystn
+MDSUPDRSPainflOffStatDystnaScr,MDS-UPDRS,at-home-pd,24 months,painfloffstatdystn
+MDSUPDRSPainflOffStatDystnaScr,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPainflOffStatDystnaScr,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSPainflOffStatDystnaScr,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSPainflOffStatDystnaScr,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrspainfloffstatdystn
+MDSUPDRSDrpssMoodScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsdrpssmoodscore
+MDSUPDRSDrpssMoodScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsdrpssmoodscore
+MDSUPDRSDrpssMoodScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsdrpssmoodscore
+MDSUPDRSDrpssMoodScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSDrpssMoodScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSDrpssMoodScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSDrpssMoodScore,MDS-UPDRS,super-pd,Physician_OFF,mds_dep
+MDSUPDRSFatigueScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsfatiguescore
+MDSUPDRSFatigueScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsfatiguescore_m12
+MDSUPDRSFatigueScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsfatiguescore_m12
+MDSUPDRSFatigueScore,MDS-UPDRS,at-home-pd,36 months,mdsupdrsfatiguescore_m12_as
+MDSUPDRSFatigueScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSFatigueScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSFatigueScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsfatiguescore_spd
+MDSUPDRSQstnnreInfoProvdrTyp,MDS-UPDRS,at-home-pd,Baseline,qstnnreinfoprovdrt
+MDSUPDRSQstnnreInfoProvdrTyp,MDS-UPDRS,at-home-pd,12 months,qstnnreinfoprovdrt_m12
+MDSUPDRSQstnnreInfoProvdrTyp,MDS-UPDRS,at-home-pd,24 months,qstnnreinfoprovdrt_m12
+MDSUPDRSQstnnreInfoProvdrTyp,MDS-UPDRS,at-home-pd,36 months,qstnnreinfoprovdrt_m12_as
+MDSUPDRSQstnnreInfoProvdrTyp,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSQstnnreInfoProvdrTyp,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSQstnnreInfoProvdrTyp,MDS-UPDRS,super-pd,Physician_OFF,qstnnreinfoprovdrt_spd
+MDSUPDRSFuncImpactDyskScore,MDS-UPDRS,at-home-pd,Baseline,funcimpactdyskscor
+MDSUPDRSFuncImpactDyskScore,MDS-UPDRS,at-home-pd,12 months,funcimpactdyskscor
+MDSUPDRSFuncImpactDyskScore,MDS-UPDRS,at-home-pd,24 months,funcimpactdyskscor
+MDSUPDRSFuncImpactDyskScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSFuncImpactDyskScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSFuncImpactDyskScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSFuncImpactDyskScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsfuncimpactdyskscor
+MDSUPDRSSleepProbScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrssleepprobscore
+MDSUPDRSSleepProbScore,MDS-UPDRS,at-home-pd,12 months,sleepprobscore_m12
+MDSUPDRSSleepProbScore,MDS-UPDRS,at-home-pd,24 months,sleepprobscore_m12
+MDSUPDRSSleepProbScore,MDS-UPDRS,at-home-pd,36 months,sleepprobscore_m12_as
+MDSUPDRSSleepProbScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSSleepProbScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSSleepProbScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrssleepprobscore_spd
+RteFtToeTppngScore,MDS-UPDRS,at-home-pd,Baseline,NA
+RteFtToeTppngScore,MDS-UPDRS,at-home-pd,12 months,NA
+RteFtToeTppngScore,MDS-UPDRS,at-home-pd,24 months,NA
+RteFtToeTppngScore,MDS-UPDRS,at-home-pd,36 months,NA
+RteFtToeTppngScore,MDS-UPDRS,super-pd,Baseline,rtefttoetppngscore_v2
+RteFtToeTppngScore,MDS-UPDRS,super-pd,Physician_ON,rtefttoetppngscore_2
+RteFtToeTppngScore,MDS-UPDRS,super-pd,Physician_OFF,rtefttoetppngscore_spd
+MDSUPDRSFingerTppngLftHndScore,MDS-UPDRS,at-home-pd,Baseline,fingertppnglfthnds
+MDSUPDRSFingerTppngLftHndScore,MDS-UPDRS,at-home-pd,12 months,fingertppnglfthnds
+MDSUPDRSFingerTppngLftHndScore,MDS-UPDRS,at-home-pd,24 months,fingertppnglfthnds
+MDSUPDRSFingerTppngLftHndScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSFingerTppngLftHndScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsfingertppnglfthnds_v2
+MDSUPDRSFingerTppngLftHndScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsfingertppnglfthnds_2
+MDSUPDRSFingerTppngLftHndScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsfingertppnglfthnds
+MDSUPDRSRestTremorAmpLUEScore,MDS-UPDRS,at-home-pd,Baseline,resttremorampluesc
+MDSUPDRSRestTremorAmpLUEScore,MDS-UPDRS,at-home-pd,12 months,resttremorampluesc
+MDSUPDRSRestTremorAmpLUEScore,MDS-UPDRS,at-home-pd,24 months,resttremorampluesc
+MDSUPDRSRestTremorAmpLUEScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSRestTremorAmpLUEScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsresttremorampluesc_v2
+MDSUPDRSRestTremorAmpLUEScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsresttremorampluesc_2
+MDSUPDRSRestTremorAmpLUEScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsresttremorampluesc
+MDSUPDRSKineticTremrLftHndScr,MDS-UPDRS,at-home-pd,Baseline,kinetictremrlfthnd
+MDSUPDRSKineticTremrLftHndScr,MDS-UPDRS,at-home-pd,12 months,kinetictremrlfthnd
+MDSUPDRSKineticTremrLftHndScr,MDS-UPDRS,at-home-pd,24 months,kinetictremrlfthnd
+MDSUPDRSKineticTremrLftHndScr,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSKineticTremrLftHndScr,MDS-UPDRS,super-pd,Baseline,mdsupdrskinetictremrlfthnd_v2
+MDSUPDRSKineticTremrLftHndScr,MDS-UPDRS,super-pd,Physician_ON,mdsupdrskinetictremrlfthnd_2
+MDSUPDRSKineticTremrLftHndScr,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrskinetictremrlfthnd
+MDSUPDRSApathyScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsapathyscore
+MDSUPDRSApathyScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsapathyscore
+MDSUPDRSApathyScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsapathyscore
+MDSUPDRSApathyScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSApathyScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSApathyScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSApathyScore,MDS-UPDRS,super-pd,Physician_OFF,mds_apathy
+MDSUPDRSRLERigidScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRSRLERigidScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRSRLERigidScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRSRLERigidScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSRLERigidScore,MDS-UPDRS,super-pd,Baseline,neck_4
+MDSUPDRSRLERigidScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsrigidityrle_2
+MDSUPDRSRLERigidScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsrigidityrle
+MDSUPDRSTtlHrDyskNum,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsttlhrdysknum
+MDSUPDRSTtlHrDyskNum,MDS-UPDRS,at-home-pd,12 months,mdsupdrsttlhrdysknum
+MDSUPDRSTtlHrDyskNum,MDS-UPDRS,at-home-pd,24 months,mdsupdrsttlhrdysknum
+MDSUPDRSTtlHrDyskNum,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSTtlHrDyskNum,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTtlHrDyskNum,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTtlHrDyskNum,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsttlhrdysknum_spd
+MDSUPDRSFreezingScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsfreezingscore
+MDSUPDRSFreezingScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsfreezingscore_m12
+MDSUPDRSFreezingScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsfreezingscore_m12
+MDSUPDRSFreezingScore,MDS-UPDRS,at-home-pd,36 months,mdsupdrsfreezingscore_m12_as
+MDSUPDRSFreezingScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSFreezingScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSFreezingScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsfreezingscore_spd
+MDSUPDRSProntSupnRtHndMvmtScr,MDS-UPDRS,at-home-pd,Baseline,prontsupnrthndmvmt
+MDSUPDRSProntSupnRtHndMvmtScr,MDS-UPDRS,at-home-pd,12 months,prontsupnrthndmvmt
+MDSUPDRSProntSupnRtHndMvmtScr,MDS-UPDRS,at-home-pd,24 months,prontsupnrthndmvmt
+MDSUPDRSProntSupnRtHndMvmtScr,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSProntSupnRtHndMvmtScr,MDS-UPDRS,super-pd,Baseline,mdsupdrsprontsupnrthndmvmt_v2
+MDSUPDRSProntSupnRtHndMvmtScr,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsprontsupnrthndmvmt_2
+MDSUPDRSProntSupnRtHndMvmtScr,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsprontsupnrthndmvmt
+MDSUPDRSKineticTremrRtHndScore,MDS-UPDRS,at-home-pd,Baseline,kinetictremrrthnds
+MDSUPDRSKineticTremrRtHndScore,MDS-UPDRS,at-home-pd,12 months,kinetictremrrthnds
+MDSUPDRSKineticTremrRtHndScore,MDS-UPDRS,at-home-pd,24 months,kinetictremrrthnds
+MDSUPDRSKineticTremrRtHndScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSKineticTremrRtHndScore,MDS-UPDRS,super-pd,Baseline,mdsupdrskinetictremrrthnds_v2
+MDSUPDRSKineticTremrRtHndScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrskinetictremrrthnds_2
+MDSUPDRSKineticTremrRtHndScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrskinetictremrrthnds
+MDSUPDRSEatingTskScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrseatingtskscore
+MDSUPDRSEatingTskScore,MDS-UPDRS,at-home-pd,12 months,eatingtskscore_m12
+MDSUPDRSEatingTskScore,MDS-UPDRS,at-home-pd,24 months,eatingtskscore_m12
+MDSUPDRSEatingTskScore,MDS-UPDRS,at-home-pd,36 months,eatingtskscore_m12_as
+MDSUPDRSEatingTskScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSEatingTskScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSEatingTskScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrseatingtskscore_spd
+MDSUPDRSPrcntOffVal,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsprcntoffval
+MDSUPDRSPrcntOffVal,MDS-UPDRS,at-home-pd,12 months,mdsupdrsprcntoffval
+MDSUPDRSPrcntOffVal,MDS-UPDRS,at-home-pd,24 months,mdsupdrsprcntoffval
+MDSUPDRSPrcntOffVal,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPrcntOffVal,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSPrcntOffVal,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSPrcntOffVal,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsprcntoffval_spd
+MDSUPDRSFuncImpactFluctScore,MDS-UPDRS,at-home-pd,Baseline,funcimpactfluctsco
+MDSUPDRSFuncImpactFluctScore,MDS-UPDRS,at-home-pd,12 months,funcimpactfluctsco
+MDSUPDRSFuncImpactFluctScore,MDS-UPDRS,at-home-pd,24 months,funcimpactfluctsco
+MDSUPDRSFuncImpactFluctScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSFuncImpactFluctScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSFuncImpactFluctScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSFuncImpactFluctScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsfuncimpactfluctsco
+MDSUPDRSRUERigidScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRSRUERigidScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRSRUERigidScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRSRUERigidScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSRUERigidScore,MDS-UPDRS,super-pd,Baseline,neck_2
+MDSUPDRSRUERigidScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsrigidityrue_2
+MDSUPDRSRUERigidScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsrigidityrue
+MDSUPDRS_PartIIScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRS_PartIIScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRS_PartIIScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRS_PartIIScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRS_PartIIScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRS_PartIIScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRS_PartIIScore,MDS-UPDRS,super-pd,Physician_OFF,NA
+MDSUPDRSLegAgiltyLftLegScore,MDS-UPDRS,at-home-pd,Baseline,legagiltylftlegsco
+MDSUPDRSLegAgiltyLftLegScore,MDS-UPDRS,at-home-pd,12 months,legagiltylftlegsco
+MDSUPDRSLegAgiltyLftLegScore,MDS-UPDRS,at-home-pd,24 months,legagiltylftlegsco
+MDSUPDRSLegAgiltyLftLegScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSLegAgiltyLftLegScore,MDS-UPDRS,super-pd,Baseline,mdsupdrslegagiltylftlegsco_v2
+MDSUPDRSLegAgiltyLftLegScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrslegagiltylftlegsco_2
+MDSUPDRSLegAgiltyLftLegScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrslegagiltylftlegsco
+MDSUPDRSRestTremorAmpRUEScore,MDS-UPDRS,at-home-pd,Baseline,resttremorampruesc
+MDSUPDRSRestTremorAmpRUEScore,MDS-UPDRS,at-home-pd,12 months,resttremorampruesc
+MDSUPDRSRestTremorAmpRUEScore,MDS-UPDRS,at-home-pd,24 months,resttremorampruesc
+MDSUPDRSRestTremorAmpRUEScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSRestTremorAmpRUEScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsresttremorampruesc_v2
+MDSUPDRSRestTremorAmpRUEScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsresttremorampruesc_2
+MDSUPDRSRestTremorAmpRUEScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsresttremorampruesc
+MDSUPDRS_PartIScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRS_PartIScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRS_PartIScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRS_PartIScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRS_PartIScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRS_PartIScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRS_PartIScore,MDS-UPDRS,super-pd,Physician_OFF,NA
+MDSUPDRSComplxtyMtrFluctScore,MDS-UPDRS,at-home-pd,Baseline,complxtymtrfluctsc
+MDSUPDRSComplxtyMtrFluctScore,MDS-UPDRS,at-home-pd,12 months,complxtymtrfluctsc
+MDSUPDRSComplxtyMtrFluctScore,MDS-UPDRS,at-home-pd,24 months,complxtymtrfluctsc
+MDSUPDRSComplxtyMtrFluctScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSComplxtyMtrFluctScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSComplxtyMtrFluctScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSComplxtyMtrFluctScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrscomplxtymtrfluctsc
+MDSUPDRSTmSpntOffStateScore,MDS-UPDRS,at-home-pd,Baseline,tmspntoffstatescor
+MDSUPDRSTmSpntOffStateScore,MDS-UPDRS,at-home-pd,12 months,tmspntoffstatescor
+MDSUPDRSTmSpntOffStateScore,MDS-UPDRS,at-home-pd,24 months,tmspntoffstatescor
+MDSUPDRSTmSpntOffStateScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSTmSpntOffStateScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTmSpntOffStateScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTmSpntOffStateScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrstmspntoffstatescor
+MDSUPDRSLegAgiltyRteLegScore,MDS-UPDRS,at-home-pd,Baseline,legagiltyrtelegsco
+MDSUPDRSLegAgiltyRteLegScore,MDS-UPDRS,at-home-pd,12 months,legagiltyrtelegsco
+MDSUPDRSLegAgiltyRteLegScore,MDS-UPDRS,at-home-pd,24 months,legagiltyrtelegsco
+MDSUPDRSLegAgiltyRteLegScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSLegAgiltyRteLegScore,MDS-UPDRS,super-pd,Baseline,mdsupdrslegagiltyrtelegsco_v2
+MDSUPDRSLegAgiltyRteLegScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrslegagiltyrtelegsco_2
+MDSUPDRSLegAgiltyRteLegScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrslegagiltyrtelegsco
+MDSUPDRSMvmntIntrfrnceScore,MDS-UPDRS,at-home-pd,Baseline,mvmntintrfrncescor
+MDSUPDRSMvmntIntrfrnceScore,MDS-UPDRS,at-home-pd,12 months,mvmntintrfrncescor
+MDSUPDRSMvmntIntrfrnceScore,MDS-UPDRS,at-home-pd,24 months,mvmntintrfrncescor
+MDSUPDRSMvmntIntrfrnceScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSMvmntIntrfrnceScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsmvmntintrfrncescor_v2
+MDSUPDRSMvmntIntrfrnceScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsmvmntintrfrncescor_2
+MDSUPDRSMvmntIntrfrnceScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsmvmntintrfrncescor
+MDSUPDRS_TotalScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRS_TotalScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRS_TotalScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRS_TotalScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRS_TotalScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRS_TotalScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRS_TotalScore,MDS-UPDRS,super-pd,Physician_OFF,NA
+PronatSupinLftHndMvmntScore,MDS-UPDRS,at-home-pd,Baseline,NA
+PronatSupinLftHndMvmntScore,MDS-UPDRS,at-home-pd,12 months,NA
+PronatSupinLftHndMvmntScore,MDS-UPDRS,at-home-pd,24 months,NA
+PronatSupinLftHndMvmntScore,MDS-UPDRS,at-home-pd,36 months,NA
+PronatSupinLftHndMvmntScore,MDS-UPDRS,super-pd,Baseline,pronatsupinlfthndmvmntscor_v2
+PronatSupinLftHndMvmntScore,MDS-UPDRS,super-pd,Physician_ON,pronatsupinlfthndmvmntscor_2
+PronatSupinLftHndMvmntScore,MDS-UPDRS,super-pd,Physician_OFF,pronatsupinlfthndmvmntscor
+MDSUPDRSConstncyRestTremrScore,MDS-UPDRS,at-home-pd,Baseline,constncyresttremrs
+MDSUPDRSConstncyRestTremrScore,MDS-UPDRS,at-home-pd,12 months,constncyresttremrs
+MDSUPDRSConstncyRestTremrScore,MDS-UPDRS,at-home-pd,24 months,constncyresttremrs
+MDSUPDRSConstncyRestTremrScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSConstncyRestTremrScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsconstncyresttremrs_v2
+MDSUPDRSConstncyRestTremrScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsconstncyresttremrs_2
+MDSUPDRSConstncyRestTremrScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsconstncyresttremrs
+MDSUPDRSTtlHrOffDemnDystniaNum,MDS-UPDRS,at-home-pd,Baseline,ttlhroffdemndystni
+MDSUPDRSTtlHrOffDemnDystniaNum,MDS-UPDRS,at-home-pd,12 months,ttlhroffdemndystni
+MDSUPDRSTtlHrOffDemnDystniaNum,MDS-UPDRS,at-home-pd,24 months,ttlhroffdemndystni
+MDSUPDRSTtlHrOffDemnDystniaNum,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSTtlHrOffDemnDystniaNum,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTtlHrOffDemnDystniaNum,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTtlHrOffDemnDystniaNum,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsttlhroffdemndystni
+MDSUPDRSHallucPsychosScore,MDS-UPDRS,at-home-pd,Baseline,hallucpsychosscore
+MDSUPDRSHallucPsychosScore,MDS-UPDRS,at-home-pd,12 months,hallucpsychosscore
+MDSUPDRSHallucPsychosScore,MDS-UPDRS,at-home-pd,24 months,hallucpsychosscore
+MDSUPDRSHallucPsychosScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSHallucPsychosScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSHallucPsychosScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSHallucPsychosScore,MDS-UPDRS,super-pd,Physician_OFF,mds_psy
+MDSUPDRSRestTremrAmpLipJawScr,MDS-UPDRS,at-home-pd,Baseline,resttremramplipjaw
+MDSUPDRSRestTremrAmpLipJawScr,MDS-UPDRS,at-home-pd,12 months,resttremramplipjaw
+MDSUPDRSRestTremrAmpLipJawScr,MDS-UPDRS,at-home-pd,24 months,resttremramplipjaw
+MDSUPDRSRestTremrAmpLipJawScr,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSRestTremrAmpLipJawScr,MDS-UPDRS,super-pd,Baseline,mdsupdrsresttremramplipjaw_v2
+MDSUPDRSRestTremrAmpLipJawScr,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsresttremramplipjaw_2
+MDSUPDRSRestTremrAmpLipJawScr,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsresttremramplipjaw
+MDSUPDRS_PartIVScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRS_PartIVScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRS_PartIVScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRS_PartIVScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRS_PartIVScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRS_PartIVScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRS_PartIVScore,MDS-UPDRS,super-pd,Physician_OFF,NA
+MDSUPDRSHygieneScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrshygienescore
+MDSUPDRSHygieneScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrshygienescore_m12
+MDSUPDRSHygieneScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrshygienescore_m12
+MDSUPDRSHygieneScore,MDS-UPDRS,at-home-pd,36 months,mdsupdrshygienescore_m12_as
+MDSUPDRSHygieneScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSHygieneScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSHygieneScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrshygienescore_spd
+MDSUPDRSTtlHrOffNum,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsttlhroffnum
+MDSUPDRSTtlHrOffNum,MDS-UPDRS,at-home-pd,12 months,mdsupdrsttlhroffnum
+MDSUPDRSTtlHrOffNum,MDS-UPDRS,at-home-pd,24 months,mdsupdrsttlhroffnum
+MDSUPDRSTtlHrOffNum,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSTtlHrOffNum,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTtlHrOffNum,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTtlHrOffNum,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsttlhroffnum_spd
+MDSUPDRS_PartIIIScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRS_PartIIIScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRS_PartIIIScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRS_PartIIIScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRS_PartIIIScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRS_PartIIIScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRS_PartIIIScore,MDS-UPDRS,super-pd,Physician_OFF,NA
+MDSUPDRSGttngOutBedScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsgttngoutbedscore
+MDSUPDRSGttngOutBedScore,MDS-UPDRS,at-home-pd,12 months,gttngoutbedscore_m12
+MDSUPDRSGttngOutBedScore,MDS-UPDRS,at-home-pd,24 months,gttngoutbedscore_m12
+MDSUPDRSGttngOutBedScore,MDS-UPDRS,at-home-pd,36 months,gttngoutbedscore_m12_as
+MDSUPDRSGttngOutBedScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSGttngOutBedScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSGttngOutBedScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsgttngoutbedscore_spd
+MDSUPDRSPtntPrknsnMedInd,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsptntprknsnmedind
+MDSUPDRSPtntPrknsnMedInd,MDS-UPDRS,at-home-pd,12 months,mdsupdrsptntprknsnmedind
+MDSUPDRSPtntPrknsnMedInd,MDS-UPDRS,at-home-pd,24 months,mdsupdrsptntprknsnmedind
+MDSUPDRSPtntPrknsnMedInd,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPtntPrknsnMedInd,MDS-UPDRS,super-pd,Baseline,mdsupdrsptntprknsnmedind_v2
+MDSUPDRSPtntPrknsnMedInd,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsptntprknsnmedind_2
+MDSUPDRSPtntPrknsnMedInd,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsptntprknsnmedind_spd
+MDSUPDRSLUERigidScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRSLUERigidScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRSLUERigidScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRSLUERigidScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSLUERigidScore,MDS-UPDRS,super-pd,Baseline,neck_3
+MDSUPDRSLUERigidScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsrigiditylue_2
+MDSUPDRSLUERigidScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsrigidityrue
+MDSUPDRSFacialExprScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsfacialexprscore
+MDSUPDRSFacialExprScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsfacialexprscore
+MDSUPDRSFacialExprScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsfacialexprscore
+MDSUPDRSFacialExprScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSFacialExprScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsfacialexprscore_v2
+MDSUPDRSFacialExprScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsfacialexprscore_2
+MDSUPDRSFacialExprScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsfacialexprscore_spd
+MDSUPDRSRcntCogImprmntScore,MDS-UPDRS,at-home-pd,Baseline,rcntcogimprmntscor
+MDSUPDRSRcntCogImprmntScore,MDS-UPDRS,at-home-pd,12 months,rcntcogimprmntscor
+MDSUPDRSRcntCogImprmntScore,MDS-UPDRS,at-home-pd,24 months,rcntcogimprmntscor
+MDSUPDRSRcntCogImprmntScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSRcntCogImprmntScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSRcntCogImprmntScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSRcntCogImprmntScore,MDS-UPDRS,super-pd,Physician_OFF,mds_cog
+MDSUPDRSArisingFrmChrScore,MDS-UPDRS,at-home-pd,Baseline,arisingfrmchrscore
+MDSUPDRSArisingFrmChrScore,MDS-UPDRS,at-home-pd,12 months,arisingfrmchrscore
+MDSUPDRSArisingFrmChrScore,MDS-UPDRS,at-home-pd,24 months,arisingfrmchrscore
+MDSUPDRSArisingFrmChrScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSArisingFrmChrScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsarisingfrmchrscore_v2
+MDSUPDRSArisingFrmChrScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsarisingfrmchrscore_2
+MDSUPDRSArisingFrmChrScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsarisingfrmchrscore
+MDSUPDRSPtntUseLDOPAInd,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsptntuseldopaind
+MDSUPDRSPtntUseLDOPAInd,MDS-UPDRS,at-home-pd,12 months,mdsupdrsptntuseldopaind
+MDSUPDRSPtntUseLDOPAInd,MDS-UPDRS,at-home-pd,24 months,mdsupdrsptntuseldopaind
+MDSUPDRSPtntUseLDOPAInd,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPtntUseLDOPAInd,MDS-UPDRS,super-pd,Baseline,mdsupdrsptntuseldopaind_v2
+MDSUPDRSPtntUseLDOPAInd,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsptntuseldopaind_2
+MDSUPDRSPtntUseLDOPAInd,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsptntuseldopaind_spd
+MDSUPDRSDopmnDysregSyndScore,MDS-UPDRS,at-home-pd,Baseline,dopmndysregsyndsco
+MDSUPDRSDopmnDysregSyndScore,MDS-UPDRS,at-home-pd,12 months,dopmndysregsyndsco
+MDSUPDRSDopmnDysregSyndScore,MDS-UPDRS,at-home-pd,24 months,dopmndysregsyndsco
+MDSUPDRSDopmnDysregSyndScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSDopmnDysregSyndScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSDopmnDysregSyndScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSDopmnDysregSyndScore,MDS-UPDRS,super-pd,Physician_OFF,mds_dop
+MDSUPDRSPostrlTremrLftHndScore,MDS-UPDRS,at-home-pd,Baseline,postrltremrlfthnds
+MDSUPDRSPostrlTremrLftHndScore,MDS-UPDRS,at-home-pd,12 months,postrltremrlfthnds
+MDSUPDRSPostrlTremrLftHndScore,MDS-UPDRS,at-home-pd,24 months,postrltremrlfthnds
+MDSUPDRSPostrlTremrLftHndScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPostrlTremrLftHndScore,MDS-UPDRS,super-pd,Baseline,mdsupdrspostrltremrlfthnds_v2
+MDSUPDRSPostrlTremrLftHndScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrspostrltremrlfthnds_2
+MDSUPDRSPostrlTremrLftHndScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrspostrltremrlfthnds
+MDSUPDRSRestTremorAmpLLEScore,MDS-UPDRS,at-home-pd,Baseline,resttremorampllesc
+MDSUPDRSRestTremorAmpLLEScore,MDS-UPDRS,at-home-pd,12 months,resttremorampllesc
+MDSUPDRSRestTremorAmpLLEScore,MDS-UPDRS,at-home-pd,24 months,resttremorampllesc
+MDSUPDRSRestTremorAmpLLEScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSRestTremorAmpLLEScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsresttremorampllesc_v2
+MDSUPDRSRestTremorAmpLLEScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsresttremorampllesc_2
+MDSUPDRSRestTremorAmpLLEScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsresttremorampllesc
+MDSUPDRSPostrlStabltyScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRSPostrlStabltyScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRSPostrlStabltyScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRSPostrlStabltyScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPostrlStabltyScore,MDS-UPDRS,super-pd,Baseline,postinst_instr
+MDSUPDRSPostrlStabltyScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsposstabil_2
+MDSUPDRSPostrlStabltyScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsposstabil
+MDSUPDRSRestTremorAmpRLEScore,MDS-UPDRS,at-home-pd,Baseline,resttremoramprlesc
+MDSUPDRSRestTremorAmpRLEScore,MDS-UPDRS,at-home-pd,12 months,resttremoramprlesc
+MDSUPDRSRestTremorAmpRLEScore,MDS-UPDRS,at-home-pd,24 months,resttremoramprlesc
+MDSUPDRSRestTremorAmpRLEScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSRestTremorAmpRLEScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsresttremoramprlesc_v2
+MDSUPDRSRestTremorAmpRLEScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsresttremoramprlesc_2
+MDSUPDRSRestTremorAmpRLEScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsresttremoramprlesc
+MDSUPDRSTtlHrAwkOffStateNum,MDS-UPDRS,at-home-pd,Baseline,ttlhrawkoffstatenu
+MDSUPDRSTtlHrAwkOffStateNum,MDS-UPDRS,at-home-pd,12 months,ttlhrawkoffstatenu
+MDSUPDRSTtlHrAwkOffStateNum,MDS-UPDRS,at-home-pd,24 months,ttlhrawkoffstatenu
+MDSUPDRSTtlHrAwkOffStateNum,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSTtlHrAwkOffStateNum,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTtlHrAwkOffStateNum,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTtlHrAwkOffStateNum,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsttlhrawkoffstatenu
+MDSUPDRSFingerTppngRteHndScore,MDS-UPDRS,at-home-pd,Baseline,fingertppngrtehnds
+MDSUPDRSFingerTppngRteHndScore,MDS-UPDRS,at-home-pd,12 months,fingertppngrtehnds
+MDSUPDRSFingerTppngRteHndScore,MDS-UPDRS,at-home-pd,24 months,fingertppngrtehnds
+MDSUPDRSFingerTppngRteHndScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSFingerTppngRteHndScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsfingertppngrtehnds_v2
+MDSUPDRSFingerTppngRteHndScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsfingertppngrtehnds_2
+MDSUPDRSFingerTppngRteHndScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsfingertppngrtehnds
+MDSUPDRSPostrlTremorRtHndScore,MDS-UPDRS,at-home-pd,Baseline,postrltremorrthnds
+MDSUPDRSPostrlTremorRtHndScore,MDS-UPDRS,at-home-pd,12 months,postrltremorrthnds
+MDSUPDRSPostrlTremorRtHndScore,MDS-UPDRS,at-home-pd,24 months,postrltremorrthnds
+MDSUPDRSPostrlTremorRtHndScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPostrlTremorRtHndScore,MDS-UPDRS,super-pd,Baseline,mdsupdrspostrltremorrthnds_v2
+MDSUPDRSPostrlTremorRtHndScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrspostrltremorrthnds_2
+MDSUPDRSPostrlTremorRtHndScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrspostrltremorrthnds
+MDSUPDRSFreeFlowSpeechScore,MDS-UPDRS,at-home-pd,Baseline,freeflowspeechscor
+MDSUPDRSFreeFlowSpeechScore,MDS-UPDRS,at-home-pd,12 months,freeflowspeechscor
+MDSUPDRSFreeFlowSpeechScore,MDS-UPDRS,at-home-pd,24 months,freeflowspeechscor
+MDSUPDRSFreeFlowSpeechScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSFreeFlowSpeechScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsfreeflowspeechscor_v2
+MDSUPDRSFreeFlowSpeechScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsfreeflowspeechscor_2
+MDSUPDRSFreeFlowSpeechScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsfreeflowspeechscor
+MDSUPDRSHoehnYahrStageScore,MDS-UPDRS,at-home-pd,Baseline,hoehnyahrstagescor
+MDSUPDRSHoehnYahrStageScore,MDS-UPDRS,at-home-pd,12 months,hoehnyahrstagescor
+MDSUPDRSHoehnYahrStageScore,MDS-UPDRS,at-home-pd,24 months,hoehnyahrstagescor
+MDSUPDRSHoehnYahrStageScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSHoehnYahrStageScore,MDS-UPDRS,super-pd,Baseline,mdsupdrshoehnyahrstagescor_v2
+MDSUPDRSHoehnYahrStageScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrshoehnyahrstagescor_2
+MDSUPDRSHoehnYahrStageScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrshoehnyahrstagescor
+MDSUPDRSLstLDOPADoseTm,MDS-UPDRS,at-home-pd,Baseline,mdsupdrslstldopadosetm
+MDSUPDRSLstLDOPADoseTm,MDS-UPDRS,at-home-pd,12 months,mdsupdrslstldopadosetm
+MDSUPDRSLstLDOPADoseTm,MDS-UPDRS,at-home-pd,24 months,mdsupdrslstldopadosetm
+MDSUPDRSLstLDOPADoseTm,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSLstLDOPADoseTm,MDS-UPDRS,super-pd,Baseline,mdsupdrslstldopadosetm_v2
+MDSUPDRSLstLDOPADoseTm,MDS-UPDRS,super-pd,Physician_ON,mdsupdrslstldopadosetm_2
+MDSUPDRSLstLDOPADoseTm,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrslstldopadosetm_spd
+MDSUPDRSLLERigidScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRSLLERigidScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRSLLERigidScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRSLLERigidScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSLLERigidScore,MDS-UPDRS,super-pd,Baseline,neck_5
+MDSUPDRSLLERigidScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsrigiditylle_2
+MDSUPDRSLLERigidScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsrigiditylle
+MDSUPDRSPrimrySrcInfoTyp,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsprimrysrcinfotyp
+MDSUPDRSPrimrySrcInfoTyp,MDS-UPDRS,at-home-pd,12 months,mdsupdrsprimrysrcinfotyp
+MDSUPDRSPrimrySrcInfoTyp,MDS-UPDRS,at-home-pd,24 months,mdsupdrsprimrysrcinfotyp
+MDSUPDRSPrimrySrcInfoTyp,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPrimrySrcInfoTyp,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSPrimrySrcInfoTyp,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSPrimrySrcInfoTyp,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsprimrysrcinfotyp_spd
+MDSUPDRSDressingScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsdressingscore
+MDSUPDRSDressingScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsdressingscore_m12
+MDSUPDRSDressingScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsdressingscore_m12
+MDSUPDRSDressingScore,MDS-UPDRS,at-home-pd,36 months,mdsupdrsdressingscore_m12_as
+MDSUPDRSDressingScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSDressingScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSDressingScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsdressingscore_spd
+MDSUPDRSAnxsMoodScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsanxsmoodscore
+MDSUPDRSAnxsMoodScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsanxsmoodscore
+MDSUPDRSAnxsMoodScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsanxsmoodscore
+MDSUPDRSAnxsMoodScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSAnxsMoodScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSAnxsMoodScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSAnxsMoodScore,MDS-UPDRS,super-pd,Physician_OFF,mds_anx
+MDSUPDRSLftFtToeTppngScore,MDS-UPDRS,at-home-pd,Baseline,lftfttoetppngscore
+MDSUPDRSLftFtToeTppngScore,MDS-UPDRS,at-home-pd,12 months,lftfttoetppngscore
+MDSUPDRSLftFtToeTppngScore,MDS-UPDRS,at-home-pd,24 months,lftfttoetppngscore
+MDSUPDRSLftFtToeTppngScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSLftFtToeTppngScore,MDS-UPDRS,super-pd,Baseline,mdsupdrslftfttoetppngscore_v2
+MDSUPDRSLftFtToeTppngScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrslftfttoetppngscore_2
+MDSUPDRSLftFtToeTppngScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrslftfttoetppngscore
+MDSUPDRSPtClinStatePrknsnMdInd,MDS-UPDRS,at-home-pd,Baseline,ptclinstateprknsnm
+MDSUPDRSPtClinStatePrknsnMdInd,MDS-UPDRS,at-home-pd,12 months,ptclinstateprknsnm
+MDSUPDRSPtClinStatePrknsnMdInd,MDS-UPDRS,at-home-pd,24 months,ptclinstateprknsnm
+MDSUPDRSPtClinStatePrknsnMdInd,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPtClinStatePrknsnMdInd,MDS-UPDRS,super-pd,Baseline,mdsupdrsptclinstateprknsnm_v2
+MDSUPDRSPtClinStatePrknsnMdInd,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsptclinstateprknsnm_2
+MDSUPDRSPtClinStatePrknsnMdInd,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsptclinstateprknsnm
+MDSUPDRSSpeechScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsspeechscore
+MDSUPDRSSpeechScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsspeechscore_m12
+MDSUPDRSSpeechScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsspeechscore_m12
+MDSUPDRSSpeechScore,MDS-UPDRS,at-home-pd,36 months,mdsupdrsspeechscore_m12_as
+MDSUPDRSSpeechScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSSpeechScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSSpeechScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsspeechscore_spd
+MDSUPDRSConstipProbScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsconstipprobscore
+MDSUPDRSConstipProbScore,MDS-UPDRS,at-home-pd,12 months,constipprobscore_m12
+MDSUPDRSConstipProbScore,MDS-UPDRS,at-home-pd,24 months,constipprobscore_m12
+MDSUPDRSConstipProbScore,MDS-UPDRS,at-home-pd,36 months,constipprobscore_m12_as
+MDSUPDRSConstipProbScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSConstipProbScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSConstipProbScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsconstipprobscore_spd
+MDSUPDRSDaytmSleepScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsdaytmsleepscore
+MDSUPDRSDaytmSleepScore,MDS-UPDRS,at-home-pd,12 months,daytmsleepscore_m12
+MDSUPDRSDaytmSleepScore,MDS-UPDRS,at-home-pd,24 months,daytmsleepscore_m12
+MDSUPDRSDaytmSleepScore,MDS-UPDRS,at-home-pd,36 months,daytmsleepscore_m12_as
+MDSUPDRSDaytmSleepScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSDaytmSleepScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSDaytmSleepScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsdaytmsleepscore_spd
+MDSUPDRSPainOthrSensScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrspainothrsensscore
+MDSUPDRSPainOthrSensScore,MDS-UPDRS,at-home-pd,12 months,painothrsensscore_m12
+MDSUPDRSPainOthrSensScore,MDS-UPDRS,at-home-pd,24 months,painothrsensscore_m12
+MDSUPDRSPainOthrSensScore,MDS-UPDRS,at-home-pd,36 months,painothrsensscore_m12_as
+MDSUPDRSPainOthrSensScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSPainOthrSensScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSPainOthrSensScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrspainothrsensscore_spd
+MDSUPDRSRteHndScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsrtehndscore
+MDSUPDRSRteHndScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsrtehndscore
+MDSUPDRSRteHndScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsrtehndscore
+MDSUPDRSRteHndScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSRteHndScore,MDS-UPDRS,super-pd,Baseline,mdsupdrsrtehndscore_v2
+MDSUPDRSRteHndScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsrtehndscore_2
+MDSUPDRSRteHndScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsrtehndscore_spd
+MDSUPDRSTtlHrOffWDystniaNum,MDS-UPDRS,at-home-pd,Baseline,ttlhroffwdystnianu
+MDSUPDRSTtlHrOffWDystniaNum,MDS-UPDRS,at-home-pd,12 months,ttlhroffwdystnianu
+MDSUPDRSTtlHrOffWDystniaNum,MDS-UPDRS,at-home-pd,24 months,ttlhroffwdystnianu
+MDSUPDRSTtlHrOffWDystniaNum,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSTtlHrOffWDystniaNum,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTtlHrOffWDystniaNum,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTtlHrOffWDystniaNum,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsttlhroffwdystnianu
+MDSUPDRSLiteHeadStndngScore,MDS-UPDRS,at-home-pd,Baseline,liteheadstndngscor
+MDSUPDRSLiteHeadStndngScore,MDS-UPDRS,at-home-pd,12 months,liteheadstndngscor_m12
+MDSUPDRSLiteHeadStndngScore,MDS-UPDRS,at-home-pd,24 months,liteheadstndngscor_m12
+MDSUPDRSLiteHeadStndngScore,MDS-UPDRS,at-home-pd,36 months,liteheadstndngscor_m12_as
+MDSUPDRSLiteHeadStndngScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSLiteHeadStndngScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSLiteHeadStndngScore,MDS-UPDRS,super-pd,Physician_OFF,liteheadstndngscor_spd
+MDSUPDRSTmSpntDyskScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrstmspntdyskscore
+MDSUPDRSTmSpntDyskScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrstmspntdyskscore
+MDSUPDRSTmSpntDyskScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrstmspntdyskscore
+MDSUPDRSTmSpntDyskScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSTmSpntDyskScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTmSpntDyskScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTmSpntDyskScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrstmspntdyskscore_spd
+MDSUPDRSHandwritingScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrshandwritingscore
+MDSUPDRSHandwritingScore,MDS-UPDRS,at-home-pd,12 months,handwritingscore_m12
+MDSUPDRSHandwritingScore,MDS-UPDRS,at-home-pd,24 months,handwritingscore_m12
+MDSUPDRSHandwritingScore,MDS-UPDRS,at-home-pd,36 months,handwritingscore_m12_as
+MDSUPDRSHandwritingScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSHandwritingScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSHandwritingScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrshandwritingscore_spd
+MDSUPDRSPrcntDyskVal,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsprcntdyskval
+MDSUPDRSPrcntDyskVal,MDS-UPDRS,at-home-pd,12 months,mdsupdrsprcntdyskval
+MDSUPDRSPrcntDyskVal,MDS-UPDRS,at-home-pd,24 months,mdsupdrsprcntdyskval
+MDSUPDRSPrcntDyskVal,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSPrcntDyskVal,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSPrcntDyskVal,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSPrcntDyskVal,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsprcntdyskval_spd
+MDSUPDRSTurngBedScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsturngbedscore
+MDSUPDRSTurngBedScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrsturngbedscore_m12
+MDSUPDRSTurngBedScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrsturngbedscore_m12
+MDSUPDRSTurngBedScore,MDS-UPDRS,at-home-pd,36 months,mdsupdrsturngbedscore_m12_as
+MDSUPDRSTurngBedScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTurngBedScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTurngBedScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsturngbedscore_spd
+MDSUPDRSUrnryProbScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrsurnryprobscore
+MDSUPDRSUrnryProbScore,MDS-UPDRS,at-home-pd,12 months,urnryprobscore_m12
+MDSUPDRSUrnryProbScore,MDS-UPDRS,at-home-pd,24 months,urnryprobscore_m12
+MDSUPDRSUrnryProbScore,MDS-UPDRS,at-home-pd,36 months,urnryprobscore_m12_as
+MDSUPDRSUrnryProbScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSUrnryProbScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSUrnryProbScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsurnryprobscore_spd
+MDSUPDRSTremorScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrstremorscore
+MDSUPDRSTremorScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrstremorscore_m12
+MDSUPDRSTremorScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrstremorscore_m12
+MDSUPDRSTremorScore,MDS-UPDRS,at-home-pd,36 months,mdsupdrstremorscore_m12_as
+MDSUPDRSTremorScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSTremorScore,MDS-UPDRS,super-pd,Physician_ON,NA
+MDSUPDRSTremorScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrstremorscore_spd
+MDSUPDRSLftHndScore,MDS-UPDRS,at-home-pd,Baseline,mdsupdrslfthndscore
+MDSUPDRSLftHndScore,MDS-UPDRS,at-home-pd,12 months,mdsupdrslfthndscore
+MDSUPDRSLftHndScore,MDS-UPDRS,at-home-pd,24 months,mdsupdrslfthndscore
+MDSUPDRSLftHndScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSLftHndScore,MDS-UPDRS,super-pd,Baseline,mdsupdrslfthndscore_v2
+MDSUPDRSLftHndScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrslfthndscore_2
+MDSUPDRSLftHndScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrslfthndscore_spd
+MDSUPDRSNeckRigidScore,MDS-UPDRS,at-home-pd,Baseline,NA
+MDSUPDRSNeckRigidScore,MDS-UPDRS,at-home-pd,12 months,NA
+MDSUPDRSNeckRigidScore,MDS-UPDRS,at-home-pd,24 months,NA
+MDSUPDRSNeckRigidScore,MDS-UPDRS,at-home-pd,36 months,NA
+MDSUPDRSNeckRigidScore,MDS-UPDRS,super-pd,Baseline,NA
+MDSUPDRSNeckRigidScore,MDS-UPDRS,super-pd,Physician_ON,mdsupdrsrigidityneck_2
+MDSUPDRSNeckRigidScore,MDS-UPDRS,super-pd,Physician_OFF,mdsupdrsrigidityneck
+TobcoUseStopAgeVal,BehavioralHistory,at-home-pd,Baseline,NA
+TobcoUseStopAgeVal,BehavioralHistory,at-home-pd,12 months,NA
+TobcoUseStopAgeVal,BehavioralHistory,at-home-pd,24 months,NA
+TobcoUseStopAgeVal,BehavioralHistory,at-home-pd,36 months,NA
+TobcoUseStopAgeVal,BehavioralHistory,super-pd,Baseline,NA
+TobcoUseStopAgeVal,BehavioralHistory,super-pd,Physician_ON,NA
+TobcoUseStopAgeVal,BehavioralHistory,super-pd,Physician_OFF,NA
+TobcoRcntUseIndPDBP,BehavioralHistory,at-home-pd,Baseline,NA
+TobcoRcntUseIndPDBP,BehavioralHistory,at-home-pd,12 months,NA
+TobcoRcntUseIndPDBP,BehavioralHistory,at-home-pd,24 months,NA
+TobcoRcntUseIndPDBP,BehavioralHistory,at-home-pd,36 months,NA
+TobcoRcntUseIndPDBP,BehavioralHistory,super-pd,Baseline,NA
+TobcoRcntUseIndPDBP,BehavioralHistory,super-pd,Physician_ON,NA
+TobcoRcntUseIndPDBP,BehavioralHistory,super-pd,Physician_OFF,NA
+DrgSubIllctUseCatPDBP,BehavioralHistory,at-home-pd,Baseline,NA
+DrgSubIllctUseCatPDBP,BehavioralHistory,at-home-pd,12 months,NA
+DrgSubIllctUseCatPDBP,BehavioralHistory,at-home-pd,24 months,NA
+DrgSubIllctUseCatPDBP,BehavioralHistory,at-home-pd,36 months,NA
+DrgSubIllctUseCatPDBP,BehavioralHistory,super-pd,Baseline,NA
+DrgSubIllctUseCatPDBP,BehavioralHistory,super-pd,Physician_ON,NA
+DrgSubIllctUseCatPDBP,BehavioralHistory,super-pd,Physician_OFF,NA
+AlcUseStopAgeVal,BehavioralHistory,at-home-pd,Baseline,NA
+AlcUseStopAgeVal,BehavioralHistory,at-home-pd,12 months,NA
+AlcUseStopAgeVal,BehavioralHistory,at-home-pd,24 months,NA
+AlcUseStopAgeVal,BehavioralHistory,at-home-pd,36 months,NA
+AlcUseStopAgeVal,BehavioralHistory,super-pd,Baseline,NA
+AlcUseStopAgeVal,BehavioralHistory,super-pd,Physician_ON,NA
+AlcUseStopAgeVal,BehavioralHistory,super-pd,Physician_OFF,NA
+EverUsedTobaccoInd,BehavioralHistory,at-home-pd,Baseline,NA
+EverUsedTobaccoInd,BehavioralHistory,at-home-pd,12 months,NA
+EverUsedTobaccoInd,BehavioralHistory,at-home-pd,24 months,NA
+EverUsedTobaccoInd,BehavioralHistory,at-home-pd,36 months,NA
+EverUsedTobaccoInd,BehavioralHistory,super-pd,Baseline,NA
+EverUsedTobaccoInd,BehavioralHistory,super-pd,Physician_ON,NA
+EverUsedTobaccoInd,BehavioralHistory,super-pd,Physician_OFF,NA
+EverUsedAlcoholInd,BehavioralHistory,at-home-pd,Baseline,NA
+EverUsedAlcoholInd,BehavioralHistory,at-home-pd,12 months,NA
+EverUsedAlcoholInd,BehavioralHistory,at-home-pd,24 months,NA
+EverUsedAlcoholInd,BehavioralHistory,at-home-pd,36 months,NA
+EverUsedAlcoholInd,BehavioralHistory,super-pd,Baseline,NA
+EverUsedAlcoholInd,BehavioralHistory,super-pd,Physician_ON,NA
+EverUsedAlcoholInd,BehavioralHistory,super-pd,Physician_OFF,NA
+DrgSubstCurrntIllicitUseCat,BehavioralHistory,at-home-pd,Baseline,NA
+DrgSubstCurrntIllicitUseCat,BehavioralHistory,at-home-pd,12 months,NA
+DrgSubstCurrntIllicitUseCat,BehavioralHistory,at-home-pd,24 months,NA
+DrgSubstCurrntIllicitUseCat,BehavioralHistory,at-home-pd,36 months,NA
+DrgSubstCurrntIllicitUseCat,BehavioralHistory,super-pd,Baseline,NA
+DrgSubstCurrntIllicitUseCat,BehavioralHistory,super-pd,Physician_ON,NA
+DrgSubstCurrntIllicitUseCat,BehavioralHistory,super-pd,Physician_OFF,NA
+AlcConsume6MoreDrinkFreq,BehavioralHistory,at-home-pd,Baseline,NA
+AlcConsume6MoreDrinkFreq,BehavioralHistory,at-home-pd,12 months,NA
+AlcConsume6MoreDrinkFreq,BehavioralHistory,at-home-pd,24 months,NA
+AlcConsume6MoreDrinkFreq,BehavioralHistory,at-home-pd,36 months,NA
+AlcConsume6MoreDrinkFreq,BehavioralHistory,super-pd,Baseline,NA
+AlcConsume6MoreDrinkFreq,BehavioralHistory,super-pd,Physician_ON,NA
+AlcConsume6MoreDrinkFreq,BehavioralHistory,super-pd,Physician_OFF,NA
+AlcUseRelatedHospInd,BehavioralHistory,at-home-pd,Baseline,NA
+AlcUseRelatedHospInd,BehavioralHistory,at-home-pd,12 months,NA
+AlcUseRelatedHospInd,BehavioralHistory,at-home-pd,24 months,NA
+AlcUseRelatedHospInd,BehavioralHistory,at-home-pd,36 months,NA
+AlcUseRelatedHospInd,BehavioralHistory,super-pd,Baseline,NA
+AlcUseRelatedHospInd,BehavioralHistory,super-pd,Physician_ON,NA
+AlcUseRelatedHospInd,BehavioralHistory,super-pd,Physician_OFF,NA
+TobcoPriorUseInd,BehavioralHistory,at-home-pd,Baseline,NA
+TobcoPriorUseInd,BehavioralHistory,at-home-pd,12 months,NA
+TobcoPriorUseInd,BehavioralHistory,at-home-pd,24 months,NA
+TobcoPriorUseInd,BehavioralHistory,at-home-pd,36 months,NA
+TobcoPriorUseInd,BehavioralHistory,super-pd,Baseline,NA
+TobcoPriorUseInd,BehavioralHistory,super-pd,Physician_ON,NA
+TobcoPriorUseInd,BehavioralHistory,super-pd,Physician_OFF,NA
+TobcoUseStrtAgeVal,BehavioralHistory,at-home-pd,Baseline,NA
+TobcoUseStrtAgeVal,BehavioralHistory,at-home-pd,12 months,NA
+TobcoUseStrtAgeVal,BehavioralHistory,at-home-pd,24 months,NA
+TobcoUseStrtAgeVal,BehavioralHistory,at-home-pd,36 months,NA
+TobcoUseStrtAgeVal,BehavioralHistory,super-pd,Baseline,NA
+TobcoUseStrtAgeVal,BehavioralHistory,super-pd,Physician_ON,NA
+TobcoUseStrtAgeVal,BehavioralHistory,super-pd,Physician_OFF,NA
+AlcRcntUseIndPDBP,BehavioralHistory,at-home-pd,Baseline,NA
+AlcRcntUseIndPDBP,BehavioralHistory,at-home-pd,12 months,NA
+AlcRcntUseIndPDBP,BehavioralHistory,at-home-pd,24 months,NA
+AlcRcntUseIndPDBP,BehavioralHistory,at-home-pd,36 months,NA
+AlcRcntUseIndPDBP,BehavioralHistory,super-pd,Baseline,NA
+AlcRcntUseIndPDBP,BehavioralHistory,super-pd,Physician_ON,NA
+AlcRcntUseIndPDBP,BehavioralHistory,super-pd,Physician_OFF,NA
+AlcPriorUseInd,BehavioralHistory,at-home-pd,Baseline,NA
+AlcPriorUseInd,BehavioralHistory,at-home-pd,12 months,NA
+AlcPriorUseInd,BehavioralHistory,at-home-pd,24 months,NA
+AlcPriorUseInd,BehavioralHistory,at-home-pd,36 months,NA
+AlcPriorUseInd,BehavioralHistory,super-pd,Baseline,NA
+AlcPriorUseInd,BehavioralHistory,super-pd,Physician_ON,NA
+AlcPriorUseInd,BehavioralHistory,super-pd,Physician_OFF,NA
+TobcoProdctUsedTypPDBP,BehavioralHistory,at-home-pd,Baseline,NA
+TobcoProdctUsedTypPDBP,BehavioralHistory,at-home-pd,12 months,NA
+TobcoProdctUsedTypPDBP,BehavioralHistory,at-home-pd,24 months,NA
+TobcoProdctUsedTypPDBP,BehavioralHistory,at-home-pd,36 months,NA
+TobcoProdctUsedTypPDBP,BehavioralHistory,super-pd,Baseline,NA
+TobcoProdctUsedTypPDBP,BehavioralHistory,super-pd,Physician_ON,NA
+TobcoProdctUsedTypPDBP,BehavioralHistory,super-pd,Physician_OFF,NA
+AlcUseStrtAgeVal,BehavioralHistory,at-home-pd,Baseline,NA
+AlcUseStrtAgeVal,BehavioralHistory,at-home-pd,12 months,NA
+AlcUseStrtAgeVal,BehavioralHistory,at-home-pd,24 months,NA
+AlcUseStrtAgeVal,BehavioralHistory,at-home-pd,36 months,NA
+AlcUseStrtAgeVal,BehavioralHistory,super-pd,Baseline,NA
+AlcUseStrtAgeVal,BehavioralHistory,super-pd,Physician_ON,NA
+AlcUseStrtAgeVal,BehavioralHistory,super-pd,Physician_OFF,NA
+TobcoCigaretSmokedDlyAvgNum,BehavioralHistory,at-home-pd,Baseline,NA
+TobcoCigaretSmokedDlyAvgNum,BehavioralHistory,at-home-pd,12 months,NA
+TobcoCigaretSmokedDlyAvgNum,BehavioralHistory,at-home-pd,24 months,NA
+TobcoCigaretSmokedDlyAvgNum,BehavioralHistory,at-home-pd,36 months,NA
+TobcoCigaretSmokedDlyAvgNum,BehavioralHistory,super-pd,Baseline,NA
+TobcoCigaretSmokedDlyAvgNum,BehavioralHistory,super-pd,Physician_ON,NA
+TobcoCigaretSmokedDlyAvgNum,BehavioralHistory,super-pd,Physician_OFF,NA
+AlcCurntUseInd,BehavioralHistory,at-home-pd,Baseline,NA
+AlcCurntUseInd,BehavioralHistory,at-home-pd,12 months,NA
+AlcCurntUseInd,BehavioralHistory,at-home-pd,24 months,NA
+AlcCurntUseInd,BehavioralHistory,at-home-pd,36 months,NA
+AlcCurntUseInd,BehavioralHistory,super-pd,Baseline,NA
+AlcCurntUseInd,BehavioralHistory,super-pd,Physician_ON,NA
+AlcCurntUseInd,BehavioralHistory,super-pd,Physician_OFF,NA
+TobcoUseCurntInd,BehavioralHistory,at-home-pd,Baseline,NA
+TobcoUseCurntInd,BehavioralHistory,at-home-pd,12 months,NA
+TobcoUseCurntInd,BehavioralHistory,at-home-pd,24 months,NA
+TobcoUseCurntInd,BehavioralHistory,at-home-pd,36 months,NA
+TobcoUseCurntInd,BehavioralHistory,super-pd,Baseline,NA
+TobcoUseCurntInd,BehavioralHistory,super-pd,Physician_ON,NA
+TobcoUseCurntInd,BehavioralHistory,super-pd,Physician_OFF,NA
+AlcDrinkingDayAvgDrinks,BehavioralHistory,at-home-pd,Baseline,NA
+AlcDrinkingDayAvgDrinks,BehavioralHistory,at-home-pd,12 months,NA
+AlcDrinkingDayAvgDrinks,BehavioralHistory,at-home-pd,24 months,NA
+AlcDrinkingDayAvgDrinks,BehavioralHistory,at-home-pd,36 months,NA
+AlcDrinkingDayAvgDrinks,BehavioralHistory,super-pd,Baseline,NA
+AlcDrinkingDayAvgDrinks,BehavioralHistory,super-pd,Physician_ON,NA
+AlcDrinkingDayAvgDrinks,BehavioralHistory,super-pd,Physician_OFF,NA
+AlcUseFreq,BehavioralHistory,at-home-pd,Baseline,NA
+AlcUseFreq,BehavioralHistory,at-home-pd,12 months,NA
+AlcUseFreq,BehavioralHistory,at-home-pd,24 months,NA
+AlcUseFreq,BehavioralHistory,at-home-pd,36 months,NA
+AlcUseFreq,BehavioralHistory,super-pd,Baseline,NA
+AlcUseFreq,BehavioralHistory,super-pd,Physician_ON,NA
+AlcUseFreq,BehavioralHistory,super-pd,Physician_OFF,NA
+MedctnPriorConcomMinsLstDose,PriorAndConcomitantMeds,at-home-pd,Baseline,NA
+MedctnPriorConcomMinsLstDose,PriorAndConcomitantMeds,at-home-pd,12 months,NA
+MedctnPriorConcomMinsLstDose,PriorAndConcomitantMeds,at-home-pd,24 months,NA
+MedctnPriorConcomMinsLstDose,PriorAndConcomitantMeds,at-home-pd,36 months,NA
+MedctnPriorConcomMinsLstDose,PriorAndConcomitantMeds,super-pd,Baseline,NA
+MedctnPriorConcomMinsLstDose,PriorAndConcomitantMeds,super-pd,Physician_ON,NA
+MedctnPriorConcomMinsLstDose,PriorAndConcomitantMeds,super-pd,Physician_OFF,NA
+MedctnPriorConcomHrsLstDose,PriorAndConcomitantMeds,at-home-pd,Baseline,NA
+MedctnPriorConcomHrsLstDose,PriorAndConcomitantMeds,at-home-pd,12 months,NA
+MedctnPriorConcomHrsLstDose,PriorAndConcomitantMeds,at-home-pd,24 months,NA
+MedctnPriorConcomHrsLstDose,PriorAndConcomitantMeds,at-home-pd,36 months,NA
+MedctnPriorConcomHrsLstDose,PriorAndConcomitantMeds,super-pd,Baseline,NA
+MedctnPriorConcomHrsLstDose,PriorAndConcomitantMeds,super-pd,Physician_ON,NA
+MedctnPriorConcomHrsLstDose,PriorAndConcomitantMeds,super-pd,Physician_OFF,NA
+MedctnPriorConcomRteTyp,PriorAndConcomitantMeds,at-home-pd,Baseline,NA
+MedctnPriorConcomRteTyp,PriorAndConcomitantMeds,at-home-pd,12 months,NA
+MedctnPriorConcomRteTyp,PriorAndConcomitantMeds,at-home-pd,24 months,NA
+MedctnPriorConcomRteTyp,PriorAndConcomitantMeds,at-home-pd,36 months,NA
+MedctnPriorConcomRteTyp,PriorAndConcomitantMeds,super-pd,Baseline,NA
+MedctnPriorConcomRteTyp,PriorAndConcomitantMeds,super-pd,Physician_ON,NA
+MedctnPriorConcomRteTyp,PriorAndConcomitantMeds,super-pd,Physician_OFF,NA
+MedctnPriorConcomName,PriorAndConcomitantMeds,at-home-pd,Baseline,NA
+MedctnPriorConcomName,PriorAndConcomitantMeds,at-home-pd,12 months,NA
+MedctnPriorConcomName,PriorAndConcomitantMeds,at-home-pd,24 months,NA
+MedctnPriorConcomName,PriorAndConcomitantMeds,at-home-pd,36 months,NA
+MedctnPriorConcomName,PriorAndConcomitantMeds,super-pd,Baseline,NA
+MedctnPriorConcomName,PriorAndConcomitantMeds,super-pd,Physician_ON,NA
+MedctnPriorConcomName,PriorAndConcomitantMeds,super-pd,Physician_OFF,NA
+MedctnPriorConcomDoseMsrTxt,PriorAndConcomitantMeds,at-home-pd,Baseline,NA
+MedctnPriorConcomDoseMsrTxt,PriorAndConcomitantMeds,at-home-pd,12 months,NA
+MedctnPriorConcomDoseMsrTxt,PriorAndConcomitantMeds,at-home-pd,24 months,NA
+MedctnPriorConcomDoseMsrTxt,PriorAndConcomitantMeds,at-home-pd,36 months,NA
+MedctnPriorConcomDoseMsrTxt,PriorAndConcomitantMeds,super-pd,Baseline,NA
+MedctnPriorConcomDoseMsrTxt,PriorAndConcomitantMeds,super-pd,Physician_ON,NA
+MedctnPriorConcomDoseMsrTxt,PriorAndConcomitantMeds,super-pd,Physician_OFF,NA
+MedctnPriorConcomIndTxt,PriorAndConcomitantMeds,at-home-pd,Baseline,NA
+MedctnPriorConcomIndTxt,PriorAndConcomitantMeds,at-home-pd,12 months,NA
+MedctnPriorConcomIndTxt,PriorAndConcomitantMeds,at-home-pd,24 months,NA
+MedctnPriorConcomIndTxt,PriorAndConcomitantMeds,at-home-pd,36 months,NA
+MedctnPriorConcomIndTxt,PriorAndConcomitantMeds,super-pd,Baseline,NA
+MedctnPriorConcomIndTxt,PriorAndConcomitantMeds,super-pd,Physician_ON,NA
+MedctnPriorConcomIndTxt,PriorAndConcomitantMeds,super-pd,Physician_OFF,NA
+MedctnPriorConcomDoseUoM,PriorAndConcomitantMeds,at-home-pd,Baseline,NA
+MedctnPriorConcomDoseUoM,PriorAndConcomitantMeds,at-home-pd,12 months,NA
+MedctnPriorConcomDoseUoM,PriorAndConcomitantMeds,at-home-pd,24 months,NA
+MedctnPriorConcomDoseUoM,PriorAndConcomitantMeds,at-home-pd,36 months,NA
+MedctnPriorConcomDoseUoM,PriorAndConcomitantMeds,super-pd,Baseline,NA
+MedctnPriorConcomDoseUoM,PriorAndConcomitantMeds,super-pd,Physician_ON,NA
+MedctnPriorConcomDoseUoM,PriorAndConcomitantMeds,super-pd,Physician_OFF,NA
+MedctnPriorConcomFreqTxt,PriorAndConcomitantMeds,at-home-pd,Baseline,NA
+MedctnPriorConcomFreqTxt,PriorAndConcomitantMeds,at-home-pd,12 months,NA
+MedctnPriorConcomFreqTxt,PriorAndConcomitantMeds,at-home-pd,24 months,NA
+MedctnPriorConcomFreqTxt,PriorAndConcomitantMeds,at-home-pd,36 months,NA
+MedctnPriorConcomFreqTxt,PriorAndConcomitantMeds,super-pd,Baseline,NA
+MedctnPriorConcomFreqTxt,PriorAndConcomitantMeds,super-pd,Physician_ON,NA
+MedctnPriorConcomFreqTxt,PriorAndConcomitantMeds,super-pd,Physician_OFF,NA
+MedctnPriorConcomPD,PriorAndConcomitantMeds,at-home-pd,Baseline,NA
+MedctnPriorConcomPD,PriorAndConcomitantMeds,at-home-pd,12 months,NA
+MedctnPriorConcomPD,PriorAndConcomitantMeds,at-home-pd,24 months,NA
+MedctnPriorConcomPD,PriorAndConcomitantMeds,at-home-pd,36 months,NA
+MedctnPriorConcomPD,PriorAndConcomitantMeds,super-pd,Baseline,NA
+MedctnPriorConcomPD,PriorAndConcomitantMeds,super-pd,Physician_ON,NA
+MedctnPriorConcomPD,PriorAndConcomitantMeds,super-pd,Physician_OFF,NA
+PDBPInclusnXclusn_XclusnCase,InclExclCriteria,at-home-pd,Baseline,NA
+PDBPInclusnXclusn_XclusnCase,InclExclCriteria,at-home-pd,12 months,NA
+PDBPInclusnXclusn_XclusnCase,InclExclCriteria,at-home-pd,24 months,NA
+PDBPInclusnXclusn_XclusnCase,InclExclCriteria,at-home-pd,36 months,NA
+PDBPInclusnXclusn_XclusnCase,InclExclCriteria,super-pd,Baseline,NA
+PDBPInclusnXclusn_XclusnCase,InclExclCriteria,super-pd,Physician_ON,NA
+PDBPInclusnXclusn_XclusnCase,InclExclCriteria,super-pd,Physician_OFF,NA
+PDBPInclusnXclusn_InclusnCntrl,InclExclCriteria,at-home-pd,Baseline,NA
+PDBPInclusnXclusn_InclusnCntrl,InclExclCriteria,at-home-pd,12 months,NA
+PDBPInclusnXclusn_InclusnCntrl,InclExclCriteria,at-home-pd,24 months,NA
+PDBPInclusnXclusn_InclusnCntrl,InclExclCriteria,at-home-pd,36 months,NA
+PDBPInclusnXclusn_InclusnCntrl,InclExclCriteria,super-pd,Baseline,NA
+PDBPInclusnXclusn_InclusnCntrl,InclExclCriteria,super-pd,Physician_ON,NA
+PDBPInclusnXclusn_InclusnCntrl,InclExclCriteria,super-pd,Physician_OFF,NA
+PDBPInclusnXclusn_InclusnCase,InclExclCriteria,at-home-pd,Baseline,NA
+PDBPInclusnXclusn_InclusnCase,InclExclCriteria,at-home-pd,12 months,NA
+PDBPInclusnXclusn_InclusnCase,InclExclCriteria,at-home-pd,24 months,NA
+PDBPInclusnXclusn_InclusnCase,InclExclCriteria,at-home-pd,36 months,NA
+PDBPInclusnXclusn_InclusnCase,InclExclCriteria,super-pd,Baseline,NA
+PDBPInclusnXclusn_InclusnCase,InclExclCriteria,super-pd,Physician_ON,NA
+PDBPInclusnXclusn_InclusnCase,InclExclCriteria,super-pd,Physician_OFF,NA
+StdyEligibilityInd,InclExclCriteria,at-home-pd,Baseline,enrollconfirm
+StdyEligibilityInd,InclExclCriteria,at-home-pd,12 months,NA
+StdyEligibilityInd,InclExclCriteria,at-home-pd,24 months,NA
+StdyEligibilityInd,InclExclCriteria,at-home-pd,36 months,NA
+StdyEligibilityInd,InclExclCriteria,super-pd,Baseline,enrollconfirm
+StdyEligibilityInd,InclExclCriteria,super-pd,Physician_ON,NA
+StdyEligibilityInd,InclExclCriteria,super-pd,Physician_OFF,NA
+PDBPInclusnXclusn_XclusnCntrl,InclExclCriteria,at-home-pd,Baseline,NA
+PDBPInclusnXclusn_XclusnCntrl,InclExclCriteria,at-home-pd,12 months,NA
+PDBPInclusnXclusn_XclusnCntrl,InclExclCriteria,at-home-pd,24 months,NA
+PDBPInclusnXclusn_XclusnCntrl,InclExclCriteria,at-home-pd,36 months,NA
+PDBPInclusnXclusn_XclusnCntrl,InclExclCriteria,super-pd,Baseline,NA
+PDBPInclusnXclusn_XclusnCntrl,InclExclCriteria,super-pd,Physician_ON,NA
+PDBPInclusnXclusn_XclusnCntrl,InclExclCriteria,super-pd,Physician_OFF,NA
+BloodCollectCentrifugationDur,BloodCollection,at-home-pd,Baseline,NA
+BloodCollectCentrifugationDur,BloodCollection,at-home-pd,12 months,NA
+BloodCollectCentrifugationDur,BloodCollection,at-home-pd,24 months,NA
+BloodCollectCentrifugationDur,BloodCollection,at-home-pd,36 months,NA
+BloodCollectCentrifugationDur,BloodCollection,super-pd,Baseline,NA
+BloodCollectCentrifugationDur,BloodCollection,super-pd,Physician_ON,NA
+BloodCollectCentrifugationDur,BloodCollection,super-pd,Physician_OFF,NA
+SampleCentrifTempVal,BloodCollection,at-home-pd,Baseline,NA
+SampleCentrifTempVal,BloodCollection,at-home-pd,12 months,NA
+SampleCentrifTempVal,BloodCollection,at-home-pd,24 months,NA
+SampleCentrifTempVal,BloodCollection,at-home-pd,36 months,NA
+SampleCentrifTempVal,BloodCollection,super-pd,Baseline,NA
+SampleCentrifTempVal,BloodCollection,super-pd,Physician_ON,NA
+SampleCentrifTempVal,BloodCollection,super-pd,Physician_OFF,NA
+TempMeasrFreezerPDBP,BloodCollection,at-home-pd,Baseline,NA
+TempMeasrFreezerPDBP,BloodCollection,at-home-pd,12 months,NA
+TempMeasrFreezerPDBP,BloodCollection,at-home-pd,24 months,NA
+TempMeasrFreezerPDBP,BloodCollection,at-home-pd,36 months,NA
+TempMeasrFreezerPDBP,BloodCollection,super-pd,Baseline,NA
+TempMeasrFreezerPDBP,BloodCollection,super-pd,Physician_ON,NA
+TempMeasrFreezerPDBP,BloodCollection,super-pd,Physician_OFF,NA
+BloodCollectDateTime,BloodCollection,at-home-pd,Baseline,NA
+BloodCollectDateTime,BloodCollection,at-home-pd,12 months,NA
+BloodCollectDateTime,BloodCollection,at-home-pd,24 months,NA
+BloodCollectDateTime,BloodCollection,at-home-pd,36 months,NA
+BloodCollectDateTime,BloodCollection,super-pd,Baseline,NA
+BloodCollectDateTime,BloodCollection,super-pd,Physician_ON,NA
+BloodCollectDateTime,BloodCollection,super-pd,Physician_OFF,NA
+SampleShippedDateTime,BloodCollection,at-home-pd,Baseline,NA
+SampleShippedDateTime,BloodCollection,at-home-pd,12 months,NA
+SampleShippedDateTime,BloodCollection,at-home-pd,24 months,NA
+SampleShippedDateTime,BloodCollection,at-home-pd,36 months,NA
+SampleShippedDateTime,BloodCollection,super-pd,Baseline,NA
+SampleShippedDateTime,BloodCollection,super-pd,Physician_ON,NA
+SampleShippedDateTime,BloodCollection,super-pd,Physician_OFF,NA
+BloodCollCentrifDateTime,BloodCollection,at-home-pd,Baseline,NA
+BloodCollCentrifDateTime,BloodCollection,at-home-pd,12 months,NA
+BloodCollCentrifDateTime,BloodCollection,at-home-pd,24 months,NA
+BloodCollCentrifDateTime,BloodCollection,at-home-pd,36 months,NA
+BloodCollCentrifDateTime,BloodCollection,super-pd,Baseline,NA
+BloodCollCentrifDateTime,BloodCollection,super-pd,Physician_ON,NA
+BloodCollCentrifDateTime,BloodCollection,super-pd,Physician_OFF,NA
+SampPlacedFreezerDateTime,BloodCollection,at-home-pd,Baseline,NA
+SampPlacedFreezerDateTime,BloodCollection,at-home-pd,12 months,NA
+SampPlacedFreezerDateTime,BloodCollection,at-home-pd,24 months,NA
+SampPlacedFreezerDateTime,BloodCollection,at-home-pd,36 months,NA
+SampPlacedFreezerDateTime,BloodCollection,super-pd,Baseline,NA
+SampPlacedFreezerDateTime,BloodCollection,super-pd,Physician_ON,NA
+SampPlacedFreezerDateTime,BloodCollection,super-pd,Physician_OFF,NA
+BloodCollectVol,BloodCollection,at-home-pd,Baseline,NA
+BloodCollectVol,BloodCollection,at-home-pd,12 months,NA
+BloodCollectVol,BloodCollection,at-home-pd,24 months,NA
+BloodCollectVol,BloodCollection,at-home-pd,36 months,NA
+BloodCollectVol,BloodCollection,super-pd,Baseline,NA
+BloodCollectVol,BloodCollection,super-pd,Physician_ON,NA
+BloodCollectVol,BloodCollection,super-pd,Physician_OFF,NA
+CSFCollectedInd,BloodCollection,at-home-pd,Baseline,NA
+CSFCollectedInd,BloodCollection,at-home-pd,12 months,NA
+CSFCollectedInd,BloodCollection,at-home-pd,24 months,NA
+CSFCollectedInd,BloodCollection,at-home-pd,36 months,NA
+CSFCollectedInd,BloodCollection,super-pd,Baseline,NA
+CSFCollectedInd,BloodCollection,super-pd,Physician_ON,NA
+CSFCollectedInd,BloodCollection,super-pd,Physician_OFF,NA
+BloodCollectInd,BloodCollection,at-home-pd,Baseline,NA
+BloodCollectInd,BloodCollection,at-home-pd,12 months,NA
+BloodCollectInd,BloodCollection,at-home-pd,24 months,NA
+BloodCollectInd,BloodCollection,at-home-pd,36 months,NA
+BloodCollectInd,BloodCollection,super-pd,Baseline,NA
+BloodCollectInd,BloodCollection,super-pd,Physician_ON,NA
+BloodCollectInd,BloodCollection,super-pd,Physician_OFF,NA
+CentrifgRate,BloodCollection,at-home-pd,Baseline,NA
+CentrifgRate,BloodCollection,at-home-pd,12 months,NA
+CentrifgRate,BloodCollection,at-home-pd,24 months,NA
+CentrifgRate,BloodCollection,at-home-pd,36 months,NA
+CentrifgRate,BloodCollection,super-pd,Baseline,NA
+CentrifgRate,BloodCollection,super-pd,Physician_ON,NA
+CentrifgRate,BloodCollection,super-pd,Physician_OFF,NA
+ReporterTyp,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+ReporterTyp,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+ReporterTyp,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+ReporterTyp,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+ReporterTyp,MayoSleepQuestionnaire,super-pd,Baseline,NA
+ReporterTyp,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+ReporterTyp,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_DreamsAttackedInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_DreamsAttackedInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_DreamsAttackedInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_DreamsAttackedInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_DreamsAttackedInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_DreamsAttackedInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_DreamsAttackedInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_RestlessLegInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_RestlessLegInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_RestlessLegInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_RestlessLegInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_RestlessLegInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_RestlessLegInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_RestlessLegInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_SleepBehavrInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_SleepBehavrInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_SleepBehavrInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_SleepBehavrInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_SleepBehavrInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_SleepBehavrInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_SleepBehavrInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_DreamsActNumYr,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_DreamsActNumYr,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_DreamsActNumYr,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_DreamsActNumYr,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_DreamsActNumYr,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_DreamsActNumYr,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_DreamsActNumYr,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_StopBreathingInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_StopBreathingInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_StopBreathingInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_StopBreathingInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_StopBreathingInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_StopBreathingInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_StopBreathingInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_DreamsActNumMo,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_DreamsActNumMo,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_DreamsActNumMo,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_DreamsActNumMo,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_DreamsActNumMo,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_DreamsActNumMo,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_DreamsActNumMo,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_DreamsActInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_DreamsActInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_DreamsActInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_DreamsActInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_DreamsActInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_DreamsActInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_DreamsActInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_TreatedStopBreathingInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_TreatedStopBreathingInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_TreatedStopBreathingInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_TreatedStopBreathingInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_TreatedStopBreathingInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_TreatedStopBreathingInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_TreatedStopBreathingInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_SleepSameRoomInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_SleepSameRoomInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_SleepSameRoomInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_SleepSameRoomInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_SleepSameRoomInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_SleepSameRoomInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_SleepSameRoomInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_LiveWithSubjInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_LiveWithSubjInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_LiveWithSubjInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_LiveWithSubjInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_LiveWithSubjInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_LiveWithSubjInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_LiveWithSubjInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_LegJerkInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_LegJerkInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_LegJerkInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_LegJerkInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_LegJerkInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_LegJerkInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_LegJerkInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_SleepWalk,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_SleepWalk,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_SleepWalk,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_SleepWalk,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_SleepWalk,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_SleepWalk,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_SleepWalk,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_SnortAwakeInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_SnortAwakeInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_SnortAwakeInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_SnortAwakeInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_SnortAwakeInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_SnortAwakeInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_SnortAwakeInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_RateAlert,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_RateAlert,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_RateAlert,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_RateAlert,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_RateAlert,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_RateAlert,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_RateAlert,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_PatientInjInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_PatientInjInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_PatientInjInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_PatientInjInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_PatientInjInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_PatientInjInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_PatientInjInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_LegSensationDecreaseInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_LegSensationDecreaseInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_LegSensationDecreaseInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_LegSensationDecreaseInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_LegSensationDecreaseInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_LegSensationDecreaseInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_LegSensationDecreaseInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_BedpartnerInjInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_BedpartnerInjInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_BedpartnerInjInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_BedpartnerInjInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_BedpartnerInjInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_BedpartnerInjInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_BedpartnerInjInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_LegCrampsInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_LegCrampsInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_LegCrampsInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_LegCrampsInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_LegCrampsInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_LegCrampsInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_LegCrampsInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_DreamsMatchDetailsInd,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_DreamsMatchDetailsInd,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_DreamsMatchDetailsInd,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_DreamsMatchDetailsInd,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_DreamsMatchDetailsInd,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_DreamsMatchDetailsInd,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_DreamsMatchDetailsInd,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+MSQ_LegSensationWorst,MayoSleepQuestionnaire,at-home-pd,Baseline,NA
+MSQ_LegSensationWorst,MayoSleepQuestionnaire,at-home-pd,12 months,NA
+MSQ_LegSensationWorst,MayoSleepQuestionnaire,at-home-pd,24 months,NA
+MSQ_LegSensationWorst,MayoSleepQuestionnaire,at-home-pd,36 months,NA
+MSQ_LegSensationWorst,MayoSleepQuestionnaire,super-pd,Baseline,NA
+MSQ_LegSensationWorst,MayoSleepQuestionnaire,super-pd,Physician_ON,NA
+MSQ_LegSensationWorst,MayoSleepQuestionnaire,super-pd,Physician_OFF,NA
+RaceExpndCatPDBP,Demographics,at-home-pd,Baseline,NA
+RaceExpndCatPDBP,Demographics,at-home-pd,12 months,NA
+RaceExpndCatPDBP,Demographics,at-home-pd,24 months,NA
+RaceExpndCatPDBP,Demographics,at-home-pd,36 months,NA
+RaceExpndCatPDBP,Demographics,super-pd,Baseline,demo_race
+RaceExpndCatPDBP,Demographics,super-pd,Physician_ON,NA
+RaceExpndCatPDBP,Demographics,super-pd,Physician_OFF,NA
+GenderTypPDBP,Demographics,at-home-pd,Baseline,gendertyppdbp
+GenderTypPDBP,Demographics,at-home-pd,12 months,NA
+GenderTypPDBP,Demographics,at-home-pd,24 months,NA
+GenderTypPDBP,Demographics,at-home-pd,36 months,NA
+GenderTypPDBP,Demographics,super-pd,Baseline,demo_sex
+GenderTypPDBP,Demographics,super-pd,Physician_ON,NA
+GenderTypPDBP,Demographics,super-pd,Physician_OFF,NA
+EthnUSACat,Demographics,at-home-pd,Baseline,ethnicity
+EthnUSACat,Demographics,at-home-pd,12 months,NA
+EthnUSACat,Demographics,at-home-pd,24 months,NA
+EthnUSACat,Demographics,at-home-pd,36 months,NA
+EthnUSACat,Demographics,super-pd,Baseline,demo_ethnicity
+EthnUSACat,Demographics,super-pd,Physician_ON,NA
+EthnUSACat,Demographics,super-pd,Physician_OFF,NA
+EmplmtStatus,Demographics,at-home-pd,Baseline,employment
+EmplmtStatus,Demographics,at-home-pd,12 months,NA
+EmplmtStatus,Demographics,at-home-pd,24 months,NA
+EmplmtStatus,Demographics,at-home-pd,36 months,NA
+EmplmtStatus,Demographics,super-pd,Baseline,demo_employment
+EmplmtStatus,Demographics,super-pd,Physician_ON,NA
+EmplmtStatus,Demographics,super-pd,Physician_OFF,NA
+EduLvlUSATypPDBP,Demographics,at-home-pd,Baseline,education
+EduLvlUSATypPDBP,Demographics,at-home-pd,12 months,NA
+EduLvlUSATypPDBP,Demographics,at-home-pd,24 months,NA
+EduLvlUSATypPDBP,Demographics,at-home-pd,36 months,NA
+EduLvlUSATypPDBP,Demographics,super-pd,Baseline,demo_education
+EduLvlUSATypPDBP,Demographics,super-pd,Physician_ON,NA
+EduLvlUSATypPDBP,Demographics,super-pd,Physician_OFF,NA
+MOCA_DelydRecalOptnlMultChoice,MoCA,at-home-pd,Baseline,NA
+MOCA_DelydRecalOptnlMultChoice,MoCA,at-home-pd,12 months,NA
+MOCA_DelydRecalOptnlMultChoice,MoCA,at-home-pd,24 months,NA
+MOCA_DelydRecalOptnlMultChoice,MoCA,at-home-pd,36 months,NA
+MOCA_DelydRecalOptnlMultChoice,MoCA,super-pd,Baseline,NA
+MOCA_DelydRecalOptnlMultChoice,MoCA,super-pd,Physician_ON,NA
+MOCA_DelydRecalOptnlMultChoice,MoCA,super-pd,Physician_OFF,NA
+MOCA_Serial7,MoCA,at-home-pd,Baseline,moca_serial7
+MOCA_Serial7,MoCA,at-home-pd,12 months,moca_serial7
+MOCA_Serial7,MoCA,at-home-pd,24 months,moca_serial7
+MOCA_Serial7,MoCA,at-home-pd,36 months,NA
+MOCA_Serial7,MoCA,super-pd,Baseline,moca_serial7_v2
+MOCA_Serial7,MoCA,super-pd,Physician_ON,moca_5d_spd
+MOCA_Serial7,MoCA,super-pd,Physician_OFF,NA
+MOCA_EduInd,MoCA,at-home-pd,Baseline,moca_eduind
+MOCA_EduInd,MoCA,at-home-pd,12 months,moca_eduind
+MOCA_EduInd,MoCA,at-home-pd,24 months,moca_eduind
+MOCA_EduInd,MoCA,at-home-pd,36 months,NA
+MOCA_EduInd,MoCA,super-pd,Baseline,moca_eduind_v2
+MOCA_EduInd,MoCA,super-pd,Physician_ON,moca_edu_spd
+MOCA_EduInd,MoCA,super-pd,Physician_OFF,NA
+MOCA_LangFluency,MoCA,at-home-pd,Baseline,moca_langfluency
+MOCA_LangFluency,MoCA,at-home-pd,12 months,moca_langfluency
+MOCA_LangFluency,MoCA,at-home-pd,24 months,moca_langfluency
+MOCA_LangFluency,MoCA,at-home-pd,36 months,NA
+MOCA_LangFluency,MoCA,super-pd,Baseline,moca_langfluency_v2
+MOCA_LangFluency,MoCA,super-pd,Physician_ON,moca_7_spd
+MOCA_LangFluency,MoCA,super-pd,Physician_OFF,NA
+MOCA_Total,MoCA,at-home-pd,Baseline,moca_total
+MOCA_Total,MoCA,at-home-pd,12 months,moca_total
+MOCA_Total,MoCA,at-home-pd,24 months,moca_total
+MOCA_Total,MoCA,at-home-pd,36 months,NA
+MOCA_Total,MoCA,super-pd,Baseline,moca_total_v2
+MOCA_Total,MoCA,super-pd,Physician_ON,moca_score_2
+MOCA_Total,MoCA,super-pd,Physician_OFF,NA
+MOCA_LangRepeat,MoCA,at-home-pd,Baseline,moca_langrepeat
+MOCA_LangRepeat,MoCA,at-home-pd,12 months,moca_langrepeat
+MOCA_LangRepeat,MoCA,at-home-pd,24 months,moca_langrepeat
+MOCA_LangRepeat,MoCA,at-home-pd,36 months,NA
+MOCA_LangRepeat,MoCA,super-pd,Baseline,moca_langrepeat_v2
+MOCA_LangRepeat,MoCA,super-pd,Physician_ON,moca_6_spd
+MOCA_LangRepeat,MoCA,super-pd,Physician_OFF,NA
+MOCA_Letters,MoCA,at-home-pd,Baseline,moca_letters
+MOCA_Letters,MoCA,at-home-pd,12 months,moca_letters
+MOCA_Letters,MoCA,at-home-pd,24 months,moca_letters
+MOCA_Letters,MoCA,at-home-pd,36 months,NA
+MOCA_Letters,MoCA,super-pd,Baseline,moca_letters_v2
+MOCA_Letters,MoCA,super-pd,Physician_ON,moca_5c_spd
+MOCA_Letters,MoCA,super-pd,Physician_OFF,NA
+MOCA_VisuospatialExec,MoCA,at-home-pd,Baseline,moca_visuospatialexec
+MOCA_VisuospatialExec,MoCA,at-home-pd,12 months,moca_visuospatialexec
+MOCA_VisuospatialExec,MoCA,at-home-pd,24 months,moca_visuospatialexec
+MOCA_VisuospatialExec,MoCA,at-home-pd,36 months,NA
+MOCA_VisuospatialExec,MoCA,super-pd,Baseline,moca_visuospatialexec_v2
+MOCA_VisuospatialExec,MoCA,super-pd,Physician_ON,NA
+MOCA_VisuospatialExec,MoCA,super-pd,Physician_OFF,NA
+MOCA_Abstraction,MoCA,at-home-pd,Baseline,moca_abstraction
+MOCA_Abstraction,MoCA,at-home-pd,12 months,moca_abstraction
+MOCA_Abstraction,MoCA,at-home-pd,24 months,moca_abstraction
+MOCA_Abstraction,MoCA,at-home-pd,36 months,NA
+MOCA_Abstraction,MoCA,super-pd,Baseline,moca_abstraction_v2
+MOCA_Abstraction,MoCA,super-pd,Physician_ON,moca_8_spd
+MOCA_Abstraction,MoCA,super-pd,Physician_OFF,NA
+MOCA_Naming,MoCA,at-home-pd,Baseline,moca_naming
+MOCA_Naming,MoCA,at-home-pd,12 months,moca_naming
+MOCA_Naming,MoCA,at-home-pd,24 months,moca_naming
+MOCA_Naming,MoCA,at-home-pd,36 months,NA
+MOCA_Naming,MoCA,super-pd,Baseline,moca_naming_v2
+MOCA_Naming,MoCA,super-pd,Physician_ON,NA
+MOCA_Naming,MoCA,super-pd,Physician_OFF,NA
+MOCA_DelydRecall,MoCA,at-home-pd,Baseline,moca_delydrecall
+MOCA_DelydRecall,MoCA,at-home-pd,12 months,moca_delydrecall
+MOCA_DelydRecall,MoCA,at-home-pd,24 months,moca_delydrecall
+MOCA_DelydRecall,MoCA,at-home-pd,36 months,NA
+MOCA_DelydRecall,MoCA,super-pd,Baseline,moca_delydrecall_v2
+MOCA_DelydRecall,MoCA,super-pd,Physician_ON,NA
+MOCA_DelydRecall,MoCA,super-pd,Physician_OFF,NA
+MOCA_Orient,MoCA,at-home-pd,Baseline,moca_orient
+MOCA_Orient,MoCA,at-home-pd,12 months,moca_orient
+MOCA_Orient,MoCA,at-home-pd,24 months,moca_orient
+MOCA_Orient,MoCA,at-home-pd,36 months,NA
+MOCA_Orient,MoCA,super-pd,Baseline,moca_orient_v2
+MOCA_Orient,MoCA,super-pd,Physician_ON,NA
+MOCA_Orient,MoCA,super-pd,Physician_OFF,NA
+MOCA_ImageResponse,MoCA,at-home-pd,Baseline,NA
+MOCA_ImageResponse,MoCA,at-home-pd,12 months,NA
+MOCA_ImageResponse,MoCA,at-home-pd,24 months,NA
+MOCA_ImageResponse,MoCA,at-home-pd,36 months,NA
+MOCA_ImageResponse,MoCA,super-pd,Baseline,NA
+MOCA_ImageResponse,MoCA,super-pd,Physician_ON,NA
+MOCA_ImageResponse,MoCA,super-pd,Physician_OFF,NA
+MOCA_Digits,MoCA,at-home-pd,Baseline,moca_digits
+MOCA_Digits,MoCA,at-home-pd,12 months,moca_digits
+MOCA_Digits,MoCA,at-home-pd,24 months,moca_digits
+MOCA_Digits,MoCA,at-home-pd,36 months,NA
+MOCA_Digits,MoCA,super-pd,Baseline,moca_digits_v2
+MOCA_Digits,MoCA,super-pd,Physician_ON,NA
+MOCA_Digits,MoCA,super-pd,Physician_OFF,NA
+MOCA_DelydRecallOptnlCatCue,MoCA,at-home-pd,Baseline,NA
+MOCA_DelydRecallOptnlCatCue,MoCA,at-home-pd,12 months,NA
+MOCA_DelydRecallOptnlCatCue,MoCA,at-home-pd,24 months,NA
+MOCA_DelydRecallOptnlCatCue,MoCA,at-home-pd,36 months,NA
+MOCA_DelydRecallOptnlCatCue,MoCA,super-pd,Baseline,NA
+MOCA_DelydRecallOptnlCatCue,MoCA,super-pd,Physician_ON,NA
+MOCA_DelydRecallOptnlCatCue,MoCA,super-pd,Physician_OFF,NA
+PDQ_39_Leisure,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Leisure,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Leisure,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Leisure,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Leisure,PDQ-39,super-pd,Baseline,leisure
+PDQ_39_Leisure,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Leisure,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_TotalScore_CogImpairmnt,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_TotalScore_CogImpairmnt,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_TotalScore_CogImpairmnt,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_TotalScore_CogImpairmnt,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_TotalScore_CogImpairmnt,PDQ-39,super-pd,Baseline,NA
+PDQ_39_TotalScore_CogImpairmnt,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_TotalScore_CogImpairmnt,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_TotalScore_ADL,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_TotalScore_ADL,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_TotalScore_ADL,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_TotalScore_ADL,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_TotalScore_ADL,PDQ-39,super-pd,Baseline,NA
+PDQ_39_TotalScore_ADL,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_TotalScore_ADL,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Tearful,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Tearful,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Tearful,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Tearful,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Tearful,PDQ-39,super-pd,Baseline,weepy
+PDQ_39_Tearful,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Tearful,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Falling,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Falling,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Falling,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Falling,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Falling,PDQ-39,super-pd,Baseline,fall
+PDQ_39_Falling,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Falling,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Speaking,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Speaking,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Speaking,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Speaking,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Speaking,PDQ-39,super-pd,Baseline,speech
+PDQ_39_Speaking,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Speaking,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Buttons,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Buttons,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Buttons,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Buttons,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Buttons,PDQ-39,super-pd,Baseline,shoes
+PDQ_39_Buttons,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Buttons,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_AchesPains,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_AchesPains,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_AchesPains,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_AchesPains,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_AchesPains,PDQ-39,super-pd,Baseline,aches
+PDQ_39_AchesPains,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_AchesPains,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_TotalScore_Mobility,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_TotalScore_Mobility,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_TotalScore_Mobility,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_TotalScore_Mobility,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_TotalScore_Mobility,PDQ-39,super-pd,Baseline,NA
+PDQ_39_TotalScore_Mobility,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_TotalScore_Mobility,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_WorriedReaction,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_WorriedReaction,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_WorriedReaction,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_WorriedReaction,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_WorriedReaction,PDQ-39,super-pd,Baseline,worried
+PDQ_39_WorriedReaction,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_WorriedReaction,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Worried,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Worried,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Worried,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Worried,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Worried,PDQ-39,super-pd,Baseline,future
+PDQ_39_Worried,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Worried,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_WalkingBlock,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_WalkingBlock,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_WalkingBlock,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_WalkingBlock,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_WalkingBlock,PDQ-39,super-pd,Baseline,yards
+PDQ_39_WalkingBlock,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_WalkingBlock,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_CuttingFood,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_CuttingFood,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_CuttingFood,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_CuttingFood,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_CuttingFood,PDQ-39,super-pd,Baseline,cut
+PDQ_39_CuttingFood,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_CuttingFood,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Memory,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Memory,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Memory,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Memory,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Memory,PDQ-39,super-pd,Baseline,memory_e3a8f9
+PDQ_39_Memory,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Memory,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_CrampsSpasms,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_CrampsSpasms,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_CrampsSpasms,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_CrampsSpasms,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_CrampsSpasms,PDQ-39,super-pd,Baseline,cramps
+PDQ_39_CrampsSpasms,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_CrampsSpasms,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Outside,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Outside,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Outside,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Outside,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Outside,PDQ-39,super-pd,Baseline,accompany
+PDQ_39_Outside,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Outside,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_HidePD,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_HidePD,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_HidePD,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_HidePD,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_HidePD,PDQ-39,super-pd,Baseline,conceal
+PDQ_39_HidePD,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_HidePD,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Dressing,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Dressing,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Dressing,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Dressing,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Dressing,PDQ-39,super-pd,Baseline,dress
+PDQ_39_Dressing,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Dressing,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_WalkingHalfMile,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_WalkingHalfMile,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_WalkingHalfMile,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_WalkingHalfMile,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_WalkingHalfMile,PDQ-39,super-pd,Baseline,mile
+PDQ_39_WalkingHalfMile,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_WalkingHalfMile,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Showering,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Showering,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Showering,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Showering,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Showering,PDQ-39,super-pd,Baseline,wash
+PDQ_39_Showering,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Showering,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Depressed,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Depressed,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Depressed,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Depressed,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Depressed,PDQ-39,super-pd,Baseline,depressed
+PDQ_39_Depressed,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Depressed,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Relationships,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Relationships,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Relationships,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Relationships,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Relationships,PDQ-39,super-pd,Baseline,relationships
+PDQ_39_Relationships,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Relationships,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_UnexpctdSleep,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_UnexpctdSleep,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_UnexpctdSleep,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_UnexpctdSleep,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_UnexpctdSleep,PDQ-39,super-pd,Baseline,sleep
+PDQ_39_UnexpctdSleep,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_UnexpctdSleep,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_PublicPlaces,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_PublicPlaces,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_PublicPlaces,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_PublicPlaces,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_PublicPlaces,PDQ-39,super-pd,Baseline,public
+PDQ_39_PublicPlaces,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_PublicPlaces,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_HotCold,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_HotCold,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_HotCold,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_HotCold,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_HotCold,PDQ-39,super-pd,Baseline,temp
+PDQ_39_HotCold,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_HotCold,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Ignored,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Ignored,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Ignored,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Ignored,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Ignored,PDQ-39,super-pd,Baseline,ignored
+PDQ_39_Ignored,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Ignored,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_EmbarrassedPublic,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_EmbarrassedPublic,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_EmbarrassedPublic,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_EmbarrassedPublic,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_EmbarrassedPublic,PDQ-39,super-pd,Baseline,embarrassed
+PDQ_39_EmbarrassedPublic,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_EmbarrassedPublic,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Concentration,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Concentration,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Concentration,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Concentration,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Concentration,PDQ-39,super-pd,Baseline,concentration
+PDQ_39_Concentration,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Concentration,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_LackOfSuprtPrtnr,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_LackOfSuprtPrtnr,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_LackOfSuprtPrtnr,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_LackOfSuprtPrtnr,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_LackOfSuprtPrtnr,PDQ-39,super-pd,Baseline,spouse
+PDQ_39_LackOfSuprtPrtnr,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_LackOfSuprtPrtnr,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_House,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_House,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_House,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_House,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_House,PDQ-39,super-pd,Baseline,home
+PDQ_39_House,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_House,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Housework,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Housework,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Housework,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Housework,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Housework,PDQ-39,super-pd,Baseline,housework
+PDQ_39_Housework,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Housework,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_TotalScore_SocialSuprt,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_TotalScore_SocialSuprt,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_TotalScore_SocialSuprt,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_TotalScore_SocialSuprt,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_TotalScore_SocialSuprt,PDQ-39,super-pd,Baseline,NA
+PDQ_39_TotalScore_SocialSuprt,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_TotalScore_SocialSuprt,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Lonely,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Lonely,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Lonely,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Lonely,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Lonely,PDQ-39,super-pd,Baseline,isolated
+PDQ_39_Lonely,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Lonely,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Anxious,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Anxious,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Anxious,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Anxious,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Anxious,PDQ-39,super-pd,Baseline,anxious
+PDQ_39_Anxious,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Anxious,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_TotalScore_Stigma,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_TotalScore_Stigma,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_TotalScore_Stigma,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_TotalScore_Stigma,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_TotalScore_Stigma,PDQ-39,super-pd,Baseline,NA
+PDQ_39_TotalScore_Stigma,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_TotalScore_Stigma,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_TotalScore_Communcation,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_TotalScore_Communcation,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_TotalScore_Communcation,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_TotalScore_Communcation,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_TotalScore_Communcation,PDQ-39,super-pd,Baseline,NA
+PDQ_39_TotalScore_Communcation,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_TotalScore_Communcation,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_LackOfSuprtFmly,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_LackOfSuprtFmly,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_LackOfSuprtFmly,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_LackOfSuprtFmly,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_LackOfSuprtFmly,PDQ-39,super-pd,Baseline,friends
+PDQ_39_LackOfSuprtFmly,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_LackOfSuprtFmly,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_GroceryBags,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_GroceryBags,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_GroceryBags,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_GroceryBags,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_GroceryBags,PDQ-39,super-pd,Baseline,bags
+PDQ_39_GroceryBags,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_GroceryBags,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_HoldingDrink,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_HoldingDrink,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_HoldingDrink,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_HoldingDrink,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_HoldingDrink,PDQ-39,super-pd,Baseline,spill
+PDQ_39_HoldingDrink,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_HoldingDrink,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_TotalScore_BodDiscomfrt,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_TotalScore_BodDiscomfrt,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_TotalScore_BodDiscomfrt,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_TotalScore_BodDiscomfrt,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_TotalScore_BodDiscomfrt,PDQ-39,super-pd,Baseline,NA
+PDQ_39_TotalScore_BodDiscomfrt,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_TotalScore_BodDiscomfrt,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Angry,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Angry,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Angry,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Angry,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Angry,PDQ-39,super-pd,Baseline,angry
+PDQ_39_Angry,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Angry,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Writing,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Writing,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Writing,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Writing,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Writing,PDQ-39,super-pd,Baseline,writing
+PDQ_39_Writing,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Writing,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Confined,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Confined,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Confined,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Confined,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Confined,PDQ-39,super-pd,Baseline,confined
+PDQ_39_Confined,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Confined,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_EatingPublic,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_EatingPublic,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_EatingPublic,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_EatingPublic,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_EatingPublic,PDQ-39,super-pd,Baseline,avoid
+PDQ_39_EatingPublic,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_EatingPublic,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Dreams,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Dreams,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Dreams,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Dreams,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Dreams,PDQ-39,super-pd,Baseline,dreams
+PDQ_39_Dreams,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Dreams,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_Communicate,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_Communicate,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_Communicate,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_Communicate,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_Communicate,PDQ-39,super-pd,Baseline,communicate
+PDQ_39_Communicate,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_Communicate,PDQ-39,super-pd,Physician_OFF,NA
+PDQ_39_TotalScore_Emotional,PDQ-39,at-home-pd,Baseline,NA
+PDQ_39_TotalScore_Emotional,PDQ-39,at-home-pd,12 months,NA
+PDQ_39_TotalScore_Emotional,PDQ-39,at-home-pd,24 months,NA
+PDQ_39_TotalScore_Emotional,PDQ-39,at-home-pd,36 months,NA
+PDQ_39_TotalScore_Emotional,PDQ-39,super-pd,Baseline,NA
+PDQ_39_TotalScore_Emotional,PDQ-39,super-pd,Physician_ON,NA
+PDQ_39_TotalScore_Emotional,PDQ-39,super-pd,Physician_OFF,NA
+RandomizedInd,InformedConsent,at-home-pd,Baseline,NA
+RandomizedInd,InformedConsent,at-home-pd,12 months,NA
+RandomizedInd,InformedConsent,at-home-pd,24 months,NA
+RandomizedInd,InformedConsent,at-home-pd,36 months,NA
+RandomizedInd,InformedConsent,super-pd,Baseline,NA
+RandomizedInd,InformedConsent,super-pd,Physician_ON,NA
+RandomizedInd,InformedConsent,super-pd,Physician_OFF,NA
+EnrldStdyDateTime,InformedConsent,at-home-pd,Baseline,inexdttm
+EnrldStdyDateTime,InformedConsent,at-home-pd,12 months,NA
+EnrldStdyDateTime,InformedConsent,at-home-pd,24 months,NA
+EnrldStdyDateTime,InformedConsent,at-home-pd,36 months,NA
+EnrldStdyDateTime,InformedConsent,super-pd,Baseline,NA
+EnrldStdyDateTime,InformedConsent,super-pd,Physician_ON,NA
+EnrldStdyDateTime,InformedConsent,super-pd,Physician_OFF,NA
+InfConsntObtInd,InformedConsent,at-home-pd,Baseline,inex5
+InfConsntObtInd,InformedConsent,at-home-pd,12 months,NA
+InfConsntObtInd,InformedConsent,at-home-pd,24 months,NA
+InfConsntObtInd,InformedConsent,at-home-pd,36 months,NA
+InfConsntObtInd,InformedConsent,super-pd,Baseline,NA
+InfConsntObtInd,InformedConsent,super-pd,Physician_ON,NA
+InfConsntObtInd,InformedConsent,super-pd,Physician_OFF,NA
+InformConsntObtnDateTime,InformedConsent,at-home-pd,Baseline,inexdttm
+InformConsntObtnDateTime,InformedConsent,at-home-pd,12 months,NA
+InformConsntObtnDateTime,InformedConsent,at-home-pd,24 months,NA
+InformConsntObtnDateTime,InformedConsent,at-home-pd,36 months,NA
+InformConsntObtnDateTime,InformedConsent,super-pd,Baseline,NA
+InformConsntObtnDateTime,InformedConsent,super-pd,Physician_ON,NA
+InformConsntObtnDateTime,InformedConsent,super-pd,Physician_OFF,NA
+EnrldStdyInd,InformedConsent,at-home-pd,Baseline,enrollconfirm
+EnrldStdyInd,InformedConsent,at-home-pd,12 months,NA
+EnrldStdyInd,InformedConsent,at-home-pd,24 months,NA
+EnrldStdyInd,InformedConsent,at-home-pd,36 months,NA
+EnrldStdyInd,InformedConsent,super-pd,Baseline,enrollconfirm
+EnrldStdyInd,InformedConsent,super-pd,Physician_ON,NA
+EnrldStdyInd,InformedConsent,super-pd,Physician_OFF,NA
+RandomizedDateTime,InformedConsent,at-home-pd,Baseline,NA
+RandomizedDateTime,InformedConsent,at-home-pd,12 months,NA
+RandomizedDateTime,InformedConsent,at-home-pd,24 months,NA
+RandomizedDateTime,InformedConsent,at-home-pd,36 months,NA
+RandomizedDateTime,InformedConsent,super-pd,Baseline,NA
+RandomizedDateTime,InformedConsent,super-pd,Physician_ON,NA
+RandomizedDateTime,InformedConsent,super-pd,Physician_OFF,NA
+CranlNervMassetWeakFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervMassetWeakFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervMassetWeakFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervMassetWeakFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervMassetWeakFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervMassetWeakFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervMassetWeakFind,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexPatellarLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexPatellarLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexPatellarLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexPatellarLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexPatellarLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexPatellarLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexPatellarLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthQuadcpsRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthQuadcpsRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthQuadcpsRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthQuadcpsRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthQuadcpsRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthQuadcpsRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthQuadcpsRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexBrachioradRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexBrachioradRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexBrachioradRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexBrachioradRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexBrachioradRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexBrachioradRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexBrachioradRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervEyeMovmntUpFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervEyeMovmntUpFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervEyeMovmntUpFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervEyeMovmntUpFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervEyeMovmntUpFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervEyeMovmntUpFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervEyeMovmntUpFind,NeurologicalExam,super-pd,Physician_OFF,NA
+OthrMovmntMyoclonusLoc,NeurologicalExam,at-home-pd,Baseline,NA
+OthrMovmntMyoclonusLoc,NeurologicalExam,at-home-pd,12 months,NA
+OthrMovmntMyoclonusLoc,NeurologicalExam,at-home-pd,24 months,NA
+OthrMovmntMyoclonusLoc,NeurologicalExam,at-home-pd,36 months,NA
+OthrMovmntMyoclonusLoc,NeurologicalExam,super-pd,Baseline,NA
+OthrMovmntMyoclonusLoc,NeurologicalExam,super-pd,Physician_ON,NA
+OthrMovmntMyoclonusLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervExamFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervExamFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervExamFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervExamFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervExamFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervExamFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervExamFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthHamstringLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthHamstringLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthHamstringLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthHamstringLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthHamstringLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthHamstringLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthHamstringLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationAssmtExamFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationAssmtExamFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationAssmtExamFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationAssmtExamFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationAssmtExamFind,NeurologicalExam,super-pd,Baseline,NA
+SensationAssmtExamFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationAssmtExamFind,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervFaclStrngthLft,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervFaclStrngthLft,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervFaclStrngthLft,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervFaclStrngthLft,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervFaclStrngthLft,NeurologicalExam,super-pd,Baseline,NA
+CranlNervFaclStrngthLft,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervFaclStrngthLft,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervPupilsFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervPupilsFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervPupilsFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervPupilsFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervPupilsFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervPupilsFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervPupilsFind,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervEyeMovmntLatFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervEyeMovmntLatFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervEyeMovmntLatFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervEyeMovmntLatFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervEyeMovmntLatFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervEyeMovmntLatFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervEyeMovmntLatFind,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervQuadrantanopiaLoc,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervQuadrantanopiaLoc,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervQuadrantanopiaLoc,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervQuadrantanopiaLoc,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervQuadrantanopiaLoc,NeurologicalExam,super-pd,Baseline,NA
+CranlNervQuadrantanopiaLoc,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervQuadrantanopiaLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervPupilsAbnrmlyFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervPupilsAbnrmlyFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervPupilsAbnrmlyFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervPupilsAbnrmlyFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervPupilsAbnrmlyFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervPupilsAbnrmlyFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervPupilsAbnrmlyFind,NeurologicalExam,super-pd,Physician_OFF,NA
+AgeDiagnosYrs,NeurologicalExam,at-home-pd,Baseline,NA
+AgeDiagnosYrs,NeurologicalExam,at-home-pd,12 months,NA
+AgeDiagnosYrs,NeurologicalExam,at-home-pd,24 months,NA
+AgeDiagnosYrs,NeurologicalExam,at-home-pd,36 months,NA
+AgeDiagnosYrs,NeurologicalExam,super-pd,Baseline,pd_year
+AgeDiagnosYrs,NeurologicalExam,super-pd,Physician_ON,NA
+AgeDiagnosYrs,NeurologicalExam,super-pd,Physician_OFF,NA
+OthrMovmntTicsLoc,NeurologicalExam,at-home-pd,Baseline,NA
+OthrMovmntTicsLoc,NeurologicalExam,at-home-pd,12 months,NA
+OthrMovmntTicsLoc,NeurologicalExam,at-home-pd,24 months,NA
+OthrMovmntTicsLoc,NeurologicalExam,at-home-pd,36 months,NA
+OthrMovmntTicsLoc,NeurologicalExam,super-pd,Baseline,NA
+OthrMovmntTicsLoc,NeurologicalExam,super-pd,Physician_ON,NA
+OthrMovmntTicsLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervVisualAcuityFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervVisualAcuityFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervVisualAcuityFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervVisualAcuityFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervVisualAcuityFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervVisualAcuityFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervVisualAcuityFind,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervSCMWeakFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervSCMWeakFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervSCMWeakFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervSCMWeakFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervSCMWeakFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervSCMWeakFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervSCMWeakFind,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationProxmlArmRtFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationProxmlArmRtFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationProxmlArmRtFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationProxmlArmRtFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationProxmlArmRtFind,NeurologicalExam,super-pd,Baseline,NA
+SensationProxmlArmRtFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationProxmlArmRtFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthAtrophInd,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthAtrophInd,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthAtrophInd,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthAtrophInd,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthAtrophInd,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthAtrophInd,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthAtrophInd,NeurologicalExam,super-pd,Physician_OFF,NA
+OthrExamFindTxt,NeurologicalExam,at-home-pd,Baseline,NA
+OthrExamFindTxt,NeurologicalExam,at-home-pd,12 months,NA
+OthrExamFindTxt,NeurologicalExam,at-home-pd,24 months,NA
+OthrExamFindTxt,NeurologicalExam,at-home-pd,36 months,NA
+OthrExamFindTxt,NeurologicalExam,super-pd,Baseline,NA
+OthrExamFindTxt,NeurologicalExam,super-pd,Physician_ON,NA
+OthrExamFindTxt,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationProxmlArmLftFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationProxmlArmLftFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationProxmlArmLftFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationProxmlArmLftFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationProxmlArmLftFind,NeurologicalExam,super-pd,Baseline,NA
+SensationProxmlArmLftFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationProxmlArmLftFind,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervHemianopiaLoc,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervHemianopiaLoc,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervHemianopiaLoc,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervHemianopiaLoc,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervHemianopiaLoc,NeurologicalExam,super-pd,Baseline,NA
+CranlNervHemianopiaLoc,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervHemianopiaLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervEyeMovmntSmoothPur,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervEyeMovmntSmoothPur,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervEyeMovmntSmoothPur,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervEyeMovmntSmoothPur,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervEyeMovmntSmoothPur,NeurologicalExam,super-pd,Baseline,NA
+CranlNervEyeMovmntSmoothPur,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervEyeMovmntSmoothPur,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervRinneTestRslt,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervRinneTestRslt,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervRinneTestRslt,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervRinneTestRslt,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervRinneTestRslt,NeurologicalExam,super-pd,Baseline,NA
+CranlNervRinneTestRslt,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervRinneTestRslt,NeurologicalExam,super-pd,Physician_OFF,NA
+OthrMovmntAthetosisLoc,NeurologicalExam,at-home-pd,Baseline,NA
+OthrMovmntAthetosisLoc,NeurologicalExam,at-home-pd,12 months,NA
+OthrMovmntAthetosisLoc,NeurologicalExam,at-home-pd,24 months,NA
+OthrMovmntAthetosisLoc,NeurologicalExam,at-home-pd,36 months,NA
+OthrMovmntAthetosisLoc,NeurologicalExam,super-pd,Baseline,NA
+OthrMovmntAthetosisLoc,NeurologicalExam,super-pd,Physician_ON,NA
+OthrMovmntAthetosisLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationDistlLegRtFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationDistlLegRtFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationDistlLegRtFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationDistlLegRtFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationDistlLegRtFind,NeurologicalExam,super-pd,Baseline,NA
+SensationDistlLegRtFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationDistlLegRtFind,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationDistlArmLftFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationDistlArmLftFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationDistlArmLftFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationDistlArmLftFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationDistlArmLftFind,NeurologicalExam,super-pd,Baseline,NA
+SensationDistlArmLftFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationDistlArmLftFind,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervEyeMovmntDownFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervEyeMovmntDownFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervEyeMovmntDownFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervEyeMovmntDownFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervEyeMovmntDownFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervEyeMovmntDownFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervEyeMovmntDownFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthTblAnterRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthTblAnterRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthTblAnterRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthTblAnterRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthTblAnterRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthTblAnterRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthTblAnterRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+OthrMovmntChoreaLoc,NeurologicalExam,at-home-pd,Baseline,NA
+OthrMovmntChoreaLoc,NeurologicalExam,at-home-pd,12 months,NA
+OthrMovmntChoreaLoc,NeurologicalExam,at-home-pd,24 months,NA
+OthrMovmntChoreaLoc,NeurologicalExam,at-home-pd,36 months,NA
+OthrMovmntChoreaLoc,NeurologicalExam,super-pd,Baseline,NA
+OthrMovmntChoreaLoc,NeurologicalExam,super-pd,Physician_ON,NA
+OthrMovmntChoreaLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervPapilledemaFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervPapilledemaFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervPapilledemaFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervPapilledemaFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervPapilledemaFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervPapilledemaFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervPapilledemaFind,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervFaclNumbnessFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervFaclNumbnessFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervFaclNumbnessFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervFaclNumbnessFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervFaclNumbnessFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervFaclNumbnessFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervFaclNumbnessFind,NeurologicalExam,super-pd,Physician_OFF,NA
+NeuroExamPrimaryDiagnos,NeurologicalExam,at-home-pd,Baseline,NA
+NeuroExamPrimaryDiagnos,NeurologicalExam,at-home-pd,12 months,NA
+NeuroExamPrimaryDiagnos,NeurologicalExam,at-home-pd,24 months,NA
+NeuroExamPrimaryDiagnos,NeurologicalExam,at-home-pd,36 months,NA
+NeuroExamPrimaryDiagnos,NeurologicalExam,super-pd,Baseline,NA
+NeuroExamPrimaryDiagnos,NeurologicalExam,super-pd,Physician_ON,NA
+NeuroExamPrimaryDiagnos,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervVisualAcuityAbnrmly,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervVisualAcuityAbnrmly,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervVisualAcuityAbnrmly,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervVisualAcuityAbnrmly,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervVisualAcuityAbnrmly,NeurologicalExam,super-pd,Baseline,NA
+CranlNervVisualAcuityAbnrmly,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervVisualAcuityAbnrmly,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervWeberTestRsltFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervWeberTestRsltFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervWeberTestRsltFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervWeberTestRsltFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervWeberTestRsltFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervWeberTestRsltFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervWeberTestRsltFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthBicepsRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthBicepsRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthBicepsRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthBicepsRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthBicepsRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthBicepsRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthBicepsRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthInterosLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthInterosLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthInterosLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthInterosLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthInterosLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthInterosLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthInterosLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexBabinskyInd,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexBabinskyInd,NeurologicalExam,at-home-pd,12 months,NA
+ReflexBabinskyInd,NeurologicalExam,at-home-pd,24 months,NA
+ReflexBabinskyInd,NeurologicalExam,at-home-pd,36 months,NA
+ReflexBabinskyInd,NeurologicalExam,super-pd,Baseline,NA
+ReflexBabinskyInd,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexBabinskyInd,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervHearingAbnrmlyFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervHearingAbnrmlyFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervHearingAbnrmlyFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervHearingAbnrmlyFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervHearingAbnrmlyFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervHearingAbnrmlyFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervHearingAbnrmlyFind,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexOthrTxt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexOthrTxt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexOthrTxt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexOthrTxt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexOthrTxt,NeurologicalExam,super-pd,Baseline,NA
+ReflexOthrTxt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexOthrTxt,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervGagRflxFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervGagRflxFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervGagRflxFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervGagRflxFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervGagRflxFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervGagRflxFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervGagRflxFind,NeurologicalExam,super-pd,Physician_OFF,NA
+NeuroExamAbnrmlFindDocumntd,NeurologicalExam,at-home-pd,Baseline,NA
+NeuroExamAbnrmlFindDocumntd,NeurologicalExam,at-home-pd,12 months,NA
+NeuroExamAbnrmlFindDocumntd,NeurologicalExam,at-home-pd,24 months,NA
+NeuroExamAbnrmlFindDocumntd,NeurologicalExam,at-home-pd,36 months,NA
+NeuroExamAbnrmlFindDocumntd,NeurologicalExam,super-pd,Baseline,NA
+NeuroExamAbnrmlFindDocumntd,NeurologicalExam,super-pd,Physician_ON,NA
+NeuroExamAbnrmlFindDocumntd,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervDiscPallorFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervDiscPallorFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervDiscPallorFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervDiscPallorFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervDiscPallorFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervDiscPallorFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervDiscPallorFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthBicepsLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthBicepsLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthBicepsLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthBicepsLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthBicepsLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthBicepsLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthBicepsLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervTongueWeakFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervTongueWeakFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervTongueWeakFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervTongueWeakFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervTongueWeakFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervTongueWeakFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervTongueWeakFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthInterosRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthInterosRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthInterosRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthInterosRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthInterosRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthInterosRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthInterosRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+OthrMovmntBallismusLoc,NeurologicalExam,at-home-pd,Baseline,NA
+OthrMovmntBallismusLoc,NeurologicalExam,at-home-pd,12 months,NA
+OthrMovmntBallismusLoc,NeurologicalExam,at-home-pd,24 months,NA
+OthrMovmntBallismusLoc,NeurologicalExam,at-home-pd,36 months,NA
+OthrMovmntBallismusLoc,NeurologicalExam,super-pd,Baseline,NA
+OthrMovmntBallismusLoc,NeurologicalExam,super-pd,Physician_ON,NA
+OthrMovmntBallismusLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervEyeMovmntFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervEyeMovmntFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervEyeMovmntFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervEyeMovmntFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervEyeMovmntFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervEyeMovmntFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervEyeMovmntFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthDeltoidRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthDeltoidRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthDeltoidRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthDeltoidRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthDeltoidRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthDeltoidRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthDeltoidRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthTricepsRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthTricepsRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthTricepsRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthTricepsRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthTricepsRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthTricepsRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthTricepsRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthFlexCarpiRadLtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthFlexCarpiRadLtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthFlexCarpiRadLtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthFlexCarpiRadLtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthFlexCarpiRadLtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthFlexCarpiRadLtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthFlexCarpiRadLtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+Gait,NeurologicalExam,at-home-pd,Baseline,NA
+Gait,NeurologicalExam,at-home-pd,12 months,NA
+Gait,NeurologicalExam,at-home-pd,24 months,NA
+Gait,NeurologicalExam,at-home-pd,36 months,NA
+Gait,NeurologicalExam,super-pd,Baseline,NA
+Gait,NeurologicalExam,super-pd,Physician_ON,NA
+Gait,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervPtosisLocFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervPtosisLocFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervPtosisLocFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervPtosisLocFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervPtosisLocFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervPtosisLocFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervPtosisLocFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthExtCarpiRadLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthExtCarpiRadLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthExtCarpiRadLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthExtCarpiRadLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthExtCarpiRadLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthExtCarpiRadLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthExtCarpiRadLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexBicepsRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexBicepsRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexBicepsRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexBicepsRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexBicepsRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexBicepsRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexBicepsRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthHamstringRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthHamstringRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthHamstringRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthHamstringRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthHamstringRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthHamstringRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthHamstringRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationDistlLegLftFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationDistlLegLftFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationDistlLegLftFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationDistlLegLftFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationDistlLegLftFind,NeurologicalExam,super-pd,Baseline,NA
+SensationDistlLegLftFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationDistlLegLftFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthTricepsLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthTricepsLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthTricepsLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthTricepsLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthTricepsLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthTricepsLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthTricepsLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervEyeMovmntSaccadesFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervEyeMovmntSaccadesFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervEyeMovmntSaccadesFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervEyeMovmntSaccadesFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervEyeMovmntSaccadesFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervEyeMovmntSaccadesFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervEyeMovmntSaccadesFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthExtCarpiRadRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthExtCarpiRadRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthExtCarpiRadRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthExtCarpiRadRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthExtCarpiRadRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthExtCarpiRadRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthExtCarpiRadRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervPalatalElevatnFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervPalatalElevatnFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervPalatalElevatnFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervPalatalElevatnFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervPalatalElevatnFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervPalatalElevatnFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervPalatalElevatnFind,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexAchillesRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexAchillesRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexAchillesRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexAchillesRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexAchillesRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexAchillesRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexAchillesRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervFaclStrngthRt,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervFaclStrngthRt,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervFaclStrngthRt,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervFaclStrngthRt,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervFaclStrngthRt,NeurologicalExam,super-pd,Baseline,NA
+CranlNervFaclStrngthRt,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervFaclStrngthRt,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationProxmlLegLftFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationProxmlLegLftFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationProxmlLegLftFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationProxmlLegLftFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationProxmlLegLftFind,NeurologicalExam,super-pd,Baseline,NA
+SensationProxmlLegLftFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationProxmlLegLftFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthQuadcpsLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthQuadcpsLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthQuadcpsLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthQuadcpsLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthQuadcpsLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthQuadcpsLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthQuadcpsLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthFlexCarpiRadRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthFlexCarpiRadRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthFlexCarpiRadRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthFlexCarpiRadRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthFlexCarpiRadRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthFlexCarpiRadRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthFlexCarpiRadRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervVisualFieldsFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervVisualFieldsFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervVisualFieldsFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervVisualFieldsFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervVisualFieldsFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervVisualFieldsFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervVisualFieldsFind,NeurologicalExam,super-pd,Physician_OFF,NA
+InclusnXclusnCntrlInd,NeurologicalExam,at-home-pd,Baseline,NA
+InclusnXclusnCntrlInd,NeurologicalExam,at-home-pd,12 months,NA
+InclusnXclusnCntrlInd,NeurologicalExam,at-home-pd,24 months,NA
+InclusnXclusnCntrlInd,NeurologicalExam,at-home-pd,36 months,NA
+InclusnXclusnCntrlInd,NeurologicalExam,super-pd,Baseline,cohort
+InclusnXclusnCntrlInd,NeurologicalExam,super-pd,Physician_ON,NA
+InclusnXclusnCntrlInd,NeurologicalExam,super-pd,Physician_OFF,NA
+AgeDiagnosRemaindrMonths,NeurologicalExam,at-home-pd,Baseline,NA
+AgeDiagnosRemaindrMonths,NeurologicalExam,at-home-pd,12 months,NA
+AgeDiagnosRemaindrMonths,NeurologicalExam,at-home-pd,24 months,NA
+AgeDiagnosRemaindrMonths,NeurologicalExam,at-home-pd,36 months,NA
+AgeDiagnosRemaindrMonths,NeurologicalExam,super-pd,Baseline,pd_year
+AgeDiagnosRemaindrMonths,NeurologicalExam,super-pd,Physician_ON,NA
+AgeDiagnosRemaindrMonths,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervCentralScotomaLoc,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervCentralScotomaLoc,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervCentralScotomaLoc,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervCentralScotomaLoc,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervCentralScotomaLoc,NeurologicalExam,super-pd,Baseline,NA
+CranlNervCentralScotomaLoc,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervCentralScotomaLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervEyeMovmntMedialFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervEyeMovmntMedialFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervEyeMovmntMedialFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervEyeMovmntMedialFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervEyeMovmntMedialFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervEyeMovmntMedialFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervEyeMovmntMedialFind,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexTricepsRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexTricepsRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexTricepsRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexTricepsRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexTricepsRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexTricepsRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexTricepsRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthExamFind,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthExamFind,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthExamFind,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthExamFind,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthExamFind,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthExamFind,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthExamFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MentlStatExamFind,NeurologicalExam,at-home-pd,Baseline,NA
+MentlStatExamFind,NeurologicalExam,at-home-pd,12 months,NA
+MentlStatExamFind,NeurologicalExam,at-home-pd,24 months,NA
+MentlStatExamFind,NeurologicalExam,at-home-pd,36 months,NA
+MentlStatExamFind,NeurologicalExam,super-pd,Baseline,NA
+MentlStatExamFind,NeurologicalExam,super-pd,Physician_ON,NA
+MentlStatExamFind,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationDistlArmRtFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationDistlArmRtFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationDistlArmRtFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationDistlArmRtFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationDistlArmRtFind,NeurologicalExam,super-pd,Baseline,NA
+SensationDistlArmRtFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationDistlArmRtFind,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexAchillesLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexAchillesLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexAchillesLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexAchillesLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexAchillesLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexAchillesLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexAchillesLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationStockingGloveFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationStockingGloveFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationStockingGloveFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationStockingGloveFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationStockingGloveFind,NeurologicalExam,super-pd,Baseline,NA
+SensationStockingGloveFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationStockingGloveFind,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervHearingFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervHearingFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervHearingFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervHearingFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervHearingFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervHearingFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervHearingFind,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexBicepsLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexBicepsLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexBicepsLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexBicepsLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexBicepsLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexBicepsLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexBicepsLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MentlStatExamMoodAbnrmlyTxt,NeurologicalExam,at-home-pd,Baseline,NA
+MentlStatExamMoodAbnrmlyTxt,NeurologicalExam,at-home-pd,12 months,NA
+MentlStatExamMoodAbnrmlyTxt,NeurologicalExam,at-home-pd,24 months,NA
+MentlStatExamMoodAbnrmlyTxt,NeurologicalExam,at-home-pd,36 months,NA
+MentlStatExamMoodAbnrmlyTxt,NeurologicalExam,super-pd,Baseline,NA
+MentlStatExamMoodAbnrmlyTxt,NeurologicalExam,super-pd,Physician_ON,NA
+MentlStatExamMoodAbnrmlyTxt,NeurologicalExam,super-pd,Physician_OFF,NA
+SensationProxmlLegRtFind,NeurologicalExam,at-home-pd,Baseline,NA
+SensationProxmlLegRtFind,NeurologicalExam,at-home-pd,12 months,NA
+SensationProxmlLegRtFind,NeurologicalExam,at-home-pd,24 months,NA
+SensationProxmlLegRtFind,NeurologicalExam,at-home-pd,36 months,NA
+SensationProxmlLegRtFind,NeurologicalExam,super-pd,Baseline,NA
+SensationProxmlLegRtFind,NeurologicalExam,super-pd,Physician_ON,NA
+SensationProxmlLegRtFind,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexBabinskyLoc,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexBabinskyLoc,NeurologicalExam,at-home-pd,12 months,NA
+ReflexBabinskyLoc,NeurologicalExam,at-home-pd,24 months,NA
+ReflexBabinskyLoc,NeurologicalExam,at-home-pd,36 months,NA
+ReflexBabinskyLoc,NeurologicalExam,super-pd,Baseline,NA
+ReflexBabinskyLoc,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexBabinskyLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexBrachioradLtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexBrachioradLtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexBrachioradLtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexBrachioradLtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexBrachioradLtAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexBrachioradLtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexBrachioradLtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthTblAnterLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthTblAnterLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthTblAnterLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthTblAnterLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthTblAnterLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthTblAnterLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthTblAnterLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+OthrMovmntInd,NeurologicalExam,at-home-pd,Baseline,NA
+OthrMovmntInd,NeurologicalExam,at-home-pd,12 months,NA
+OthrMovmntInd,NeurologicalExam,at-home-pd,24 months,NA
+OthrMovmntInd,NeurologicalExam,at-home-pd,36 months,NA
+OthrMovmntInd,NeurologicalExam,super-pd,Baseline,NA
+OthrMovmntInd,NeurologicalExam,super-pd,Physician_ON,NA
+OthrMovmntInd,NeurologicalExam,super-pd,Physician_OFF,NA
+MentlStatExamCogAbnrmlyTxt,NeurologicalExam,at-home-pd,Baseline,NA
+MentlStatExamCogAbnrmlyTxt,NeurologicalExam,at-home-pd,12 months,NA
+MentlStatExamCogAbnrmlyTxt,NeurologicalExam,at-home-pd,24 months,NA
+MentlStatExamCogAbnrmlyTxt,NeurologicalExam,at-home-pd,36 months,NA
+MentlStatExamCogAbnrmlyTxt,NeurologicalExam,super-pd,Baseline,NA
+MentlStatExamCogAbnrmlyTxt,NeurologicalExam,super-pd,Physician_ON,NA
+MentlStatExamCogAbnrmlyTxt,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexTricepsLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexTricepsLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexTricepsLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexTricepsLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexTricepsLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexTricepsLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexTricepsLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthGastrocnmusLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthGastrocnmusLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthGastrocnmusLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthGastrocnmusLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthGastrocnmusLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthGastrocnmusLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthGastrocnmusLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexInd,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexInd,NeurologicalExam,at-home-pd,12 months,NA
+ReflexInd,NeurologicalExam,at-home-pd,24 months,NA
+ReflexInd,NeurologicalExam,at-home-pd,36 months,NA
+ReflexInd,NeurologicalExam,super-pd,Baseline,NA
+ReflexInd,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexInd,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthlliopsoasRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthlliopsoasRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthlliopsoasRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthlliopsoasRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthlliopsoasRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthlliopsoasRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthlliopsoasRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+ReflexPatellarRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+ReflexPatellarRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+ReflexPatellarRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+ReflexPatellarRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+ReflexPatellarRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+ReflexPatellarRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+ReflexPatellarRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervFaclStrngthFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervFaclStrngthFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervFaclStrngthFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervFaclStrngthFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervFaclStrngthFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervFaclStrngthFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervFaclStrngthFind,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervShouldShrugWeakFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervShouldShrugWeakFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervShouldShrugWeakFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervShouldShrugWeakFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervShouldShrugWeakFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervShouldShrugWeakFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervShouldShrugWeakFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthFasciculationFind,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthFasciculationFind,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthFasciculationFind,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthFasciculationFind,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthFasciculationFind,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthFasciculationFind,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthFasciculationFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthlliopsoasLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthlliopsoasLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthlliopsoasLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthlliopsoasLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthlliopsoasLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthlliopsoasLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthlliopsoasLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervFaclNumbnessLoc,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervFaclNumbnessLoc,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervFaclNumbnessLoc,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervFaclNumbnessLoc,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervFaclNumbnessLoc,NeurologicalExam,super-pd,Baseline,NA
+CranlNervFaclNumbnessLoc,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervFaclNumbnessLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+CranlNervTongueOthrFind,NeurologicalExam,at-home-pd,Baseline,NA
+CranlNervTongueOthrFind,NeurologicalExam,at-home-pd,12 months,NA
+CranlNervTongueOthrFind,NeurologicalExam,at-home-pd,24 months,NA
+CranlNervTongueOthrFind,NeurologicalExam,at-home-pd,36 months,NA
+CranlNervTongueOthrFind,NeurologicalExam,super-pd,Baseline,NA
+CranlNervTongueOthrFind,NeurologicalExam,super-pd,Physician_ON,NA
+CranlNervTongueOthrFind,NeurologicalExam,super-pd,Physician_OFF,NA
+OthrMovmntAtaxiaLoc,NeurologicalExam,at-home-pd,Baseline,NA
+OthrMovmntAtaxiaLoc,NeurologicalExam,at-home-pd,12 months,NA
+OthrMovmntAtaxiaLoc,NeurologicalExam,at-home-pd,24 months,NA
+OthrMovmntAtaxiaLoc,NeurologicalExam,at-home-pd,36 months,NA
+OthrMovmntAtaxiaLoc,NeurologicalExam,super-pd,Baseline,NA
+OthrMovmntAtaxiaLoc,NeurologicalExam,super-pd,Physician_ON,NA
+OthrMovmntAtaxiaLoc,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthGastrocnmusRtAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthGastrocnmusRtAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthGastrocnmusRtAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthGastrocnmusRtAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthGastrocnmusRtAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthGastrocnmusRtAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthGastrocnmusRtAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+NeuroExamFind,NeurologicalExam,at-home-pd,Baseline,NA
+NeuroExamFind,NeurologicalExam,at-home-pd,12 months,NA
+NeuroExamFind,NeurologicalExam,at-home-pd,24 months,NA
+NeuroExamFind,NeurologicalExam,at-home-pd,36 months,NA
+NeuroExamFind,NeurologicalExam,super-pd,Baseline,NA
+NeuroExamFind,NeurologicalExam,super-pd,Physician_ON,NA
+NeuroExamFind,NeurologicalExam,super-pd,Physician_OFF,NA
+MotorStrgthDeltoidLftAssmt,NeurologicalExam,at-home-pd,Baseline,NA
+MotorStrgthDeltoidLftAssmt,NeurologicalExam,at-home-pd,12 months,NA
+MotorStrgthDeltoidLftAssmt,NeurologicalExam,at-home-pd,24 months,NA
+MotorStrgthDeltoidLftAssmt,NeurologicalExam,at-home-pd,36 months,NA
+MotorStrgthDeltoidLftAssmt,NeurologicalExam,super-pd,Baseline,NA
+MotorStrgthDeltoidLftAssmt,NeurologicalExam,super-pd,Physician_ON,NA
+MotorStrgthDeltoidLftAssmt,NeurologicalExam,super-pd,Physician_OFF,NA
+SeriousAdvrsEvntInd,AdverseEvents,at-home-pd,Baseline,NA
+SeriousAdvrsEvntInd,AdverseEvents,at-home-pd,12 months,NA
+SeriousAdvrsEvntInd,AdverseEvents,at-home-pd,24 months,NA
+SeriousAdvrsEvntInd,AdverseEvents,at-home-pd,36 months,NA
+SeriousAdvrsEvntInd,AdverseEvents,super-pd,Baseline,NA
+SeriousAdvrsEvntInd,AdverseEvents,super-pd,Physician_ON,NA
+SeriousAdvrsEvntInd,AdverseEvents,super-pd,Physician_OFF,NA
+AdverseEvntEndDateTime,AdverseEvents,at-home-pd,Baseline,reslvdt
+AdverseEvntEndDateTime,AdverseEvents,at-home-pd,12 months,reslvdt
+AdverseEvntEndDateTime,AdverseEvents,at-home-pd,24 months,reslvdt
+AdverseEvntEndDateTime,AdverseEvents,at-home-pd,36 months,NA
+AdverseEvntEndDateTime,AdverseEvents,super-pd,Baseline,NA
+AdverseEvntEndDateTime,AdverseEvents,super-pd,Physician_ON,NA
+AdverseEvntEndDateTime,AdverseEvents,super-pd,Physician_OFF,NA
+AdvEvntOthrActionTakenTyp,AdverseEvents,at-home-pd,Baseline,NA
+AdvEvntOthrActionTakenTyp,AdverseEvents,at-home-pd,12 months,NA
+AdvEvntOthrActionTakenTyp,AdverseEvents,at-home-pd,24 months,NA
+AdvEvntOthrActionTakenTyp,AdverseEvents,at-home-pd,36 months,NA
+AdvEvntOthrActionTakenTyp,AdverseEvents,super-pd,Baseline,NA
+AdvEvntOthrActionTakenTyp,AdverseEvents,super-pd,Physician_ON,NA
+AdvEvntOthrActionTakenTyp,AdverseEvents,super-pd,Physician_OFF,NA
+AdvrsEvntDuringStudyInd,AdverseEvents,at-home-pd,Baseline,NA
+AdvrsEvntDuringStudyInd,AdverseEvents,at-home-pd,12 months,NA
+AdvrsEvntDuringStudyInd,AdverseEvents,at-home-pd,24 months,NA
+AdvrsEvntDuringStudyInd,AdverseEvents,at-home-pd,36 months,NA
+AdvrsEvntDuringStudyInd,AdverseEvents,super-pd,Baseline,NA
+AdvrsEvntDuringStudyInd,AdverseEvents,super-pd,Physician_ON,NA
+AdvrsEvntDuringStudyInd,AdverseEvents,super-pd,Physician_OFF,NA
+AdvrsEvntSeverScale,AdverseEvents,at-home-pd,Baseline,NA
+AdvrsEvntSeverScale,AdverseEvents,at-home-pd,12 months,NA
+AdvrsEvntSeverScale,AdverseEvents,at-home-pd,24 months,NA
+AdvrsEvntSeverScale,AdverseEvents,at-home-pd,36 months,NA
+AdvrsEvntSeverScale,AdverseEvents,super-pd,Baseline,NA
+AdvrsEvntSeverScale,AdverseEvents,super-pd,Physician_ON,NA
+AdvrsEvntSeverScale,AdverseEvents,super-pd,Physician_OFF,NA
+AdvEvntStdyIntrvntActTakenTyp,AdverseEvents,at-home-pd,Baseline,NA
+AdvEvntStdyIntrvntActTakenTyp,AdverseEvents,at-home-pd,12 months,NA
+AdvEvntStdyIntrvntActTakenTyp,AdverseEvents,at-home-pd,24 months,NA
+AdvEvntStdyIntrvntActTakenTyp,AdverseEvents,at-home-pd,36 months,NA
+AdvEvntStdyIntrvntActTakenTyp,AdverseEvents,super-pd,Baseline,NA
+AdvEvntStdyIntrvntActTakenTyp,AdverseEvents,super-pd,Physician_ON,NA
+AdvEvntStdyIntrvntActTakenTyp,AdverseEvents,super-pd,Physician_OFF,NA
+AdvrsEvntVerbatimTermText,AdverseEvents,at-home-pd,Baseline,aeterm
+AdvrsEvntVerbatimTermText,AdverseEvents,at-home-pd,12 months,aeterm
+AdvrsEvntVerbatimTermText,AdverseEvents,at-home-pd,24 months,aeterm
+AdvrsEvntVerbatimTermText,AdverseEvents,at-home-pd,36 months,NA
+AdvrsEvntVerbatimTermText,AdverseEvents,super-pd,Baseline,NA
+AdvrsEvntVerbatimTermText,AdverseEvents,super-pd,Physician_ON,NA
+AdvrsEvntVerbatimTermText,AdverseEvents,super-pd,Physician_OFF,NA
+AdvEvntRelatednessScalePDBP,AdverseEvents,at-home-pd,Baseline,NA
+AdvEvntRelatednessScalePDBP,AdverseEvents,at-home-pd,12 months,NA
+AdvEvntRelatednessScalePDBP,AdverseEvents,at-home-pd,24 months,NA
+AdvEvntRelatednessScalePDBP,AdverseEvents,at-home-pd,36 months,NA
+AdvEvntRelatednessScalePDBP,AdverseEvents,super-pd,Baseline,NA
+AdvEvntRelatednessScalePDBP,AdverseEvents,super-pd,Physician_ON,NA
+AdvEvntRelatednessScalePDBP,AdverseEvents,super-pd,Physician_OFF,NA
+AdvrsEvntStartDateTime,AdverseEvents,at-home-pd,Baseline,onsetdt
+AdvrsEvntStartDateTime,AdverseEvents,at-home-pd,12 months,onsetdt
+AdvrsEvntStartDateTime,AdverseEvents,at-home-pd,24 months,onsetdt
+AdvrsEvntStartDateTime,AdverseEvents,at-home-pd,36 months,NA
+AdvrsEvntStartDateTime,AdverseEvents,super-pd,Baseline,NA
+AdvrsEvntStartDateTime,AdverseEvents,super-pd,Physician_ON,NA
+AdvrsEvntStartDateTime,AdverseEvents,super-pd,Physician_OFF,NA
+AdvrsEvntOutcomStatus,AdverseEvents,at-home-pd,Baseline,NA
+AdvrsEvntOutcomStatus,AdverseEvents,at-home-pd,12 months,NA
+AdvrsEvntOutcomStatus,AdverseEvents,at-home-pd,24 months,NA
+AdvrsEvntOutcomStatus,AdverseEvents,at-home-pd,36 months,NA
+AdvrsEvntOutcomStatus,AdverseEvents,super-pd,Baseline,NA
+AdvrsEvntOutcomStatus,AdverseEvents,super-pd,Physician_ON,NA
+AdvrsEvntOutcomStatus,AdverseEvents,super-pd,Physician_OFF,NA
+FamHistMedclCondInd,FamilyHistory,at-home-pd,Baseline,NA
+FamHistMedclCondInd,FamilyHistory,at-home-pd,12 months,NA
+FamHistMedclCondInd,FamilyHistory,at-home-pd,24 months,NA
+FamHistMedclCondInd,FamilyHistory,at-home-pd,36 months,NA
+FamHistMedclCondInd,FamilyHistory,super-pd,Baseline,NA
+FamHistMedclCondInd,FamilyHistory,super-pd,Physician_ON,NA
+FamHistMedclCondInd,FamilyHistory,super-pd,Physician_OFF,NA
+FamHistMedclCondTyp,FamilyHistory,at-home-pd,Baseline,NA
+FamHistMedclCondTyp,FamilyHistory,at-home-pd,12 months,NA
+FamHistMedclCondTyp,FamilyHistory,at-home-pd,24 months,NA
+FamHistMedclCondTyp,FamilyHistory,at-home-pd,36 months,NA
+FamHistMedclCondTyp,FamilyHistory,super-pd,Baseline,NA
+FamHistMedclCondTyp,FamilyHistory,super-pd,Physician_ON,NA
+FamHistMedclCondTyp,FamilyHistory,super-pd,Physician_OFF,NA
+FamHistMedclCondReltvTyp,FamilyHistory,at-home-pd,Baseline,NA
+FamHistMedclCondReltvTyp,FamilyHistory,at-home-pd,12 months,NA
+FamHistMedclCondReltvTyp,FamilyHistory,at-home-pd,24 months,NA
+FamHistMedclCondReltvTyp,FamilyHistory,at-home-pd,36 months,NA
+FamHistMedclCondReltvTyp,FamilyHistory,super-pd,Baseline,NA
+FamHistMedclCondReltvTyp,FamilyHistory,super-pd,Physician_ON,NA
+FamHistMedclCondReltvTyp,FamilyHistory,super-pd,Physician_OFF,NA
+UPDRStScaleSchEngDalLivScl,ModSchwabAndEnglandScale,at-home-pd,Baseline,tscaleschengdallivscl
+UPDRStScaleSchEngDalLivScl,ModSchwabAndEnglandScale,at-home-pd,12 months,tscaleschengdallivscl
+UPDRStScaleSchEngDalLivScl,ModSchwabAndEnglandScale,at-home-pd,24 months,tscaleschengdallivscl
+UPDRStScaleSchEngDalLivScl,ModSchwabAndEnglandScale,at-home-pd,36 months,NA
+UPDRStScaleSchEngDalLivScl,ModSchwabAndEnglandScale,super-pd,Baseline,NA
+UPDRStScaleSchEngDalLivScl,ModSchwabAndEnglandScale,super-pd,Physician_ON,NA
+UPDRStScaleSchEngDalLivScl,ModSchwabAndEnglandScale,super-pd,Physician_OFF,NA
+EarlyTerm_StopFactor,EarlyTerminationQuest,at-home-pd,Baseline,reasonpw
+EarlyTerm_StopFactor,EarlyTerminationQuest,at-home-pd,12 months,NA
+EarlyTerm_StopFactor,EarlyTerminationQuest,at-home-pd,24 months,NA
+EarlyTerm_StopFactor,EarlyTerminationQuest,at-home-pd,36 months,NA
+EarlyTerm_StopFactor,EarlyTerminationQuest,super-pd,Baseline,reasonpw
+EarlyTerm_StopFactor,EarlyTerminationQuest,super-pd,Physician_ON,NA
+EarlyTerm_StopFactor,EarlyTerminationQuest,super-pd,Physician_OFF,NA
+EarlyTerm_StopPrtpWhy,EarlyTerminationQuest,at-home-pd,Baseline,NA
+EarlyTerm_StopPrtpWhy,EarlyTerminationQuest,at-home-pd,12 months,NA
+EarlyTerm_StopPrtpWhy,EarlyTerminationQuest,at-home-pd,24 months,NA
+EarlyTerm_StopPrtpWhy,EarlyTerminationQuest,at-home-pd,36 months,NA
+EarlyTerm_StopPrtpWhy,EarlyTerminationQuest,super-pd,Baseline,NA
+EarlyTerm_StopPrtpWhy,EarlyTerminationQuest,super-pd,Physician_ON,NA
+EarlyTerm_StopPrtpWhy,EarlyTerminationQuest,super-pd,Physician_OFF,NA
+EarlyTerm_ImportntFactor,EarlyTerminationQuest,at-home-pd,Baseline,NA
+EarlyTerm_ImportntFactor,EarlyTerminationQuest,at-home-pd,12 months,NA
+EarlyTerm_ImportntFactor,EarlyTerminationQuest,at-home-pd,24 months,NA
+EarlyTerm_ImportntFactor,EarlyTerminationQuest,at-home-pd,36 months,NA
+EarlyTerm_ImportntFactor,EarlyTerminationQuest,super-pd,Baseline,NA
+EarlyTerm_ImportntFactor,EarlyTerminationQuest,super-pd,Physician_ON,NA
+EarlyTerm_ImportntFactor,EarlyTerminationQuest,super-pd,Physician_OFF,NA
+EarlyTerm_StdySatisfctn,EarlyTerminationQuest,at-home-pd,Baseline,NA
+EarlyTerm_StdySatisfctn,EarlyTerminationQuest,at-home-pd,12 months,NA
+EarlyTerm_StdySatisfctn,EarlyTerminationQuest,at-home-pd,24 months,NA
+EarlyTerm_StdySatisfctn,EarlyTerminationQuest,at-home-pd,36 months,NA
+EarlyTerm_StdySatisfctn,EarlyTerminationQuest,super-pd,Baseline,NA
+EarlyTerm_StdySatisfctn,EarlyTerminationQuest,super-pd,Physician_ON,NA
+EarlyTerm_StdySatisfctn,EarlyTerminationQuest,super-pd,Physician_OFF,NA
+EarlyTerm_Expectns,EarlyTerminationQuest,at-home-pd,Baseline,NA
+EarlyTerm_Expectns,EarlyTerminationQuest,at-home-pd,12 months,NA
+EarlyTerm_Expectns,EarlyTerminationQuest,at-home-pd,24 months,NA
+EarlyTerm_Expectns,EarlyTerminationQuest,at-home-pd,36 months,NA
+EarlyTerm_Expectns,EarlyTerminationQuest,super-pd,Baseline,NA
+EarlyTerm_Expectns,EarlyTerminationQuest,super-pd,Physician_ON,NA
+EarlyTerm_Expectns,EarlyTerminationQuest,super-pd,Physician_OFF,NA
+EarlyTerm_PrtpWhy,EarlyTerminationQuest,at-home-pd,Baseline,NA
+EarlyTerm_PrtpWhy,EarlyTerminationQuest,at-home-pd,12 months,NA
+EarlyTerm_PrtpWhy,EarlyTerminationQuest,at-home-pd,24 months,NA
+EarlyTerm_PrtpWhy,EarlyTerminationQuest,at-home-pd,36 months,NA
+EarlyTerm_PrtpWhy,EarlyTerminationQuest,super-pd,Baseline,NA
+EarlyTerm_PrtpWhy,EarlyTerminationQuest,super-pd,Physician_ON,NA
+EarlyTerm_PrtpWhy,EarlyTerminationQuest,super-pd,Physician_OFF,NA
