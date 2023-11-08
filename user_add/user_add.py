@@ -113,41 +113,51 @@ def process_request(bridge, participant_info, phone_number, external_id,
                     "has the GUID already been assigned? "
                     "Console output: {0}".format(e))
     elif substudy not in participant_info['items'][0]['externalIds']:
+        # add external_id and then assign to existing account
+        user_id = participant_info['items'][0]['id']
+        user_info = bridge.restGET("/v3/participants/{}".format(user_id))
+        if "clinical_consent" not in user_info["dataGroups"]:
+            user_info["dataGroups"] = user_info["dataGroups"] + ["clinical_consent"]
+        if "show_3_cognitive" not in user_info["dataGroups"]:
+            user_info["dataGroups"] = user_info["dataGroups"] + ["show_3_cognitive"]
+        if not ("gr_SC_DB" in user_info["dataGroups"] or
+                "gr_SC_CS" in user_info["dataGroups"]):
+            user_info["dataGroups"] = user_info["dataGroups"] + \
+                    [random.choice(["gr_SC_DB", "gr_SC_CS"])]
+        if not ("gr_BR_AD" in user_info["dataGroups"] or
+                "gr_BR_II" in user_info["dataGroups"]):
+            user_info["dataGroups"] = user_info["dataGroups"] + \
+                    [random.choice(["gr_BR_AD", "gr_BR_II"])]
+        if not ("gr_ST_T" in user_info["dataGroups"] or
+                "gr_ST_F" in user_info["dataGroups"]):
+            user_info["dataGroups"] = user_info["dataGroups"] + \
+                    [random.choice(["gr_ST_T", "gr_ST_F"])]
+        if not ("gr_DT_F" in user_info["dataGroups"] or
+                "gr_DT_T" in user_info["dataGroups"]):
+            user_info["dataGroups"] = user_info["dataGroups"] + \
+                    [random.choice(["gr_DT_F", "gr_DT_T"])]
+        user_info["sharingScope"] = "all_qualified_researchers"
         try:
-            # add external_id and then assign to existing account
-            user_id = participant_info['items'][0]['id']
-            user_info = bridge.restGET("/v3/participants/{}".format(user_id))
-            if "clinical_consent" not in user_info["dataGroups"]:
-                user_info["dataGroups"] = user_info["dataGroups"] + ["clinical_consent"]
-            if "show_3_cognitive" not in user_info["dataGroups"]:
-                user_info["dataGroups"] = user_info["dataGroups"] + ["show_3_cognitive"]
-            if not ("gr_SC_DB" in user_info["dataGroups"] or
-                    "gr_SC_CS" in user_info["dataGroups"]):
-                user_info["dataGroups"] = user_info["dataGroups"] + \
-                        [random.choice(["gr_SC_DB", "gr_SC_CS"])]
-            if not ("gr_BR_AD" in user_info["dataGroups"] or
-                    "gr_BR_II" in user_info["dataGroups"]):
-                user_info["dataGroups"] = user_info["dataGroups"] + \
-                        [random.choice(["gr_BR_AD", "gr_BR_II"])]
-            if not ("gr_ST_T" in user_info["dataGroups"] or
-                    "gr_ST_F" in user_info["dataGroups"]):
-                user_info["dataGroups"] = user_info["dataGroups"] + \
-                        [random.choice(["gr_ST_T", "gr_ST_F"])]
-            if not ("gr_DT_F" in user_info["dataGroups"] or
-                    "gr_DT_T" in user_info["dataGroups"]):
-                user_info["dataGroups"] = user_info["dataGroups"] + \
-                        [random.choice(["gr_DT_F", "gr_DT_T"])]
-            user_info["sharingScope"] = "all_qualified_researchers"
             bridge.restPOST("/v3/participants/{}".format(user_id), user_info)
-            bridge.restPOST("/v5/studies/{}/enrollments".format(substudy),
-                    {"userId": user_id, "consentRequired": False,
-                     "externalId": external_id})
-            return ("Success: Preexisting user account found. "
-                    "Enrolled in new study.")
         except Exception as e:
             return ("Error: Preexising user account found. "
-                    "Could not enroll in new study. "
+                    "but data groups could not be updated. "
                     "Console output: {0}".format(e))
+        if not "at-home-pd" in participant_info['items'][0]['externalIds']:
+            try:
+                bridge.restPOST("/v5/studies/{}/enrollments".format(substudy),
+                        {"userId": user_id, "consentRequired": False,
+                         "externalId": external_id})
+            except Exception as e:
+                return ("Error: Preexising user account found. "
+                        "Could not enroll in new study. "
+                        "Console output: {0}".format(e))
+            return ("Success: Preexisting user account found. "
+                    "Enrolled in new study.")
+        return ("Success: Preexisting user account found. "
+                "User is already enrolled in at-home-pd. "
+                "No enrollment in at-home-PD2 has been made "
+                "but data groups have been updated")
     elif participant_info['items'][0]['externalIds'][substudy] != external_id:
         # phone and external ID have already been assigned
         return ("Error: Preexisting account found with GUID {}. "
