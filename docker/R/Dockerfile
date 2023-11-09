@@ -1,6 +1,6 @@
-FROM rocker/tidyverse:3.6.1
+FROM rocker/tidyverse:4.0.3
 
-RUN apt install libffi-dev
+RUN apt-get install libffi-dev
 ENV CRYPTOGRAPHY_DONT_BUILD_RUST=true
 RUN Rscript -e 'install.packages("devtools")'
 RUN Rscript -e 'devtools::install_github("Sage-Bionetworks/synapser", ref="0.8.71")'
