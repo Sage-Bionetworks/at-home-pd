@@ -48,20 +48,8 @@ fetch_mpower <- function(health_data_summary_table) {
   return(mpower)
 }
 
-build_study_burst_schedule <- function(mpower, previous_schedule_id) {
-  previous_schedule <- read_syn_table(previous_schedule_id)
-  new_participants <- mpower %>%
-    filter(!is.na(guid)) %>%
-    anti_join(previous_schedule, by = "guid") %>%
-    distinct(guid)
-  if (nrow(new_participants) == 0) {
-    current_schedule <- previous_schedule %>%
-      distinct(guid, study_burst, study_burst_start_date, study_burst_end_date)
-  } else {
-    bridge_login(study = "sage-mpower-2",
-                 email = Sys.getenv("bridgeUsername"),
-                 password = Sys.getenv("bridgePassword"))
-    new_schedule <- purrr::map_dfr(unique(new_participants$guid), function(guid) {
+get_schedule <- function(guids) {
+    schedule <- purrr::map_dfr(unique(guids), function(guid) {
       participant_info <- bridgeclient::get_participant(
               external_id = guid)
       activity_events <- bridgeclient::get_activity_events(
@@ -78,23 +66,54 @@ build_study_burst_schedule <- function(mpower, previous_schedule_id) {
                study_burst_end_date = study_burst_start_date + lubridate::days(19),
                guid = guid) %>%
         distinct(guid, study_burst, study_burst_start_date, study_burst_end_date) %>%
-        arrange(study_burst)
+        arrange(guid, study_burst)
     })
-    new_schedule$study_burst <- dplyr::recode(
-      new_schedule$study_burst, "0" = "Y1,Q1", "1" = "Y1,Q2", "2" = "Y1,Q3",
+    schedule$study_burst <- dplyr::recode(
+      schedule$study_burst, "0" = "Y1,Q1", "1" = "Y1,Q2", "2" = "Y1,Q3",
       "3" = "Y1,Q4", "4" = "Y2,Q1", "5" = "Y2,Q2", "6" = "Y2,Q3",
       "7" = "Y2,Q4", "8" = "Y3,Q1", "9" = "Y3,Q2", "10" = "Y3,Q3",
       "11" = "Y3,Q4", "12" = "Y4,Q1", "13" = "Y4,Q2", "14" = "Y4,Q3",
       "15" = "Y4,Q4", "16" = "Y5,Q1", "17" = "Y5,Q2", "18" = "Y5,Q3",
-      "19" = "Y5,Q4", "20" = "Y6,Q1")
-    new_schedule <- new_schedule %>%
+      "19" = "Y5,Q4", "20" = "Y6,Q1", "21" = "Y6,Q2", "22" = "Y6,Q3",
+      "23" = "Y6,Q4", "24" = "Y7,Q1", "25" = "Y7,Q2", "26" = "Y7,Q3",
+      "27" = "Y7,Q4", "28" = "Y8,Q1", "29" = "Y8,Q2", "30" = "Y8,Q3",
+      "31" = "Y8,Q4", "32" = "Y9,Q1", "33" = "Y9,Q2", "34" = "Y9,Q3",
+      "35" = "Y9,Q4", "36" = "Y10,Q1", "37" = "Y10,Q2", "38" = "Y10,Q3",
+      "39" = "Y10,Q4", "40" = "Y11,Q1", "41" = "Y11,Q2", "42" = "Y11,Q3",
+      "43" = "Y11,Q4", "44" = "Y12,Q1", "45" = "Y12,Q2", "46" = "Y12,Q3",
+      "47" = "Y12,Q4")
+    schedule <- schedule %>%
       mutate(study_burst_start_date = as.character(study_burst_start_date),
              study_burst_end_date = as.character(study_burst_end_date))
-    current_schedule <- previous_schedule %>%
-      distinct(guid, study_burst, study_burst_start_date, study_burst_end_date) %>%
-      bind_rows(new_schedule)
+    return(schedule)
+}
+
+build_study_burst_schedule <- function(mpower, previous_schedule_id) {
+  previous_schedule <- read_syn_table(previous_schedule_id)
+  new_participants <- mpower %>%
+    filter(!is.na(guid)) %>%
+    anti_join(previous_schedule, by = "guid") %>%
+    distinct(guid)
+  all_participant_guids <- c(new_participants$guid, previous_schedule$guid)
+  bridge_login(study = "sage-mpower-2",
+               email = Sys.getenv("bridgeUsername"),
+               password = Sys.getenv("bridgePassword"))
+  current_schedule <- get_schedule(all_participant_guids)
+  schedule_diff <- anti_join(
+    current_schedule,
+    previous_schedule,
+    by = c("guid", "study_burst")
+  )
+  if (nrow(schedule_diff) > 0) {
+    new_schedule <- previous_schedule %>%
+      bind_rows(schedule_diff)
+  } else {
+    new_schedule <- previous_schedule
   }
-  return(current_schedule)
+  new_schedule <- new_schedule %>%
+      distinct(guid, study_burst, study_burst_start_date, study_burst_end_date) %>%
+      arrange(guid, study_burst)
+  return(new_schedule)
 }
 
 build_study_burst_summary <- function(mpower, study_burst_schedule, guid_prefix_length) {
