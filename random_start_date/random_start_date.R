@@ -99,21 +99,25 @@ perturb_mjff_dates <- function(users) {
       return(df)
     })
   mjff <- purrr::map2(mjff, mjff_dates, function(df, df_dates) {
-      df <- df %>%
-        select_if(!(names(df) %in% date_cols)) %>%
-        select(-fox_insight_id) %>%
-        bind_cols(df_dates)
+      if (nrow(df_dates) > 0) {
+        df <- df %>%
+          select_if(!(names(df) %in% date_cols)) %>%
+          select(-fox_insight_id) %>%
+          bind_cols(df_dates)
+      }
       return(df)
     })
   mjff_perturbed <- purrr::map(mjff, function(df) {
     col_order <- names(df)
-    perturbed_dates <- perturb_dates(
-      df = df,
-      users = users,
-      source_name = "MJFF",
-      guid = "guid",
-      date_cols = date_cols)
-    return(perturbed_dates[col_order])
+    if (any(date_cols %in% col_order)) {
+      df <- perturb_dates(
+        df = df,
+        users = users,
+        source_name = "MJFF",
+        guid = "guid",
+        date_cols = date_cols)
+      }
+    return(df[col_order])
   })
 }
 

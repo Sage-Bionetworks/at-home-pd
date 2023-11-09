@@ -68,7 +68,7 @@ summarize_mjff <- function() {
     if (str_ends(activity, "_\\d\\d")) {
         stringr::str_sub(activity, nchar(activity) - 2, nchar(activity)) <- ""
     }
-    if (activity != "Genetic_old") {
+    if (hasName(df, "study_date")) {
       summarized_dataset <- df %>%
         select(guid, createdOn = study_date) %>%
         mutate(createdOn = lubridate::as_datetime(createdOn),
