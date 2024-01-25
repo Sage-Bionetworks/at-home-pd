@@ -3,7 +3,8 @@ library(tidyverse)
 
 MJFF_USERS <- "syn21670519"
 ROCHESTER_USERS <- "syn17051543"
-BRIDGE_USERS <- "syn16786935"
+AT_HOME_PD_USERS <- "syn16786935"
+AT_HOME_PD_2_USERS <- "syn52789119"
 ROCHESTER_PARENT <- "syn18637131"
 MJFF_PARENT <- "syn18637133"
 BRIDGE_PARENT <- "syn12617210"
@@ -49,9 +50,14 @@ curate_user_list <- function() {
   rochester_users <- read_syn_csv(ROCHESTER_USERS) %>%
     distinct(guid) %>%
     mutate(source = "ROCHESTER")
-  bridge_users <- read_syn_table(BRIDGE_USERS) %>%
+  at_home_pd_one_users <- read_syn_table(AT_HOME_PD_USERS) %>%
     distinct(guid) %>%
     mutate(source = "MPOWER")
+  at_home_pd_two_users <- read_syn_table(AT_HOME_PD_2_USERS) %>%
+    distinct(guid) %>%
+    mutate(source = "MPOWER")
+  bridge_users <- bind_rows(at_home_pd_one_users, at_home_pd_two_users) %>%
+    distinct(guid, .keep_all = TRUE)
   users <- bind_rows(mjff_users, rochester_users, bridge_users)
   users <- users %>%
     group_by(guid) %>%
@@ -130,11 +136,13 @@ perturb_rochester_dates <- function(users) {
                  "moca_dttm", "mseadl", "cgi_dttm", "determinefall_visitdt",
                  "bl_partburdenblvisitdt", "compliance_dttm", "visstatdttm",
                  "stop_dt", "reslvdt",
-                 "partburdenv1visitdt", 'enrollment_confirmation_timestamp',
-                 'prebaseline_survey_timestamp', 'preference_and_burden_bl_timestamp',
-                 'preference_and_burden_visit_timestamp', 'previsit_survey_timestamp',
-                 'redcap_survey_identifier', 'reportable_event_timestamp',
-                 'study_burst_reminders_timestamp')
+                 "partburdenv1visitdt", "enrollment_confirmation_timestamp",
+                 "prebaseline_survey_timestamp", "preference_and_burden_bl_timestamp",
+                 "preference_and_burden_visit_timestamp", "previsit_survey_timestamp",
+                 "redcap_survey_identifier", "reportable_event_timestamp",
+                 "study_burst_reminders_timestamp", "visitdate", "inexdttm_spd",
+                 "time_mdsupdrs", "date_medhx", "phoneorientdttmcmp",
+                 "mdsupdrs_sub_dttm", "moca_dttm_v2")
   rochester <- rochester %>%
     mutate(preference_and_burden_bl_timestamp = replace(
       preference_and_burden_bl_timestamp,

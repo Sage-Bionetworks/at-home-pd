@@ -7,6 +7,7 @@ import os
 
 BRIDGE_STUDY = "sage-mpower-2"
 AT_HOME_PD_USER_LIST = "syn16786935"
+AT_HOME_PD_2_USER_LIST = "syn52789119"
 HEALTH_DATA_SUMMARY_TABLE = "syn12492996"
 OUTPUT_PARENT = "syn7222412"
 LAUNCH_TIME = 1537257600 * 1000
@@ -39,14 +40,14 @@ def tag_users(syn, bridge):
     bridge_metadata = bridge_participants.id.apply(
             lambda i : bridge.getParticipantMetaData(i))
     bridge_participants['healthCode'] = [m['healthCode'] for m in bridge_metadata]
-    at_home_pd_users = get_at_home_pd_users(syn)
+    at_home_pd_one_and_two_users = get_at_home_pd_one_and_two_users(syn)
     # is test user
     hc_not_in_bridge = all_participants.healthCode.apply(
             lambda hc : hc not in bridge_participants.healthCode.values)
     # is test user
     externalid_not_in_at_home_pd = all_participants.externalId.apply(
             lambda eid : pd.notnull(eid) and
-                         eid not in at_home_pd_users.guid.values)
+                         eid not in at_home_pd_one_and_two_users)
     # is test user
     test_groups = ['test_no_consent', 'test_user']
     in_test_group = all_participants.dataGroups.apply(
@@ -61,15 +62,20 @@ def tag_users(syn, bridge):
     all_participants['userType'] = [
             "test" if b else "actual" for b in is_test_user]
     all_participants['atHomePD'] = all_participants.externalId.apply(
-            lambda eid: eid in at_home_pd_users.guid.values)
+            lambda eid: eid in at_home_pd_one_and_two_users)
     return(all_participants)
 
 
-def get_at_home_pd_users(syn):
-    users = syn.tableQuery(
-            "select * from {}".format(AT_HOME_PD_USER_LIST)).asDataFrame()
-    users = users[["Success" in s for s in users.status]]
-    return users
+def get_at_home_pd_one_and_two_users(syn):
+    at_home_pd_users = syn.tableQuery(
+            "select distinct guid from {} where status like 'Success%'".format(AT_HOME_PD_USER_LIST)
+    ).asDataFrame()
+    at_home_pd_2_users = syn.tableQuery(
+            "select distinct guid from {} where status like 'Success%'".format(AT_HOME_PD_2_USER_LIST)
+    ).asDataFrame()
+    all_users = pd.concat([at_home_pd_users, at_home_pd_2_users], axis=0)
+    unique_users = set(all_users.guid.values)
+    return unique_users
 
 
 def push_to_synapse(syn, all_participants):
