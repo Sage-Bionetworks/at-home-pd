@@ -147,13 +147,24 @@ build_study_burst_summary <- function(mpower, study_burst_schedule, guid_prefix_
         study_burst_successful = days_completed >= 10)
       return(result)
   })
+  participant_studies <- mpower %>%
+    mutate(
+           study = case_when(
+              str_detect(substudyMemberships, "at-home-PD2") ~ "at-home-PD2",
+              str_detect(substudyMemberships, "at-home-pd") ~ "at-home-pd",
+              str_detect(substudyMemberships, "Udall-superusers") ~ "Udall-superusers"
+           )
+    ) %>%
+    filter(!is.na(study)) %>%
+    distinct(guid, study)
   study_burst_summary <- days_completed %>%
     mutate(study_burst_start_date = as.character(study_burst_start_date),
            study_burst_end_date = as.character(study_burst_end_date),
            guid_prefix = str_extract(
               guid, glue::glue("^.{{{guid_prefix_length}}}"))) %>%
+    inner_join(participant_studies, by = "guid") %>%
     arrange(guid, study_burst) %>%
-    select(guid, guid_prefix, study_burst, study_burst_start_date,
+    select(guid, guid_prefix, study, study_burst, study_burst_start_date,
            study_burst_end_date, days_completed, study_burst_successful)
   return(study_burst_summary)
 }
