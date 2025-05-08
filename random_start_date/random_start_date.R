@@ -2,10 +2,12 @@ library(synapser)
 library(tidyverse)
 
 MJFF_USERS <- "syn21670519"
-ROCHESTER_USERS <- "syn17051543"
+AT_HOME_PD_REDCAP <- "syn17051543"
 AT_HOME_PD_USERS <- "syn16786935"
 AT_HOME_PD_2_USERS <- "syn52789119"
+AT_HOME_PD_2_REDCAP <- "syn66250726"
 ROCHESTER_PARENT <- "syn18637131"
+AT_HOME_PD_2_PARENT <- "syn66496678"
 MJFF_PARENT <- "syn18637133"
 BRIDGE_PARENT <- "syn12617210"
 DEIDENTIFIED_DATA_OFFSET <- "syn18637903"
@@ -47,7 +49,7 @@ curate_user_list <- function() {
   mjff_users <- read_syn_csv(MJFF_USERS) %>%
     distinct(guid) %>%
     mutate(source = "MJFF")
-  rochester_users <- read_syn_csv(ROCHESTER_USERS) %>%
+  at_home_pd_redcap <- read_syn_csv(AT_HOME_PD_REDCAP) %>%
     distinct(guid) %>%
     mutate(source = "ROCHESTER")
   at_home_pd_one_users <- read_syn_table(AT_HOME_PD_USERS) %>%
@@ -56,9 +58,15 @@ curate_user_list <- function() {
   at_home_pd_two_users <- read_syn_table(AT_HOME_PD_2_USERS) %>%
     distinct(guid) %>%
     mutate(source = "MPOWER")
+  at_home_pd_two_redcap <- read_syn_csv(AT_HOME_PD_2_REDCAP) %>%
+    mutate(guid = record_id) %>%
+    distinct(guid) %>%
+    mutate(source = "ROCHESTER")
   bridge_users <- bind_rows(at_home_pd_one_users, at_home_pd_two_users) %>%
     distinct(guid, .keep_all = TRUE)
-  users <- bind_rows(mjff_users, rochester_users, bridge_users)
+  redcap_users <- bind_rows(at_home_pd_redcap, at_home_pd_two_redcap) %>%
+    distinct(guid, .keep_all = TRUE)
+  users <- bind_rows(mjff_users, redcap_users, bridge_users)
   users <- users %>%
     group_by(guid) %>%
     mutate(day_offset = round(runif(1, -10, 10))) %>%
@@ -127,8 +135,8 @@ perturb_mjff_dates <- function(users) {
   })
 }
 
-perturb_rochester_dates <- function(users) {
-  rochester <- read_syn_csv(ROCHESTER_USERS)
+perturb_at_home_pd_dates <- function(users) {
+  rochester <- read_syn_csv(AT_HOME_PD_REDCAP)
   date_cols <- c("assessdate_fall", "assessdate_fall_m12", "bl_partburdenblvisitdt",
                  "determinefall_visitdt", "compliance_dttm", "concldttm", "wddt",
                  "irbapprovedt", "subjsigdt", "start_dt", "inexdttm", "demo_dttm",
@@ -168,6 +176,47 @@ perturb_rochester_dates <- function(users) {
     guid = "guid",
     date_cols = date_cols)
   return(rochester_perturbed[col_order])
+}
+
+perturb_at_home_pd_two_dates <- function(users) {
+  at_home_pd_two_redcap <- read_syn_csv(AT_HOME_PD_2_REDCAP)
+  date_fields <- c(
+    "start_dt", "stop_dt", "wddt", "pd_irb_dt", "dd_sd", "dd_ed",
+    "disp_date", "device_return_dt", "visit_dt", "reconsent_date",
+    "irbapprovedt", "subjsigdt", "onsetdt", "compliance_dttm",
+    "ffup_dttm", "ffup_dtime", "ffup_resched_dtime", "ddl_dttm",
+    "phoneorientdttm", "visit_dttm", "act_fitbit_dttm", "concldttm",
+    "econsent_study_user_timestamp", "icf_dttm", "icl_dttm", "invsigdttm",
+    "enrollment_sch_dttm", "device_acc_dttm", "pgis_dttm", "fall_questionnaire_dt",
+    "pro_mdsupdrs_dttm", "moca_dttm", "nms_dttm", "mdsupdrs_dttm", "initials_2_v1",
+    "nms_summ_date", "sus_fitbit_dttm", "sus_phone_dttm", "sus_actigraph_dttm",
+    "system_usability_scale_fitbit_timestamp", "system_usability_scale_mpower_timestamp",
+    "system_usability_scale_actigraph_timestamp", "prb_dttm", "cgis_dttm", "revent_dttm",
+    "pd_record_date", "pd_date", "determinefall_visitdt", "reslvdt", "comm_dttm",
+    "cl_dttm", "datecontact", "inex_dttm", "date_diagnosis", "demo_dttm",
+    "initial_dttm", "randomization_dt", "mseadl", "fall_questionnaire_timestamp",
+    "patient_global_impression_scale_timestamp", "perceived_research_burden_assessment_timestamp"
+  )
+
+  # Join the user day_offset by matching record_id to guid
+  ahpd2_joined <- at_home_pd_two_redcap %>%
+    left_join(users %>% rename(record_id = guid) %>% filter(source=="ROCHESTER"), by = "record_id")
+
+  # Apply the perturbation for each date column safely
+  df_dates_perturbed <- ahpd2_joined %>%
+    select(any_of(c(date_fields, "day_offset")))
+  df_no_date_cols <- ahpd2_joined %>%
+    select(!any_of(c(date_fields, "day_offset")))
+  for (col in names(df_dates_perturbed)) {
+    if (col != "day_offset" && typeof(df_dates_perturbed[[col]]) != "logical") {
+      df_dates_perturbed <- df_dates_perturbed %>%
+        mutate(!!col := !!sym(col) + lubridate::days(day_offset))
+    }
+  }
+  df_perturbed <- df_no_date_cols %>%
+    bind_cols(df_dates_perturbed) %>%
+    select(-day_offset, -source)
+  return(df_perturbed)
 }
 
 perturb_bridge_dates <- function(users, table_mapping = NULL) {
@@ -264,11 +313,19 @@ perturb_dates <- function(df, users, source_name, guid, date_cols=NULL) {
   return(df_perturbed)
 }
 
-store_rochester_perturbed <- function(rochester_dataset) {
+store_at_home_pd_perturbed <- function(rochester_dataset) {
   fname <- "deidentified_exported_records.csv"
-  write_csv(rochester_dataset, fname)
+  write_csv(rochester_dataset, fname, na="")
   f <- synapser::File(fname, parent = ROCHESTER_PARENT)
-  synStore(f, used = list(ROCHESTER_USERS))
+  synStore(f, used = list(AT_HOME_PD_REDCAP))
+  unlink(fname)
+}
+
+store_at_home_pd_two_perturbed <- function(rochester_dataset) {
+  fname <- "deidentified_exported_records.csv"
+  write_csv(rochester_dataset, fname, na="")
+  f <- synapser::File(fname, parent = AT_HOME_PD_2_PARENT)
+  synStore(f, used = list(AT_HOME_PD_2_REDCAP))
   unlink(fname)
 }
 
@@ -309,10 +366,12 @@ main <- function() {
   synLogin(Sys.getenv("synapseUsername"), Sys.getenv("synapsePassword"))
   users <- curate_user_list() %>%
     update_user_list()
-  rochester_dataset <- perturb_rochester_dates(users)
+  at_home_pd_dataset <- perturb_at_home_pd_dates(users)
+  at_home_pd_two_dataset <- perturb_at_home_pd_two_dates(users)
   mjff_dataset <- perturb_mjff_dates(users)
   bridge_dataset <- perturb_bridge_dates(users, table_mapping = BRIDGE_MAPPING)
-  store_rochester_perturbed(rochester_dataset)
+  store_at_home_pd_perturbed(at_home_pd_dataset)
+  store_at_home_pd_two_perturbed(at_home_pd_two_dataset)
   store_mjff_perturbed(mjff_dataset)
   store_bridge_perturbed(bridge_dataset, table_mapping = BRIDGE_MAPPING)
 }
