@@ -55,7 +55,7 @@ STUDY_CONFIG = {
             'subj_name', 'phone', 'emergency_contact', 'emerphone', 'email',
             'street1', 'street2', 'city', 'state', 'zipcode', 'num_type'
         ],
-        "synapse_parent": "syn16809549"
+        "synapse_parent": "syn66245804"
     },
     "at-home-PD2": {
         "additional_fields": [],
