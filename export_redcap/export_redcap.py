@@ -80,8 +80,7 @@ def read_args():
 
 def get_env_var_credentials():
     credentials = {}
-    credentials['synapseUsername'] = os.getenv('synapseUsername')
-    credentials['synapsePassword'] = os.getenv('synapsePassword')
+    credentials['synapseAccessToken'] = os.getenv('synapseAccessToken')
     credentials['redcapURL'] = os.getenv('redcapURL')
     credentials['redcapToken'] = os.getenv('redcapToken')
     credentials['study'] = os.getenv('study')
@@ -109,9 +108,7 @@ def store_to_synapse(syn, records, name, study):
 def main():
     #credentials = read_args()
     credentials = get_env_var_credentials()
-    syn = sc.login(
-        credentials['synapseUsername'],
-        credentials['synapsePassword'])
+    syn = sc.login(authToken=credentials["synapseAccessToken"])
     proj=redcap.Project(
         url=credentials['redcapURL'],
         token=credentials['redcapToken']
