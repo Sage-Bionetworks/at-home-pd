@@ -18,8 +18,7 @@ def read_args():
     parser.add_argument("--outputTable")
     parser.add_argument("--bridgeUsername")
     parser.add_argument("--bridgePassword")
-    parser.add_argument("--synapseUsername")
-    parser.add_argument("--synapsePassword")
+    parser.add_argument("--synapseAccessToken")
     parser.add_argument("--substudy")
     parser.add_argument("--supportEmail")
     args = parser.parse_args()
@@ -30,8 +29,7 @@ def get_env_var_credentials():
     credentials = {}
     credentials['inputTable'] = os.getenv('inputTable')
     credentials['outputTable'] = os.getenv('outputTable')
-    credentials['synapseUsername'] = os.getenv('synapseUsername')
-    credentials['synapsePassword'] = os.getenv('synapsePassword')
+    credentials['synapseAccessToken'] = os.getenv('synapseAccessToken')
     credentials['bridgeUsername'] = os.getenv('bridgeUsername')
     credentials['bridgePassword'] = os.getenv('bridgePassword')
     credentials['substudy'] = os.getenv('substudy')
@@ -69,8 +67,10 @@ def get_new_users(syn, input_table, output_table):
     new_numbers = set(input_table_df.index.values).difference(
             output_table_df.index.values)
     if len(new_numbers):
+        print("Found new users")
         return input_table_df.loc[list(new_numbers)]
     else:
+        print("Did not find any new users")
         return input_table_df.drop(input_table_df.index)
 
 
@@ -245,8 +245,7 @@ def main():
     credentials = read_args() if TESTING else get_env_var_credentials()
     if TESTING:
         credentials_ = {}
-        credentials_["synapseUsername"] = credentials.synapseUsername
-        credentials_["synapsePassword"] = credentials.synapsePassword
+        credentials_["synapseAccessToken"] = credentials.synapseAccessToken
         credentials_["bridgeUsername"] = credentials.bridgeUsername
         credentials_["bridgePassword"] = credentials.bridgePassword
         credentials_["inputTable"] = credentials.inputTable
@@ -254,8 +253,7 @@ def main():
         credentials_["substudy"] = credentials.substudy
         credentials_["supportEmail"] = credentials.supportEmail
         credentials = credentials_
-    syn = sc.login(email = credentials['synapseUsername'],
-                   password = credentials['synapsePassword'])
+    syn = sc.login(authToken=credentials["synapseAccessToken"])
     new_users = get_new_users(syn, input_table = credentials["inputTable"],
                               output_table = credentials["outputTable"])
     if isinstance(new_users, tuple): # returned error message
@@ -282,6 +280,7 @@ def main():
     to_append_to_table = []
     for i, user in new_users.iterrows():
         phone_number = get_phone_number_digits(user.phone_number)
+        print(f"Attempting to register user {guid}")
         guid = str(user.guid).strip()
         visit_date = int(user.visit_date)
         print("phone_number: ", phone_number)
