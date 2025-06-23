@@ -25,7 +25,7 @@ def read_args():
 
 def get_env_var_credentials():
     credentials = {}
-    credentials['synapseUsername'] = os.getenv('synapseUsername')
+    credentials['synapseAccessToken'] = os.getenv('synapseAccessToken')
     credentials['synapsePassword'] = os.getenv('synapsePassword')
     credentials['bridgeUsername'] = os.getenv('bridgeUsername')
     credentials['bridgePassword'] = os.getenv('bridgePassword')
@@ -95,7 +95,7 @@ def main():
     bridge = bc.bridgeConnector(credentials['bridgeUsername'],
                                 credentials['bridgePassword'],
                                 study = BRIDGE_STUDY)
-    syn = sc.login(credentials['synapseUsername'], credentials['synapsePassword'])
+    syn = sc.login(authToken=credentials['synapseAccessToken'])
     all_participants = tag_users(syn, bridge)
     push_to_synapse(syn, all_participants)
 
