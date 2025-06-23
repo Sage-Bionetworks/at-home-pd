@@ -6,8 +6,7 @@ import synapsebridgehelpers
 
 def get_env_var_args():
     args = {}
-    args['synapseUsername'] = os.getenv('synapseUsername')
-    args['synapsePassword'] = os.getenv('synapsePassword')
+    args['synapseAccessToken'] = os.getenv('synapseAccessToken')
     args['participantsTable'] = os.getenv('participantsTable')
     args['substudy'] = os.getenv('substudy')
     args['tableMapping'] = os.getenv('tableMapping')
@@ -37,8 +36,7 @@ def get_table_mapping(syn, synapse_id):
 
 def main():
     args = get_env_var_args()
-    syn = sc.login(args["synapseUsername"],
-                   args["synapsePassword"])
+    syn = sc.login(authToken=args["synapseAccessToken"])
     table_mapping = get_table_mapping(syn, args["tableMapping"])
     relevant_healthcodes = get_relevant_healthcodes(
             syn,
