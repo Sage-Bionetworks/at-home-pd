@@ -131,8 +131,7 @@ update_store_merged_datasets <- function(summarized_all) {
 }
 
 main <- function() {
-  synapser::synLogin(
-    Sys.getenv("synapseUsername"), Sys.getenv("synapsePassword"))
+  synapser::synLogin(authToken=Sys.getenv("synapseAccessToken"))
   summarized_mjff <- summarize_mjff()
   summarized_rochester <- summarize_rochester()
   summarized_bridge <- summarize_bridge()
