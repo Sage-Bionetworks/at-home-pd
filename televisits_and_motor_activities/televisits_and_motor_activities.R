@@ -96,7 +96,7 @@ store_to_synapse <- function(results) {
 }
 
 main <- function() {
-  synLogin(Sys.getenv("synapseUsername"), Sys.getenv("synapsePassword"))
+  synLogin(authToken=Sys.getenv("synapseAccessToken"))
   health_data_summary <- fetch_health_data_summary()
   active_task_counter <- count_active_tasks(health_data_summary)
   clinical <- clinical_data()
