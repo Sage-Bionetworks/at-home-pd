@@ -179,7 +179,7 @@ store_to_synapse <- function(study_burst_summary, table_output) {
 }
 
 main <- function() {
-  synapser::synLogin(Sys.getenv("synapseUsername"), Sys.getenv("synapsePassword"))
+  synapser::synLogin(authToken=Sys.getenv("synapseAccessToken"))
   mpower <- fetch_mpower(HEALTH_DATA_SUMMARY_TABLE)
   study_burst_schedule <- build_study_burst_schedule(mpower, TABLE_OUTPUT)
   study_burst_summary <- build_study_burst_summary(
