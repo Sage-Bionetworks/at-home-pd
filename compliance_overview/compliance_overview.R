@@ -115,7 +115,7 @@ get_any_activity_counts <- function(health_data_summary_table, study_burst_summa
 }
 
 main <- function() {
-  synLogin(Sys.getenv("synapseUsername"), Sys.getenv("synapsePassword"))
+  synLogin(authToken=Sys.getenv("synapseAccessToken"))
   study_burst_summary <- read_syn_table(STUDY_BURST_SUMMARY)
   health_data_summary_table <- fetch_health_data_summary_table(
       health_data_summary_table = HEALTH_DATA_SUMMARY_TABLE)
