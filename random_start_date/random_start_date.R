@@ -362,8 +362,7 @@ store_bridge_perturbed <- function(bridge_dataset, table_mapping=NULL) {
 }
 
 main <- function() {
-  # set env variables synapseUsername and synapsePassword before running
-  synLogin(Sys.getenv("synapseUsername"), Sys.getenv("synapsePassword"))
+  synLogin(authToken=Sys.getenv("synapseAccessToken"))
   users <- curate_user_list() %>%
     update_user_list()
   at_home_pd_dataset <- perturb_at_home_pd_dates(users)
