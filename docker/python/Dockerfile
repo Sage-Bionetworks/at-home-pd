@@ -7,4 +7,4 @@ RUN pip install synapseclient==4.8.0 \
                 git+https://github.com/redcap-tools/PyCap.git@3d4964b
 RUN git clone https://github.com/Sage-Bionetworks/at-home-pd.git /root/at-home-pd
 
-ENTRYPOINT ["/bin/bash"]
+CMD ["/bin/bash", "-l"]
