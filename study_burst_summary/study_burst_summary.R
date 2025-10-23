@@ -19,6 +19,12 @@ library(bridgeclient)
 HEALTH_DATA_SUMMARY_TABLE <- Sys.getenv("inputTable")
 TABLE_OUTPUT <- Sys.getenv("outputTable")
 GUID_PREFIX_LENGTH <- Sys.getenv("guidPrefixLength")
+# The guid is derived from the identifier associated with
+# the substudyMembership value which matches this pattern.
+# For the AT-HOME-PD project, where we collect participant data
+# across at-home-pd, at-home-PD2, and Udall-superusers participants,
+# we should use the pattern "(?:at-home|Udall)"
+BRIDGE_STUDY_IDENTIFIER_PATTERN <- Sys.getenv("bridgeStudyIdentifierPattern")
 
 read_syn_table <- function(syn_id) {
   q <- synapser::synTableQuery(paste("select * from", syn_id))
@@ -38,13 +44,19 @@ get_timezone_as_integer <- function(createdOnTimeZone) {
   }
 }
 
-fetch_mpower <- function(health_data_summary_table) {
+fetch_mpower <- function(health_data_summary_table, bridge_study_identifier_pattern) {
   mpower <- read_syn_table(health_data_summary_table)
   mpower$createdOnTimeZoneInteger <- unlist(purrr::map(mpower$createdOnTimeZone,
                                                        get_timezone_as_integer))
   mpower <- mpower %>%
-    mutate(createdOnLocalTime = createdOn + lubridate::hours(createdOnTimeZoneInteger)) %>%
-    rename(guid = externalId)
+    mutate(
+      createdOnLocalTime = createdOn + lubridate::hours(createdOnTimeZoneInteger),
+      guid = stringr::str_match(
+        substudyMemberships,
+        # this matches everything between = and | of the first instance of `bridge_study_identifier_pattern` 
+        paste0(bridge_study_identifier_pattern, "[^=]+=([^|]+)")
+      )[,2]
+    )
   return(mpower)
 }
 
@@ -122,21 +134,46 @@ build_study_burst_summary <- function(mpower, study_burst_schedule, guid_prefix_
   days_completed <- purrr::pmap_dfr(study_burst_schedule,
     function(guid_, study_burst, study_burst_start_date, study_burst_end_date) {
       study_burst_start_date <- lubridate::as_date(study_burst_start_date)
+      if (guid_ == "PDBB-338-BL7" && study_burst == "Y1,Q1") {
+        print(paste0("study_burst_start_date: ", study_burst_start_date))
+      }
+
       study_burst_end_date <- lubridate::as_date(study_burst_end_date)
+      if (guid_ == "PDBB-338-BL7" && study_burst == "Y1,Q1") {
+        print(paste0("study_burst_end_date: ", study_burst_end_date))
+      }
+
       relevant_activities <- mpower %>%
-        filter(guid == guid_,
-               createdOnLocalTime >= study_burst_start_date,
-               createdOnLocalTime <= study_burst_end_date + lubridate::days(1))
+      filter(guid == guid_,
+           createdOnLocalTime >= study_burst_start_date,
+           createdOnLocalTime <= study_burst_end_date + lubridate::days(1))
+      if (guid_ == "PDBB-338-BL7" && study_burst == "Y1,Q1") {
+        print("relevant_activities:")
+        print(relevant_activities)
+      }
+
       days_completed <- relevant_activities %>%
-        mutate(createdOnDate = lubridate::as_date(createdOnLocalTime)) %>%
-        group_by(createdOnDate) %>%
-          summarize(success = ("Tremor-v3" %in% originalTable &
-                               "WalkAndBalance-v1" %in% originalTable &
-                               "Tapping-v4" %in% originalTable))
+      mutate(createdOnDate = lubridate::as_date(createdOnLocalTime)) %>%
+      group_by(createdOnDate) %>%
+        summarize(success = ("Tremor-v3" %in% originalTable &
+                   "WalkAndBalance-v1" %in% originalTable &
+                   "Tapping-v4" %in% originalTable))
+      if (guid_ == "PDBB-338-BL7" && study_burst == "Y1,Q1") {
+        print("days_completed:")
+        print(days_completed)
+      }
+
       days_completed_this_burst <- sum(days_completed$success)
+      if (guid_ == "PDBB-338-BL7" && study_burst == "Y1,Q1") {
+        print(paste0("days_completed_this_burst (before check): ", days_completed_this_burst))
+      }
+
       # If the participant has not yet finished this study burst, store NA for days completed
       if (study_burst_end_date >= lubridate::today()) {
         days_completed_this_burst <- NA
+      }
+      if (guid_ == "PDBB-338-BL7" && study_burst == "Y1,Q1") {
+        print(paste0("days_completed_this_burst (after NA override): ", days_completed_this_burst))
       }
       result <- tibble(
         guid = guid_,
@@ -147,6 +184,7 @@ build_study_burst_summary <- function(mpower, study_burst_schedule, guid_prefix_
         study_burst_successful = days_completed >= 10)
       return(result)
   })
+  print(days_completed %>% filter(guid == "PDBB-338-BL7", study_burst=="Y1,Q1"))
   participant_studies <- mpower %>%
     mutate(
            study = case_when(
@@ -157,6 +195,7 @@ build_study_burst_summary <- function(mpower, study_burst_schedule, guid_prefix_
     ) %>%
     filter(!is.na(study)) %>%
     distinct(guid, study)
+  print(participant_studies %>% filter(guid == "PDBB-338-BL7"))
   study_burst_summary <- days_completed %>%
     mutate(study_burst_start_date = as.character(study_burst_start_date),
            study_burst_end_date = as.character(study_burst_end_date),
@@ -166,6 +205,7 @@ build_study_burst_summary <- function(mpower, study_burst_schedule, guid_prefix_
     arrange(guid, study_burst) %>%
     select(guid, guid_prefix, study, study_burst, study_burst_start_date,
            study_burst_end_date, days_completed, study_burst_successful)
+  print(study_burst_summary %>% filter(guid == "PDBB-338-BL7", study_burst=="Y1,Q1"))
   return(study_burst_summary)
 }
 
@@ -180,11 +220,14 @@ store_to_synapse <- function(study_burst_summary, table_output) {
 
 main <- function() {
   synapser::synLogin(authToken=Sys.getenv("synapseAccessToken"))
-  mpower <- fetch_mpower(HEALTH_DATA_SUMMARY_TABLE)
+  mpower <- fetch_mpower(
+    health_data_summary_table=HEALTH_DATA_SUMMARY_TABLE,
+    bridge_study_identifier_pattern=BRIDGE_STUDY_IDENTIFIER_PATTERN
+  )
   study_burst_schedule <- build_study_burst_schedule(mpower, TABLE_OUTPUT)
   study_burst_summary <- build_study_burst_summary(
       mpower, study_burst_schedule, GUID_PREFIX_LENGTH)
   store_to_synapse(study_burst_summary, TABLE_OUTPUT)
 }
 
-main()
+#main()
